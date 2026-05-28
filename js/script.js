@@ -3530,6 +3530,13 @@
       messageEl.hidden = !text;
     }
 
+    const loginParams = new URLSearchParams(window.location.search);
+    if (loginParams.get("error") === "not_admin") {
+      showMessage(
+        "У этого аккаунта нет прав администратора. Войдите с email администратора (см. README или ADMIN_EMAIL в .env)."
+      );
+    }
+
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
       showMessage("");
@@ -3587,7 +3594,19 @@
 
   function redirectAfterAuth(user, remember) {
     const params = new URLSearchParams(window.location.search);
-    const next = getSafeRedirectTarget(params.get("next"), user);
+    const rawNext = params.get("next") || "";
+    const wantsAdmin =
+      rawNext.split("#")[0].toLowerCase() === "admin.html" ||
+      (window.location.pathname.split("/").pop() || "").toLowerCase() === "login.html" &&
+        params.has("next") &&
+        rawNext.toLowerCase().includes("admin");
+
+    if (wantsAdmin && user && user.role !== "admin") {
+      window.location.href = "login.html?error=not_admin";
+      return;
+    }
+
+    const next = getSafeRedirectTarget(rawNext, user);
 
     if (user && user.role === "admin" && (!next || next.split("#")[0].toLowerCase() === "admin.html")) {
       window.location.href = next || "admin.html";

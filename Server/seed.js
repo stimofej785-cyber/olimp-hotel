@@ -1,10 +1,11 @@
 const { hashPassword } = require("./utils/password");
 
-const DEFAULT_ADMIN = {
-  email: process.env.ADMIN_EMAIL || "admin@olimp.local",
-  firstName: "Администратор",
-  lastName: "Олимп",
-  phone: "+7 (000) 000 00 - 00",
+const PRIMARY_ADMIN = {
+  email: (process.env.ADMIN_EMAIL || "forestsorokin338@mail.ru").trim().toLowerCase(),
+  password: process.env.ADMIN_PASSWORD || "Shohte12",
+  firstName: process.env.ADMIN_FIRST_NAME || "Администратор",
+  lastName: process.env.ADMIN_LAST_NAME || "Олимп",
+  phone: process.env.ADMIN_PHONE || "+7 (000) 000 00 - 00",
   role: "admin",
 };
 
@@ -145,31 +146,8 @@ const DEFAULT_REVIEWS = [
 ];
 
 async function seedDatabase(db) {
-  const existingAdmin = await db.get("SELECT id FROM users WHERE role = 'admin' LIMIT 1");
+  await ensurePrimaryAdmin(db);
 
-  if (!existingAdmin) {
-    const adminPassword = process.env.ADMIN_PASSWORD;
-
-    if (!adminPassword) {
-      console.warn(
-        "[seed] Администратор не создан. Задайте ADMIN_PASSWORD (и при необходимости ADMIN_EMAIL) перед первым запуском."
-      );
-    } else {
-      const adminHash = await hashPassword(adminPassword);
-      await db.run(
-        `INSERT INTO users (email, password, first_name, last_name, phone, role, is_blocked)
-         VALUES (?, ?, ?, ?, ?, ?, 0)`,
-        [
-          DEFAULT_ADMIN.email,
-          adminHash,
-          DEFAULT_ADMIN.firstName,
-          DEFAULT_ADMIN.lastName,
-          DEFAULT_ADMIN.phone,
-          DEFAULT_ADMIN.role,
-        ]
-      );
-    }
-  }
   const roomsCount = await db.get("SELECT COUNT(*) AS count FROM rooms");
   if (!roomsCount || roomsCount.count === 0) {
     for (const room of DEFAULT_ROOMS) {
@@ -231,6 +209,56 @@ async function seedDatabase(db) {
   await ensureDemoGuest(db);
 }
 
+async function ensurePrimaryAdmin(db) {
+  if (!PRIMARY_ADMIN.password) {
+    console.warn("[seed] ADMIN_PASSWORD не задан — учётная запись администратора не обновлена.");
+    return;
+  }
+
+  const hash = await hashPassword(PRIMARY_ADMIN.password);
+  const existing = await db.get("SELECT id, role FROM users WHERE email = ?", [
+    PRIMARY_ADMIN.email,
+  ]);
+
+  if (existing) {
+    await db.run(
+      `UPDATE users
+       SET password = ?, first_name = ?, last_name = ?, phone = ?, role = ?, is_blocked = 0
+       WHERE email = ?`,
+      [
+        hash,
+        PRIMARY_ADMIN.firstName,
+        PRIMARY_ADMIN.lastName,
+        PRIMARY_ADMIN.phone,
+        PRIMARY_ADMIN.role,
+        PRIMARY_ADMIN.email,
+      ]
+    );
+  } else {
+    await db.run(
+      `INSERT INTO users (email, password, first_name, last_name, phone, role, is_blocked, notification_prefs)
+       VALUES (?, ?, ?, ?, ?, ?, 0, ?)`,
+      [
+        PRIMARY_ADMIN.email,
+        hash,
+        PRIMARY_ADMIN.firstName,
+        PRIMARY_ADMIN.lastName,
+        PRIMARY_ADMIN.phone,
+        PRIMARY_ADMIN.role,
+        DEFAULT_NOTIFICATION_PREFS,
+      ]
+    );
+  }
+
+  console.log(
+    "[seed] Администратор:",
+    PRIMARY_ADMIN.email,
+    "—",
+    PRIMARY_ADMIN.firstName,
+    PRIMARY_ADMIN.lastName
+  );
+}
+
 async function ensureDemoGuest(db) {
   const hash = await hashPassword(DEMO_GUEST.password);
   const existing = await db.get("SELECT id FROM users WHERE email = ?", [DEMO_GUEST.email]);
@@ -270,4 +298,4 @@ async function ensureDemoGuest(db) {
   console.log("[seed] Демо-гость:", DEMO_GUEST.email, "—", DEMO_GUEST.firstName, DEMO_GUEST.lastName);
 }
 
-module.exports = { seedDatabase, DEMO_GUEST };
+module.exports = { seedDatabase, PRIMARY_ADMIN, DEMO_GUEST };

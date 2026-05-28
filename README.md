@@ -10,7 +10,7 @@ npm install
 copy deploy\.env.example .env
 ```
 
-Отредактируйте `.env`: задайте `ADMIN_EMAIL` и `ADMIN_PASSWORD` (нужны при первом запуске для входа в админку).
+Отредактируйте `.env` (или скопируйте значения из `deploy/.env.example`): `ADMIN_EMAIL` и `ADMIN_PASSWORD` для входа в админку.
 
 ```bash
 npm start
@@ -24,6 +24,17 @@ npm start
 | Главная | http://localhost:3000/ |
 | Вход | http://localhost:3000/login.html |
 | Админка | http://localhost:3000/admin.html |
+
+### Администратор
+
+Вход через [login.html](http://localhost:3000/login.html?next=admin.html) (не открывайте `admin.html` без авторизации).
+
+| Поле | По умолчанию |
+|------|----------------|
+| Email | `forestsorokin338@mail.ru` |
+| Пароль | `Shohte12` |
+
+Переопределение: `ADMIN_EMAIL`, `ADMIN_PASSWORD` в `.env`. Пароль синхронизируется при каждом `npm start`.
 
 ### Учётная запись для предзащиты
 
