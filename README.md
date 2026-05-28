@@ -25,6 +25,18 @@ npm start
 | Вход | http://localhost:3000/login.html |
 | Админка | http://localhost:3000/admin.html |
 
+### Учётная запись для предзащиты
+
+После запуска сервера в базе автоматически есть гость (см. `Server/seed.js`):
+
+| Поле | Значение |
+|------|----------|
+| Email | `greter12@mail.ru` |
+| Пароль | `great123` |
+| ФИО | Пётр Зарубин |
+
+Вход: [login.html](http://localhost:3000/login.html) → личный кабинет.
+
 Проверка проекта: `node scripts/audit-check.js` (сервер должен быть запущен).
 
 ## Публикация на GitHub и деплой

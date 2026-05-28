@@ -7,6 +7,23 @@ const DEFAULT_ADMIN = {
   phone: "+7 (000) 000 00 - 00",
   role: "admin",
 };
+
+/** Гость для демонстрации на предзащите (логин на login.html) */
+const DEMO_GUEST = {
+  email: (process.env.DEMO_USER_EMAIL || "greter12@mail.ru").trim().toLowerCase(),
+  password: process.env.DEMO_USER_PASSWORD || "great123",
+  firstName: "Пётр",
+  lastName: "Зарубин",
+  phone: process.env.DEMO_USER_PHONE || "+7 (915) 000-00-12",
+  role: "user",
+};
+
+const DEFAULT_NOTIFICATION_PREFS = JSON.stringify({
+  email: false,
+  sms: false,
+  promo: false,
+  checkin: false,
+});
 const DEFAULT_ROOMS = [
   {
     slug: "single-standard",
@@ -210,6 +227,47 @@ async function seedDatabase(db) {
       );
     }
   }
+
+  await ensureDemoGuest(db);
 }
 
-module.exports = { seedDatabase };
+async function ensureDemoGuest(db) {
+  const hash = await hashPassword(DEMO_GUEST.password);
+  const existing = await db.get("SELECT id FROM users WHERE email = ?", [DEMO_GUEST.email]);
+
+  if (existing) {
+    await db.run(
+      `UPDATE users
+       SET password = ?, first_name = ?, last_name = ?, phone = ?, role = ?, is_blocked = 0
+       WHERE email = ?`,
+      [
+        hash,
+        DEMO_GUEST.firstName,
+        DEMO_GUEST.lastName,
+        DEMO_GUEST.phone,
+        DEMO_GUEST.role,
+        DEMO_GUEST.email,
+      ]
+    );
+  } else {
+    await db.run(
+      `INSERT INTO users (
+         email, password, first_name, last_name, phone, role, is_blocked,
+         notification_prefs, last_login_at
+       ) VALUES (?, ?, ?, ?, ?, ?, 0, ?, datetime('now'))`,
+      [
+        DEMO_GUEST.email,
+        hash,
+        DEMO_GUEST.firstName,
+        DEMO_GUEST.lastName,
+        DEMO_GUEST.phone,
+        DEMO_GUEST.role,
+        DEFAULT_NOTIFICATION_PREFS,
+      ]
+    );
+  }
+
+  console.log("[seed] Демо-гость:", DEMO_GUEST.email, "—", DEMO_GUEST.firstName, DEMO_GUEST.lastName);
+}
+
+module.exports = { seedDatabase, DEMO_GUEST };
