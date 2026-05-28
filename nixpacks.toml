@@ -1,3 +1,6 @@
-# Railway / Nixpacks: Node 20 для sqlite3@6
+# Railway / Nixpacks: Node 20 + инструменты для сборки sqlite3
 [variables]
 NIXPACKS_NODE_VERSION = "20"
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "python3", "gcc", "gnumake"]
