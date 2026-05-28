@@ -1,0 +1,3 @@
+# Railway / Nixpacks: Node 20 для sqlite3@6
+[variables]
+NIXPACKS_NODE_VERSION = "20"
