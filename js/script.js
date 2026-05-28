@@ -706,19 +706,61 @@
     return (compact.slice(0, 2) || "Г").toUpperCase();
   }
 
+  const REVIEW_STAR_SRC = "assets/images/rooms/main-star.svg";
+
   function renderReviewStarsMarkup(rating) {
     const value = Math.max(0, Math.min(5, Number(rating) || 0));
     let markup = "";
     for (let star = 1; star <= 5; star += 1) {
       const src =
         star <= value
-          ? "assets/images/rooms/main-star.svg"
+          ? REVIEW_STAR_SRC
           : "assets/images/review-star-grey.svg";
       markup +=
         '<img class="reviews-list__star" src="' +
         src +
         '" alt="" width="25" height="24" decoding="async" />';
     }
+    return markup;
+  }
+
+  function renderSummaryStarsMarkup(average) {
+    const value = Math.max(0, Math.min(5, Number(average) || 0));
+    const starImg =
+      '<img class="reviews-summary__star" src="' +
+      REVIEW_STAR_SRC +
+      '" alt="" width="25" height="24" decoding="async" />';
+    let markup = "";
+
+    for (let starIndex = 1; starIndex <= 5; starIndex += 1) {
+      const fill = Math.max(0, Math.min(1, value - (starIndex - 1)));
+
+      if (fill >= 1) {
+        markup += starImg;
+        continue;
+      }
+
+      if (fill > 0.001) {
+        const widthPct = (fill * 100).toFixed(2);
+        markup +=
+          '<span class="reviews-summary__star-half">' +
+          '<img class="reviews-summary__star reviews-summary__star--ghost" src="' +
+          REVIEW_STAR_SRC +
+          '" alt="" width="25" height="24" decoding="async" />' +
+          '<span class="reviews-summary__star-half-fill" style="width:' +
+          widthPct +
+          '%">' +
+          starImg +
+          "</span></span>";
+        continue;
+      }
+
+      markup +=
+        '<img class="reviews-summary__star reviews-summary__star--ghost" src="' +
+        REVIEW_STAR_SRC +
+        '" alt="" width="25" height="24" decoding="async" />';
+    }
+
     return markup;
   }
 
@@ -743,12 +785,30 @@
 
     const average = total ? sum / total : 0;
     const scoreEl = summaryCard.querySelector(".reviews-summary__score");
+    const starsEl = summaryCard.querySelector("[data-reviews-summary-stars]");
+    const ratingCol = summaryCard.querySelector(".reviews-summary__col--rating");
     const totalEl = summaryCard.querySelector("[data-reviews-total-count]");
     const recommendEl = summaryCard.querySelector("[data-reviews-recommend]");
     const barRows = summaryCard.querySelectorAll(".reviews-summary__bar-row");
 
     if (scoreEl) {
       scoreEl.textContent = total ? average.toFixed(1) : "—";
+    }
+
+    if (starsEl) {
+      starsEl.innerHTML = renderSummaryStarsMarkup(total ? average : 0);
+      starsEl.setAttribute(
+        "aria-label",
+        total ? "Средняя оценка " + average.toFixed(1) + " из 5 звёзд" : "Нет опубликованных оценок"
+      );
+      starsEl.removeAttribute("aria-hidden");
+    }
+
+    if (ratingCol) {
+      ratingCol.setAttribute(
+        "aria-label",
+        total ? "Средняя оценка " + average.toFixed(1) + " из 5" : "Сводка оценок"
+      );
     }
 
     if (totalEl) {
