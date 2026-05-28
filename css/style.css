@@ -1140,11 +1140,29 @@ ul {
     background-color: rgba(95, 143, 78, 0.08);
   }
 
+  .site-header:has(.site-header__nav-toggle:checked) {
+    overflow: visible;
+  }
+
+  .site-header__inner:has(.site-header__nav-toggle:checked) {
+    overflow: visible;
+  }
+
   .site-header__nav-toggle:checked ~ .site-header__drawer {
-    max-height: 640px;
+    max-height: 780px;
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+    overflow: visible;
+    padding-inline: 14px;
+    padding-bottom: 22px;
+    box-sizing: border-box;
+  }
+
+  .site-header__nav-toggle:checked ~ .site-header__drawer .site-header__nav,
+  .site-header__nav-toggle:checked ~ .site-header__drawer .site-header__actions,
+  .site-header__nav-toggle:checked ~ .site-header__drawer .site-header__nav-list {
+    overflow: visible;
   }
 
   .site-header__nav-toggle:checked ~ .site-header__burger .site-header__burger-line:nth-child(1) {
@@ -1163,19 +1181,35 @@ ul {
   .site-header__actions {
     width: 100%;
     justify-content: center;
-    padding-top: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 18px 10px 14px;
     margin-top: 6px;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
+    overflow: visible;
     animation: none;
   }
 
-  .site-header__btn {
-    flex: 0 1 auto;
+  .site-header__drawer .site-header__btn {
+    flex: 0 0 auto;
     min-width: 0;
+    min-height: 44px;
+    margin: 4px;
     padding-block: 10px;
     padding-inline: 30px;
     white-space: nowrap;
     text-align: center;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .site-header__drawer .site-header__btn--ghost {
+    box-shadow: var(--btn-ghost-shadow);
+  }
+
+  .site-header__drawer .site-header__btn--ghost:hover {
+    box-shadow: 0 0 0 1px rgba(95, 143, 78, 0.22), 0 0 6px rgba(95, 143, 78, 0.35);
   }
 }
 
@@ -1319,17 +1353,28 @@ ul {
     height: auto;
   }
 
-  .site-header__actions {
-    flex-direction: column;
-    align-items: stretch;
+  .site-header__nav-toggle:checked ~ .site-header__drawer {
+    padding-inline: 18px;
+    padding-bottom: 24px;
   }
 
-  .site-header__btn {
+  .site-header__drawer .site-header__actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 12px 18px;
+  }
+
+  .site-header__drawer .site-header__btn {
     width: 100%;
-    height: 44px;
+    max-width: 280px;
+    height: 48px;
+    min-height: 48px;
+    margin: 5px;
     padding-block: 0;
     padding-inline: 16px;
     font-size: 16px;
+    box-sizing: border-box;
   }
 }
 
@@ -4947,16 +4992,10 @@ ul {
     font-size: 16px;
   }
 
-  .booking-filters__control {
-    min-height: 44px;
-    padding: 0 16px;
-    font-size: 16px;
-  }
-
   .booking-filters__apply,
   .booking-filters__reset {
-    min-height: 44px;
-    padding-block: 0;
+    min-height: 48px;
+    padding: 12px 16px;
     font-size: 16px;
     border-radius: 15px;
   }
@@ -5499,17 +5538,15 @@ ul {
   }
 
   .login-page__control {
-    min-height: 44px;
-    padding: 0 16px;
+    min-height: 48px;
     font-size: 16px;
   }
 
   .login-page__submit,
   .login-page__social {
-    min-height: 44px;
+    min-height: 48px;
+    height: auto;
     font-size: 16px;
-    height: 30px;
-    
   }
 
   .login-page__row {
@@ -8992,7 +9029,7 @@ a.contacts-info__value:focus-visible {
 
   .contacts-social__btn:hover {
     transform: none;
-    box-shadow: none;
+    box-shadow: var(--btn-ghost-shadow);
   }
 
   .contacts-social__icon {
@@ -12224,12 +12261,8 @@ select.room-payment-modal__control {
     font-size: 16px;
   }
 
-  .room-payment-modal__control {
-    min-height: 52px;
-    padding: 14px 16px;
-  }
-
   .room-payment-modal__row {
+    grid-template-columns: 1fr;
     gap: 12px;
   }
 
@@ -13177,19 +13210,207 @@ button.room-tariffs__btn {
     font-size: 16px;
   }
 
-  .room-booking__control {
+  .room-booking__submit {
     min-height: 48px;
-    padding: 0 16px;
+    padding: 12px 16px;
     font-size: 16px;
     border-radius: 15px;
   }
+}
 
+/* Mobile — единый стиль полей, кнопок и теней (≤720px) */
+@media (max-width: 720px) {
+  :root {
+    --booking-input-h: 48px;
+    --booking-input-pad-y: 12px;
+    --booking-input-pad-x: 16px;
+    --booking-input-font: 16px;
+    --booking-input-radius: 15px;
+    --mobile-btn-pad-y: 12px;
+    --mobile-btn-pad-x: 20px;
+  }
+
+  .booking-filters__fields,
+  .booking-filters__field,
+  .room-payment-modal__field,
+  .room-booking__field,
+  .hero__field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .booking-filters__control,
+  .room-payment-modal__control,
+  .room-booking__control,
+  select.room-payment-modal__control,
+  .rooms-search__control,
+  .login-page__control,
+  .contacts-info__control,
+  .reviews-form__control,
+  .account-settings__control,
+  .admin-login__control {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: var(--booking-input-h);
+    min-height: var(--booking-input-h);
+    padding: var(--booking-input-pad-y) var(--booking-input-pad-x);
+    border-radius: var(--booking-input-radius);
+    font-family: var(--font-manrope);
+    font-size: var(--booking-input-font);
+    line-height: 1.25;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .booking-filters__control[type="date"],
+  .room-booking__control--date,
+  .rooms-search__control[type="date"] {
+    color-scheme: light;
+  }
+
+  .booking-filters__control[type="date"]::-webkit-calendar-picker-indicator,
+  .room-booking__control--date::-webkit-calendar-picker-indicator,
+  .rooms-search__control[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: 4px;
+    cursor: pointer;
+    opacity: 0.72;
+  }
+
+  input.booking-filters__control[type="number"],
+  input.room-booking__control[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  input.booking-filters__control[type="number"]::-webkit-inner-spin-button,
+  input.booking-filters__control[type="number"]::-webkit-outer-spin-button,
+  input.room-booking__control[type="number"]::-webkit-inner-spin-button,
+  input.room-booking__control[type="number"]::-webkit-outer-spin-button {
+    margin: 0;
+    -webkit-appearance: none;
+  }
+
+  select.room-payment-modal__control,
+  select.room-booking__select {
+    padding-right: 44px;
+    background-position: right var(--booking-input-pad-x) center;
+    background-size: 17px 14px;
+    cursor: pointer;
+  }
+
+  .hero__control--date,
+  .hero__control--select {
+    min-height: var(--booking-input-h);
+    padding: var(--booking-input-pad-y) var(--booking-input-pad-x);
+  }
+
+  .hero__input,
+  .hero__select {
+    width: 100%;
+    min-height: 22px;
+    font-size: var(--booking-input-font);
+    line-height: 1.25;
+  }
+
+  .hero__control--select {
+    align-items: center;
+  }
+
+  .hero__select-chevron {
+    right: var(--booking-input-pad-x);
+  }
+
+  .contacts-info__textarea,
+  .reviews-form__textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 120px;
+    height: auto;
+    padding: var(--booking-input-pad-y) var(--booking-input-pad-x);
+    font-family: var(--font-manrope);
+    font-size: var(--booking-input-font);
+    line-height: 1.4;
+    border-radius: var(--booking-input-radius);
+  }
+
+  .reviews-form__textarea {
+    min-height: 130px;
+  }
+
+  .login-page__social {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+  }
+
+  .hero__btn,
+  .hero__submit,
+  .rooms__more,
+  .contacts__btn,
+  .reviews__btn,
+  .booking-cta__btn,
+  .site-footer__btn,
+  .about-who__btn,
+  .services-conference__btn,
+  .services-sauna__btn,
+  .rooms-search__submit,
+  .rooms-catalog__btn,
+  .rooms-reservation__btn,
+  .services-reservation__btn,
+  .reviews-form__submit,
+  .contacts-info__submit,
+  .login-page__submit,
+  .login-page__social,
+  .account-settings__btn,
+  .room-payment-modal__btn,
   .room-booking__submit {
-    min-height: 44px;
-    padding-block: 0;
-    padding-inline: 16px;
-    font-size: 16px;
-    border-radius: 15px;
+    box-sizing: border-box;
+    min-height: var(--booking-input-h);
+    height: auto;
+    padding: var(--mobile-btn-pad-y) var(--mobile-btn-pad-x);
+    font-size: var(--booking-input-font);
+    line-height: 1.25;
+  }
+
+  .admin-login__submit {
+    min-height: var(--booking-input-h);
+    padding: var(--mobile-btn-pad-y) var(--mobile-btn-pad-x);
+    font-size: var(--booking-input-font);
+  }
+
+  .room-payment-modal__field,
+  .service-booking-modal .room-payment-modal__field,
+  .booking-filters__field,
+  .room-booking__field,
+  .reviews-form__field,
+  .contacts-info__field,
+  .login-page__field,
+  .register-page__field,
+  .account-settings__field {
+    overflow: visible;
+  }
+
+  .room-payment-modal__dialog,
+  .login-page__form-panel,
+  .login-page__form-wrap,
+  .admin-login__card,
+  .reviews-form__card,
+  .contacts-info__card {
+    overflow: visible;
+  }
+
+  .contacts-social__btn {
+    box-shadow: var(--btn-ghost-shadow);
+  }
+
+  .contacts-social__btn:focus-visible,
+  .login-page__social:focus-visible {
+    outline-offset: 2px;
   }
 }
 
@@ -14299,6 +14520,15 @@ button.room-tariffs__btn {
     padding-top: 20px;
     padding-bottom: 20px;
   }
+}
+
+/* Скрыть кнопку a11y, пока открыта модалка (на мобильных не перекрывает «Оплатить») */
+body.room-payment-modal-open .a11y-launcher,
+body.about-gallery-lightbox-open .a11y-launcher,
+body.account-settings-modal-open .a11y-launcher,
+body.admin-modal-open .a11y-launcher {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* Версия для слабовидящих — кнопка на всех страницах */
