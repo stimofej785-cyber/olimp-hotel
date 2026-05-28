@@ -3594,14 +3594,9 @@
 
   function redirectAfterAuth(user, remember) {
     const params = new URLSearchParams(window.location.search);
-    const rawNext = params.get("next") || "";
-    const wantsAdmin =
-      rawNext.split("#")[0].toLowerCase() === "admin.html" ||
-      (window.location.pathname.split("/").pop() || "").toLowerCase() === "login.html" &&
-        params.has("next") &&
-        rawNext.toLowerCase().includes("admin");
+    const rawNext = String(params.get("next") || "").trim();
 
-    if (wantsAdmin && user && user.role !== "admin") {
+    if (rawNext.split("#")[0].toLowerCase() === "admin.html" && user && user.role !== "admin") {
       window.location.href = "login.html?error=not_admin";
       return;
     }
