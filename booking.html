@@ -1,0 +1,543 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Бронирование — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="booking-hero" aria-labelledby="booking-hero-title">
+      <div class="booking-hero__inner">
+        <h1 class="booking-hero__title" id="booking-hero-title">
+          <span>Гостиница «Олимп» -</span>
+          <span>«Номера и бронирование»</span>
+        </h1>
+        <p class="booking-hero__text">
+          Комфортные номера различных категорий с завтраком и бесплатной просторной парковкой для гостей.
+          Выберите подходящий вариант и забронируйте онлайн.
+        </p>
+      </div>
+    </section>
+
+    <section class="booking-rooms" id="available-rooms" aria-labelledby="booking-rooms-title" data-booking-page>
+      <div class="booking-rooms__inner">
+        <h2 class="booking-rooms__title" id="booking-rooms-title">Доступные номера</h2>
+
+        <div class="booking-rooms__layout">
+          <aside class="booking-filters" aria-label="Фильтры номеров">
+            <form class="booking-filters__form" action="#" method="get" data-stay-range>
+              <div class="booking-filters__cards">
+              <div class="booking-filters__card">
+                <h3 class="booking-filters__card-title">Даты проживания</h3>
+                <div class="booking-filters__fields">
+                  <label class="booking-filters__field">
+                    <span class="booking-filters__label">Заезд:</span>
+                    <input
+                      class="booking-filters__control"
+                      type="date"
+                      name="check-in"
+                      data-stay-range="checkin"
+                      autocomplete="off"
+                    />
+                  </label>
+                  <label class="booking-filters__field">
+                    <span class="booking-filters__label">Выезд:</span>
+                    <input
+                      class="booking-filters__control"
+                      type="date"
+                      name="check-out"
+                      data-stay-range="checkout"
+                      autocomplete="off"
+                    />
+                  </label>
+                  <label class="booking-filters__field">
+                    <span class="booking-filters__label">Количество гостей:</span>
+                    <input
+                      class="booking-filters__control"
+                      type="number"
+                      name="guests"
+                      min="1"
+                      max="2"
+                      value="1"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div class="booking-filters__card">
+                <h3 class="booking-filters__card-title">Цена за ночь</h3>
+                <label class="booking-filters__field">
+                  <span class="booking-filters__label">Цена:</span>
+                  <input
+                    class="booking-filters__control"
+                    type="text"
+                    name="price-range"
+                    placeholder="От - до"
+                  />
+                </label>
+              </div>
+
+              <div
+                class="booking-filters__card booking-filters__card--types"
+                role="radiogroup"
+                aria-labelledby="booking-filter-room-type-title"
+              >
+                <h3 class="booking-filters__card-title" id="booking-filter-room-type-title">Тип номера</h3>
+                <ul class="booking-filters__types">
+                  <li class="booking-filters__type">
+                    <label class="booking-filters__type-label">
+                      <input class="booking-filters__radio" type="radio" name="room-type" value="all" checked />
+                      <span class="booking-filters__radio-mark" aria-hidden="true"></span>
+                      <span class="booking-filters__type-text" data-booking-filter-label="all">Все номера: 15</span>
+                    </label>
+                  </li>
+                  <li class="booking-filters__type">
+                    <label class="booking-filters__type-label">
+                      <input class="booking-filters__radio" type="radio" name="room-type" value="single-standard" />
+                      <span class="booking-filters__radio-mark" aria-hidden="true"></span>
+                      <span class="booking-filters__type-text" data-booking-filter-label="single-standard">Одноместный стандарт: 5</span>
+                    </label>
+                  </li>
+                  <li class="booking-filters__type">
+                    <label class="booking-filters__type-label">
+                      <input class="booking-filters__radio" type="radio" name="room-type" value="improved-single" />
+                      <span class="booking-filters__radio-mark" aria-hidden="true"></span>
+                      <span class="booking-filters__type-text" data-booking-filter-label="improved-single">Улучшенный одноместный стандарт: 7</span>
+                    </label>
+                  </li>
+                  <li class="booking-filters__type">
+                    <label class="booking-filters__type-label">
+                      <input class="booking-filters__radio" type="radio" name="room-type" value="improved-double" />
+                      <span class="booking-filters__radio-mark" aria-hidden="true"></span>
+                      <span class="booking-filters__type-text" data-booking-filter-label="improved-double">Улучшенный двухместный стандарт: 2</span>
+                    </label>
+                  </li>
+                  <li class="booking-filters__type">
+                    <label class="booking-filters__type-label">
+                      <input class="booking-filters__radio" type="radio" name="room-type" value="lux-single" />
+                      <span class="booking-filters__radio-mark" aria-hidden="true"></span>
+                      <span class="booking-filters__type-text" data-booking-filter-label="lux-single">Одноместный люкс: 1</span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+              </div>
+
+              <div class="booking-filters__actions">
+                <button class="booking-filters__apply" type="submit">Применить фильтры</button>
+                <button class="booking-filters__reset" type="reset">Сбросить фильтры</button>
+              </div>
+            </form>
+          </aside>
+
+          <div class="booking-rooms__list" data-booking-rooms-list>
+            <article class="booking-rooms__card" data-room-slug="single-standard">
+              <div class="booking-rooms__media">
+                <img
+                  class="booking-rooms__photo"
+                  src="assets/images/rooms/reservation-photo 1.svg"
+                  alt="Одноместный стандарт 1 категории"
+                  width="923"
+                  height="431"
+                  decoding="async"
+                />
+                <span class="booking-rooms__photo-count" data-booking-availability aria-label="Доступно номеров">5</span>
+              </div>
+              <div class="booking-rooms__body">
+                <p class="booking-rooms__unavailable" data-booking-unavailable hidden>Номер недоступен на выбранные даты</p>
+                <h3 class="booking-rooms__card-title">Одноместный стандарт 1 категории</h3>
+                <p class="booking-rooms__description">
+                  Уютный номер для одного гостя с односпальной кроватью и всем необходимым для комфортного отдыха
+                </p>
+                <ul class="booking-rooms__amenities" aria-label="Удобства в номере">
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/advantages-icon-wifi.svg" alt="Wi-Fi" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-TV.svg" alt="Телевизор" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-fridge.svg" alt="Холодильник" width="22" height="22" decoding="async" />
+                  </li>
+                </ul>
+                <ul class="booking-rooms__features">
+                  <li>15.9 кв.м</li>
+                  <li>однокомнатный номер</li>
+                  <li>односпальная кровать</li>
+                </ul>
+                <p class="booking-rooms__price">
+                  <span class="booking-rooms__price-value">от 2400 руб.</span>
+                  <span class="booking-rooms__price-period">/ ночь</span>
+                </p>
+                <div class="booking-rooms__actions">
+                  <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="room-detail.html">Подробнее</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="booking-rooms__card" data-room-slug="improved-single">
+              <div class="booking-rooms__media">
+                <img
+                  class="booking-rooms__photo"
+                  src="assets/images/rooms/reservation-photo 2.svg"
+                  alt="Улучшенный одноместный стандарт 1 категории"
+                  width="923"
+                  height="431"
+                  decoding="async"
+                />
+                <span class="booking-rooms__photo-count" data-booking-availability aria-label="Доступно номеров">7</span>
+              </div>
+              <div class="booking-rooms__body">
+                <p class="booking-rooms__unavailable" data-booking-unavailable hidden>Номер недоступен на выбранные даты</p>
+                <h3 class="booking-rooms__card-title">Улучшенный одноместный стандарт 1 категории</h3>
+                <p class="booking-rooms__description">
+                  Просторный номер повышенного комфорта с улучшенной отделкой, увеличенной площадью и расширенным набором удобств
+                </p>
+                <ul class="booking-rooms__amenities" aria-label="Удобства в номере">
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/advantages-icon-wifi.svg" alt="Wi-Fi" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-TV.svg" alt="Телевизор" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-fridge.svg" alt="Холодильник" width="22" height="22" decoding="async" />
+                  </li>
+                </ul>
+                <ul class="booking-rooms__features">
+                  <li>19 кв.м</li>
+                  <li>однокомнатный номер</li>
+                  <li>односпальная кровать</li>
+                </ul>
+                <p class="booking-rooms__price">
+                  <span class="booking-rooms__price-value">от 3400 руб.</span>
+                  <span class="booking-rooms__price-period">/ ночь</span>
+                </p>
+                <div class="booking-rooms__actions">
+                  <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="rooms.html">Подробнее</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="booking-rooms__card" data-room-slug="improved-double">
+              <div class="booking-rooms__media">
+                <img
+                  class="booking-rooms__photo"
+                  src="assets/images/rooms/reservation-photo 3.svg"
+                  alt="Двухместный улучшенный стандарт"
+                  width="923"
+                  height="431"
+                  decoding="async"
+                />
+                <span class="booking-rooms__photo-count" data-booking-availability aria-label="Доступно номеров">2</span>
+              </div>
+              <div class="booking-rooms__body">
+                <p class="booking-rooms__unavailable" data-booking-unavailable hidden>Номер недоступен на выбранные даты</p>
+                <h3 class="booking-rooms__card-title">Двухместный улучшенный стандарт</h3>
+                <p class="booking-rooms__description">
+                  Удобный двухместный номер с двумя односпальными кроватями и всем необходимым для комфортного совместного отдыха
+                </p>
+                <ul class="booking-rooms__amenities" aria-label="Удобства в номере">
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/advantages-icon-wifi.svg" alt="Wi-Fi" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-TV.svg" alt="Телевизор" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-fridge.svg" alt="Холодильник" width="22" height="22" decoding="async" />
+                  </li>
+                </ul>
+                <ul class="booking-rooms__features">
+                  <li>18.1 кв.м</li>
+                  <li>однокомнатный номер</li>
+                  <li>две односпальные кровати</li>
+                </ul>
+                <p class="booking-rooms__price">
+                  <span class="booking-rooms__price-value">от 3600 руб.</span>
+                  <span class="booking-rooms__price-period">/ ночь</span>
+                </p>
+                <div class="booking-rooms__actions">
+                  <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="rooms.html">Подробнее</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="booking-rooms__card" data-room-slug="lux-single">
+              <div class="booking-rooms__media">
+                <img
+                  class="booking-rooms__photo"
+                  src="assets/images/rooms/reservation-photo 4.svg"
+                  alt="Люкс одноместный"
+                  width="923"
+                  height="431"
+                  decoding="async"
+                />
+                <span class="booking-rooms__photo-count" data-booking-availability aria-label="Доступно номеров">1</span>
+              </div>
+              <div class="booking-rooms__body">
+                <p class="booking-rooms__unavailable" data-booking-unavailable hidden>Номер недоступен на выбранные даты</p>
+                <h3 class="booking-rooms__card-title">Люкс одноместный</h3>
+                <p class="booking-rooms__description">
+                  Просторный двухкомнатный люкс с улучшенной отделкой, отдельной гостиной и расширенным набором удобств
+                </p>
+                <ul class="booking-rooms__amenities" aria-label="Удобства в номере">
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/advantages-icon-wifi.svg" alt="Wi-Fi" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-TV.svg" alt="Телевизор" width="22" height="22" decoding="async" />
+                  </li>
+                  <li class="booking-rooms__amenity">
+                    <img src="assets/images/rooms-icon-fridge.svg" alt="Холодильник" width="22" height="22" decoding="async" />
+                  </li>
+                </ul>
+                <ul class="booking-rooms__features">
+                  <li>63.7 кв.м</li>
+                  <li>двухкомнатный номер</li>
+                  <li>двуспальная кровать</li>
+                </ul>
+                <p class="booking-rooms__price">
+                  <span class="booking-rooms__price-value">от 5000 руб.</span>
+                  <span class="booking-rooms__price-period">/ ночь</span>
+                </p>
+                <div class="booking-rooms__actions">
+                  <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="rooms.html">Подробнее</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="room-payment-modal" id="room-payment-modal" hidden role="dialog" aria-modal="true" aria-labelledby="room-payment-title">
+    <div class="room-payment-modal__backdrop" data-room-payment-close tabindex="-1" aria-hidden="true"></div>
+    <div class="room-payment-modal__dialog">
+      <header class="room-payment-modal__header">
+        <h2 class="room-payment-modal__title" id="room-payment-title">Оплата</h2>
+        <p class="room-payment-modal__lead">
+          Проверьте детали бронирования и подтвердите демонстрационную оплату
+        </p>
+      </header>
+
+      <div class="room-payment-modal__divider" aria-hidden="true"></div>
+
+      <section class="room-payment-modal__summary" aria-label="Детали бронирования">
+        <h3 class="room-payment-modal__summary-title">Вы бронируете</h3>
+        <dl class="room-payment-modal__details">
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Номер:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-room>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Цена за ночь:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-price>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Ночей:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-nights>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Даты:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-date>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Количество гостей:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-guests>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Тариф:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-tariff>—</dd>
+          </div>
+        </dl>
+        <p class="room-payment-modal__total">
+          <span class="room-payment-modal__total-label">Итого к оплате:</span>
+          <strong class="room-payment-modal__total-value" data-room-payment-total>—</strong>
+        </p>
+        <p class="room-payment-modal__total-breakdown" data-room-payment-breakdown hidden></p>
+      </section>
+
+      <form class="room-payment-modal__form" action="#" method="post" novalidate>
+        <label class="room-payment-modal__field" data-booking-payment-tariff-wrap hidden>
+          <span class="room-payment-modal__label">Тариф</span>
+          <select
+            class="room-payment-modal__control room-payment-modal__select"
+            name="tariff"
+            data-booking-payment-tariff
+            required
+          ></select>
+        </label>
+
+        <label class="room-payment-modal__field">
+          <span class="room-payment-modal__label">Ваше имя</span>
+          <input
+            class="room-payment-modal__control"
+            type="text"
+            name="guest-name"
+            data-booking-payment-name
+            autocomplete="name"
+            placeholder="Иван Иванов"
+            required
+          />
+        </label>
+
+        <label class="room-payment-modal__field">
+          <span class="room-payment-modal__label">Телефон</span>
+          <input
+            class="room-payment-modal__control"
+            type="tel"
+            name="phone"
+            data-booking-payment-phone
+            autocomplete="tel"
+            placeholder="+7 (***) *** ** - **"
+            required
+          />
+        </label>
+
+        <p class="room-payment-modal__demo-note" role="note">
+          Демонстрационная оплата: данные банковской карты не собираются. Подтвердите бронирование ниже.
+        </p>
+
+        <label class="room-payment-modal__field room-payment-modal__field--demo">
+          <input type="checkbox" name="payment-demo-confirm" required />
+          <span>Подтверждаю оплату и согласие с условиями бронирования (демо)</span>
+        </label>
+
+        <div class="room-payment-modal__actions">
+          <button class="room-payment-modal__btn room-payment-modal__btn--primary" type="submit">Оплатить</button>
+          <button class="room-payment-modal__btn room-payment-modal__btn--ghost" type="button" data-room-payment-close>
+            Отмена
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

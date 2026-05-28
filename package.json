@@ -1,0 +1,27 @@
+{
+  "name": "diplom",
+  "version": "1.0.0",
+  "description": "Сайт гостиницы Олимп — бронирование, личный кабинет, админ-панель",
+  "main": "Server/Server.js",
+  "scripts": {
+    "start": "node Server/Server.js",
+    "dev": "node Server/Server.js",
+    "audit": "node scripts/audit-check.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "sqlite3": "^6.0.1"
+  }
+}

@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Услуги — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="services-hero" aria-labelledby="services-hero-title">
+      <div class="services-hero__inner">
+        <h1 class="services-hero__title" id="services-hero-title">
+          <span>Гостиница «Олимп» -</span>
+          <span>«Услуги»</span>
+        </h1>
+        <p class="services-hero__text">
+          Создаем все условия для комфортного отдыха, деловых встреч и
+          проведения мероприятий
+        </p>
+      </div>
+    </section>
+
+    <section class="services-conference" aria-labelledby="services-conference-title">
+      <div class="services-conference__inner">
+        <div class="services-conference__header">
+          <h2 class="services-conference__title" id="services-conference-title">
+            Конференц-зал
+          </h2>
+          <p class="services-conference__lead">
+            Идеальное пространство для деловых мероприятий
+          </p>
+        </div>
+
+        <article class="services-conference__card">
+          <div class="services-conference__gallery" aria-label="Фотографии конференц-зала">
+            <img
+              class="services-conference__photo services-conference__photo--main"
+              src="assets/images/rooms/conference-room 1.svg"
+              alt=""
+              width="640"
+              height="240"
+              aria-hidden="true"
+            />
+            <img
+              class="services-conference__photo"
+              src="assets/images/rooms/conference-room 2.svg"
+              alt=""
+              width="295"
+              height="240"
+              aria-hidden="true"
+            />
+            <img
+              class="services-conference__photo"
+              src="assets/images/rooms/conference-room 3.svg"
+              alt=""
+              width="295"
+              height="240"
+              aria-hidden="true"
+            />
+          </div>
+
+          <div class="services-conference__content">
+            <div class="services-conference__price-card">
+              <p class="services-conference__price">720 р/час</p>
+              <p class="services-conference__price-label">Аренда конференц - зала</p>
+            </div>
+
+            <ul class="services-conference__features">
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Вместимость:
+                </span>
+                <span class="services-conference__feature-value">до 40 человек (70,8 кв.м.)</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Расположение:
+                </span>
+                <span class="services-conference__feature-value">3 этаж</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Экран:
+                </span>
+                <span class="services-conference__feature-value">проектор 113</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Звук:
+                </span>
+                <span class="services-conference__feature-value">мобильная акустическая система</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Видеосигнал:
+                </span>
+                <span class="services-conference__feature-value">HDMI</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Микрофон:
+                </span>
+                <span class="services-conference__feature-value">1 радиомикрофон</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Кабели:
+                </span>
+                <span class="services-conference__feature-value">HDMI в комплекте</span>
+              </li>
+              <li class="services-conference__feature">
+                <span class="services-conference__feature-name">
+                  <img class="services-conference__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                  Wi-Fi:
+                </span>
+                <span class="services-conference__feature-value">512 Кб до 40 Мб/c</span>
+              </li>
+            </ul>
+
+            <a class="services-conference__btn" href="#" data-service-book="conference-hall" data-service-title="Конференц-зал" data-service-max-guests="40">Забронировать онлайн</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="services-sauna" aria-labelledby="services-sauna-title">
+      <div class="services-sauna__inner">
+        <div class="services-sauna__header">
+          <h2 class="services-sauna__title" id="services-sauna-title">
+            Сауна с бассейном
+          </h2>
+          <p class="services-sauna__lead">
+            Финская парная, бассейн с подсветкой и уютная гостевая комната для большой компании
+          </p>
+        </div>
+
+        <article class="services-sauna__card">
+          <div class="services-sauna__gallery" aria-label="Фотографии сауны">
+            <img
+              class="services-sauna__photo services-sauna__photo--main"
+              src="assets/images/rooms/Sauna-1.svg"
+              alt=""
+              width="640"
+              height="340"
+              aria-hidden="true"
+            />
+            <img
+              class="services-sauna__photo"
+              src="assets/images/rooms/Sauna-2.svg"
+              alt=""
+              width="295"
+              height="240"
+              aria-hidden="true"
+            />
+            <img
+              class="services-sauna__photo"
+              src="assets/images/rooms/Sauna-3.svg"
+              alt=""
+              width="295"
+              height="240"
+              aria-hidden="true"
+            />
+          </div>
+
+          <div class="services-sauna__content">
+            <ul class="services-sauna__features">
+              <li class="services-sauna__feature">
+                <img class="services-sauna__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <span>Финская парная с электрической каменкой, обшитая липовым деревом</span>
+              </li>
+              <li class="services-sauna__feature">
+                <img class="services-sauna__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <span>Удобная гостевая комната с большим столом для большой дружной компании</span>
+              </li>
+              <li class="services-sauna__feature">
+                <img class="services-sauna__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <span>Бассейн с подсветкой — искупайтесь после посещения парильной</span>
+              </li>
+              <li class="services-sauna__feature">
+                <img class="services-sauna__feature-icon" src="assets/images/services-icon-check mark.svg" alt="" width="20" height="20" aria-hidden="true" />
+                <span>Банные принадлежности для посещения парной с максимальным удовольствием</span>
+              </li>
+            </ul>
+
+            <div class="services-sauna__price-card">
+              <div class="services-sauna__price-header">
+                <p class="services-sauna__price-title">Стоимость посещения</p>
+              </div>
+              <div class="services-sauna__price-body">
+                <div class="services-sauna__price-row">
+                  <span class="services-sauna__price-name">1-й и 2-й час:</span>
+                  <span class="services-sauna__price-value">1800 руб</span>
+                </div>
+                <div class="services-sauna__price-row">
+                  <span class="services-sauna__price-name">3-й час:</span>
+                  <span class="services-sauna__price-value">1200 руб</span>
+                </div>
+              </div>
+              <div class="services-sauna__price-footer">
+                <p class="services-sauna__price-note">Для постояльцев гостиницы - скидка 10%</p>
+              </div>
+            </div>
+
+            <a class="services-sauna__btn" href="#" data-service-book="sauna-pool" data-service-title="Сауна" data-service-max-guests="10">Забронировать онлайн</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="services-extra" aria-labelledby="services-extra-title">
+      <div class="services-extra__inner">
+        <div class="services-extra__header">
+          <h2 class="services-extra__title" id="services-extra-title">
+            Дополнительные услуги
+          </h2>
+          <p class="services-extra__lead">
+            Всё для вашего комфорта — доступно для всех гостей гостиницы
+          </p>
+        </div>
+
+        <div class="services-extra__grid" aria-label="Дополнительные услуги">
+          <article class="services-extra__card">
+            <div class="services-extra__icon-wrap">
+              <img class="services-extra__icon" src="assets/images/rooms-icon-taxi.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <h3 class="services-extra__card-title">Заказ такси</h3>
+            <p class="services-extra__card-text">Организуем трансфер до аэропорта и вокзала</p>
+          </article>
+
+          <article class="services-extra__card">
+            <div class="services-extra__icon-wrap">
+              <img class="services-extra__icon" src="assets/images/advantages-icon-wifi.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <h3 class="services-extra__card-title">Интернет Wi-Fi</h3>
+            <p class="services-extra__card-text">Высокоскоростной Wi-Fi на всей территории гостиницы</p>
+          </article>
+
+          <article class="services-extra__card">
+            <div class="services-extra__icon-wrap">
+              <img class="services-extra__icon" src="assets/images/services-icon-ski.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <h3 class="services-extra__card-title">Прокат спортивного инвентаря</h3>
+            <p class="services-extra__card-text">Лыжи, роликовые лыжи, теннисный инвентарь и тд.</p>
+          </article>
+
+          <article class="services-extra__card">
+            <div class="services-extra__icon-wrap">
+              <img class="services-extra__icon" src="assets/images/services-icon-pharmacy.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <h3 class="services-extra__card-title">Медицинская помощь</h3>
+            <p class="services-extra__card-text">Аптечка первой помощи, вызов врача</p>
+          </article>
+
+          <article class="services-extra__card">
+            <div class="services-extra__icon-wrap">
+              <img class="services-extra__icon" src="assets/images/advantages-icon-gym.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <h3 class="services-extra__card-title">Тренажёрный зал</h3>
+            <p class="services-extra__card-text">Современное оборудование для поддержания формы</p>
+          </article>
+
+          <article class="services-extra__card">
+            <div class="services-extra__icon-wrap">
+              <img class="services-extra__icon" src="assets/images/rooms-icon-iron.svg" alt="" width="24" height="24" aria-hidden="true" />
+            </div>
+            <h3 class="services-extra__card-title">Прачечная</h3>
+            <p class="services-extra__card-text">Стирка и глажка в удобное для вас время</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-reservation" aria-labelledby="services-reservation-title">
+      <div class="services-reservation__card">
+        <div class="services-reservation__content">
+          <h2 class="services-reservation__title" id="services-reservation-title">
+            Готовы забронировать номер?
+          </h2>
+          <p class="services-reservation__text">
+            Свяжитесь с нами любым удобным способом, и мы поможем организовать
+            идеальный отдых или деловую встречу
+          </p>
+          <div class="services-reservation__actions">
+            <a class="services-reservation__btn services-reservation__btn--primary" href="booking.html#available-rooms">
+              Забронировать онлайн
+            </a>
+            <a class="services-reservation__btn services-reservation__btn--ghost" href="tel:+73467536267">
+              Позвонить нам
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div
+    class="room-payment-modal service-booking-modal"
+    id="service-booking-modal"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="service-booking-title"
+  >
+    <div class="room-payment-modal__backdrop" data-service-booking-close tabindex="-1" aria-hidden="true"></div>
+    <div class="room-payment-modal__dialog">
+      <header class="room-payment-modal__header">
+        <h2 class="room-payment-modal__title" id="service-booking-title">Оплата</h2>
+        <p class="room-payment-modal__lead">
+          Проверьте детали бронирования и подтвердите демонстрационную оплату
+        </p>
+      </header>
+
+      <div class="room-payment-modal__divider" aria-hidden="true"></div>
+
+      <form class="service-booking-modal__form" data-service-booking-form novalidate>
+        <input type="hidden" name="service-slug" value="" />
+
+        <section class="room-payment-modal__summary service-booking-modal__summary" aria-label="Детали бронирования услуги">
+          <h3 class="room-payment-modal__summary-title" data-service-booking-service-name>Конференц-зал</h3>
+
+          <label class="service-booking-modal__field">
+            <span class="service-booking-modal__field-label">Дата</span>
+            <input
+              class="room-payment-modal__control service-booking-modal__control"
+              type="date"
+              name="booking-date"
+              required
+            />
+          </label>
+
+          <label class="service-booking-modal__field">
+            <span class="service-booking-modal__field-label">Часы</span>
+            <input
+              class="room-payment-modal__control service-booking-modal__control"
+              type="number"
+              name="hours"
+              min="1"
+              max="24"
+              step="1"
+              placeholder="Количество часов"
+              required
+            />
+          </label>
+
+          <label class="service-booking-modal__field">
+            <span class="service-booking-modal__field-label">Количество человек</span>
+            <input
+              class="room-payment-modal__control service-booking-modal__control"
+              type="number"
+              name="guests"
+              min="1"
+              step="1"
+              placeholder="Количество"
+              required
+            />
+            <span class="service-booking-modal__field-hint" data-service-booking-guests-hint></span>
+          </label>
+
+          <label class="service-booking-modal__field" data-service-booking-name-wrap hidden>
+            <span class="service-booking-modal__field-label">Ваше имя</span>
+            <input
+              class="room-payment-modal__control service-booking-modal__control"
+              type="text"
+              name="guest-name"
+              autocomplete="name"
+              placeholder="Иван Иванов"
+            />
+          </label>
+
+          <label class="service-booking-modal__field" data-service-booking-phone-wrap hidden>
+            <span class="service-booking-modal__field-label">Телефон</span>
+            <input
+              class="room-payment-modal__control service-booking-modal__control"
+              type="tel"
+              name="phone"
+              autocomplete="tel"
+              placeholder="+7 (***) *** ** - **"
+            />
+          </label>
+
+          <p class="service-booking-modal__message" data-service-booking-message hidden role="alert"></p>
+
+          <p class="room-payment-modal__total">
+            <span class="room-payment-modal__total-label">Итого к оплате:</span>
+            <strong class="room-payment-modal__total-value" data-service-booking-total>0 рублей</strong>
+          </p>
+        </section>
+
+        <div class="room-payment-modal__form">
+          <p class="room-payment-modal__demo-note" role="note">
+            Демонстрационная оплата: данные банковской карты не собираются. Подтвердите бронирование ниже.
+          </p>
+
+          <label class="room-payment-modal__field room-payment-modal__field--demo">
+            <input type="checkbox" name="payment-demo-confirm" required />
+            <span>Подтверждаю оплату и согласие с условиями бронирования (демо)</span>
+          </label>
+
+          <div class="room-payment-modal__actions">
+            <button class="room-payment-modal__btn room-payment-modal__btn--primary" type="submit">
+              Оплатить
+            </button>
+            <button class="room-payment-modal__btn room-payment-modal__btn--ghost" type="button" data-service-booking-close>
+              Отмена
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

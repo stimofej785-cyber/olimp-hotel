@@ -1,0 +1,355 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Контакты — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="contacts-hero" aria-labelledby="contacts-hero-title">
+      <div class="contacts-hero__inner">
+        <h1 class="contacts-hero__title" id="contacts-hero-title">
+          <span>Гостиница «Олимп» -</span>
+          <span>«Контакты»</span>
+        </h1>
+        <p class="contacts-hero__text">
+          Свяжитесь с нами любым удобным способом - мы всегда рады помочь и
+          ответить на ваши вопросы
+        </p>
+      </div>
+    </section>
+
+    <section class="contacts-info" id="contacts-form" aria-labelledby="contacts-info-title">
+      <div class="contacts-info__inner">
+        <h2 class="contacts-info__title" id="contacts-info-title">
+          Информация для связи
+        </h2>
+
+        <article class="contacts-info__card">
+          <div class="contacts-info__layout">
+            <div class="contacts-info__details" aria-label="Контактная информация">
+              <div class="contacts-info__item">
+                <p class="contacts-info__label">Телефон:</p>
+                <a class="contacts-info__value" href="tel:+73467536267">
+                  8 (34675) 3-62-67
+                </a>
+              </div>
+
+              <div class="contacts-info__item">
+                <p class="contacts-info__label">Электронная почта:</p>
+                <a class="contacts-info__value" href="mailto:mail@olimp-sov.ru">
+                  mail@olimp-sov.ru
+                </a>
+              </div>
+
+              <div class="contacts-info__item">
+                <p class="contacts-info__label">Адрес:</p>
+                <div class="contacts-info__value contacts-info__value--stack">
+                  <span>г. Советский,</span>
+                  <span>ул.Юности, 12</span>
+                </div>
+              </div>
+
+              <div class="contacts-info__item">
+                <p class="contacts-info__label">Время:</p>
+                <div class="contacts-info__value contacts-info__value--stack">
+                  <span>Заезд с 14:00</span>
+                  <span>Выезд с 12:00</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="contacts-info__form-wrap">
+              <div class="contacts-info__form-header">
+                <h3 class="contacts-info__form-title">Оставьте заявку</h3>
+                <p class="contacts-info__form-lead">
+                  Заполните форму, и мы свяжемся с вами в ближайшее время
+                </p>
+              </div>
+
+              <form class="contacts-info__form" data-contacts-form novalidate>
+                <div class="contacts-info__fields">
+                  <div class="contacts-info__field">
+                    <label class="contacts-info__field-label" for="contacts-name">
+                      Ваше имя:
+                    </label>
+                    <input
+                      class="contacts-info__control"
+                      id="contacts-name"
+                      name="name"
+                      type="text"
+                      placeholder="Иван Иванов"
+                      autocomplete="name"
+                      required
+                    />
+                  </div>
+
+                  <div class="contacts-info__field">
+                    <label class="contacts-info__field-label" for="contacts-phone">
+                      Телефон:
+                    </label>
+                    <input
+                      class="contacts-info__control"
+                      id="contacts-phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="+7 (___) ___ - __ - __"
+                      autocomplete="tel"
+                      required
+                    />
+                  </div>
+
+                  <div class="contacts-info__field">
+                    <label class="contacts-info__field-label" for="contacts-email">
+                      Электронная почта:
+                    </label>
+                    <input
+                      class="contacts-info__control"
+                      id="contacts-email"
+                      name="email"
+                      type="email"
+                      placeholder="mail@example.ru"
+                      autocomplete="email"
+                      required
+                    />
+                  </div>
+
+                  <div class="contacts-info__field">
+                    <label class="contacts-info__field-label" for="contacts-topic">
+                      Тема обращения:
+                    </label>
+                    <div class="contacts-info__select-wrap">
+                      <select
+                        class="contacts-info__control contacts-info__select"
+                        id="contacts-topic"
+                        name="topic"
+                        required
+                      >
+                        <option value="" disabled selected>Выберите тему</option>
+                        <option value="booking">Бронирование номера</option>
+                        <option value="services">Услуги гостиницы</option>
+                        <option value="conference">Конференц-зал</option>
+                        <option value="other">Другой вопрос</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="contacts-info__field contacts-info__field--full">
+                  <label class="contacts-info__field-label" for="contacts-message">
+                    Сообщение
+                  </label>
+                  <textarea
+                    class="contacts-info__control contacts-info__textarea"
+                    id="contacts-message"
+                    name="message"
+                    rows="5"
+                    placeholder="Опишите ваш вопрос или пожелания..."
+                    required
+                  ></textarea>
+                </div>
+
+                <label class="contacts-info__consent">
+                  <input
+                    class="contacts-info__checkbox"
+                    type="checkbox"
+                    name="consent"
+                    required
+                  />
+                  <span class="contacts-info__consent-text">
+                    Нажимая кнопку вы соглашаетесь с
+                    <a class="contacts-info__consent-link" href="privacy.html">политикой конфиденциальности</a>
+                    и даю согласие на обработку персональных данных
+                  </span>
+                </label>
+
+                <button class="contacts-info__submit" type="submit">
+                  Отправить сообщение
+                </button>
+              </form>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="contacts-map" aria-labelledby="contacts-map-title">
+      <div class="contacts-map__inner">
+        <h2 class="contacts-map__title" id="contacts-map-title">
+          Как нас найти
+        </h2>
+
+        <figure class="contacts-map__frame">
+          <img
+            class="contacts-map__image"
+            src="assets/images/rooms/Contacts-map.svg"
+            alt="Карта расположения гостиницы «Олимп» на ул. Юности, 12, г. Советский"
+            width="1440"
+            height="451"
+            decoding="async"
+          />
+        </figure>
+      </div>
+    </section>
+
+    <section class="contacts-social" aria-labelledby="contacts-social-title">
+      <div class="contacts-social__inner">
+        <h2 class="contacts-social__title" id="contacts-social-title">
+          Социальные сети
+        </h2>
+
+        <article class="contacts-social__card">
+          <p class="contacts-social__text">Следите за нами онлайн</p>
+
+          <div class="contacts-social__actions" aria-label="Социальные сети гостиницы">
+            <a class="contacts-social__btn" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="Мы во ВКонтакте">
+              <img
+                class="contacts-social__icon"
+                src="assets/images/social-vk.svg"
+                alt=""
+                width="36"
+                height="36"
+                decoding="async"
+              />
+              <span class="contacts-social__btn-text">Мы в вконтакте</span>
+            </a>
+
+            <a class="contacts-social__btn" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Мы в Max">
+              <img
+                class="contacts-social__icon"
+                src="assets/images/social-max.svg"
+                alt=""
+                width="36"
+                height="36"
+                decoding="async"
+              />
+              <span class="contacts-social__btn-text">Мы в максе</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

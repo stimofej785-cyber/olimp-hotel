@@ -1,0 +1,571 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Улучшенный одноместный стандарт 1 категории — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-room-slug="improved-single">
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="room-detail" aria-labelledby="room-detail-title">
+      <div class="room-detail__inner">
+        <div class="room-detail__gallery" data-room-gallery aria-label="Фотографии номера">
+          <div class="room-detail__viewer">
+            <img
+              class="room-detail__main"
+              src="assets/images/rooms/Superior Single Standard photo-1.svg"
+              alt="Улучшенный одноместный стандарт 1 категории — вид номера"
+              width="760"
+              height="520"
+              decoding="async"
+            />
+          </div>
+
+          <div class="room-detail__thumbs">
+            <button
+              class="room-detail__thumb is-active"
+              type="button"
+              aria-label="Показать фото 2"
+              aria-pressed="true"
+            >
+              <img
+                src="assets/images/rooms/Superior Single Standard photo-2.svg"
+                alt=""
+                width="240"
+                height="160"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="room-detail__thumb"
+              type="button"
+              aria-label="Показать фото 3"
+              aria-pressed="false"
+            >
+              <img
+                src="assets/images/rooms/Superior Single Standard photo-3.svg"
+                alt=""
+                width="240"
+                height="160"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="room-detail__thumb"
+              type="button"
+              aria-label="Показать фото 4"
+              aria-pressed="false"
+            >
+              <img
+                src="assets/images/rooms/Superior Single Standard photo-4.svg"
+                alt=""
+                width="240"
+                height="160"
+                decoding="async"
+              />
+            </button>
+          </div>
+        </div>
+
+        <div class="room-detail__info">
+          <h1 class="room-detail__title" id="room-detail-title">Улучшенный одноместный стандарт 1 категории</h1>
+
+          <ul class="room-detail__tags">
+            <li class="room-detail__tag">
+              <img src="assets/images/rooms/Home-Icon.svg" alt="" width="20" height="20" decoding="async" />
+              <span>19 кв.м</span>
+            </li>
+            <li class="room-detail__tag">
+              <img src="assets/images/bed-icon-rooms.svg" alt="" width="20" height="16" decoding="async" />
+              <span>Двуспальная кровать</span>
+            </li>
+            <li class="room-detail__tag">
+              <img src="assets/images/guest-icon-rooms.svg" alt="" width="18" height="18" decoding="async" />
+              <span>1 гость</span>
+            </li>
+            <li class="room-detail__tag">
+              <img src="assets/images/shower-icon-rooms.svg" alt="" width="18" height="24" decoding="async" />
+              <span>Санузел с душем</span>
+            </li>
+          </ul>
+
+          <div class="room-detail__price">
+            <p class="room-detail__price-label">Стоимость за ночь - от</p>
+            <p class="room-detail__price-value">от 3400 руб. / ночь</p>
+            <p class="room-detail__price-note">Тариф «Основной» (проживание + завтрак)</p>
+          </div>
+
+          <div class="room-detail__actions">
+            <button class="room-detail__btn room-detail__btn--primary" type="button">Забронировать номер</button>
+            <a class="room-detail__btn room-detail__btn--outline" href="#room-tariffs">Смотреть тариф</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room-tariffs" id="room-tariffs" aria-labelledby="room-tariffs-title">
+      <div class="room-tariffs__inner">
+        <header class="room-tariffs__header">
+          <h2 class="room-tariffs__title" id="room-tariffs-title">Тарифы на проживание</h2>
+          <p class="room-tariffs__lead">Выберите подходящий вариант питания</p>
+        </header>
+
+        <div class="room-tariffs__grid">
+          <article class="room-tariffs__card">
+            <span class="room-tariffs__icon" aria-hidden="true">
+              <img src="assets/images/rooms-icons 1.svg" alt="" width="28" height="24" decoding="async" />
+            </span>
+            <p class="room-tariffs__text">За место в номере</p>
+            <p class="room-tariffs__price">от 3400 руб. / ночь</p>
+            <a class="room-tariffs__btn" href="booking.html#available-rooms">Выбрать</a>
+          </article>
+
+          <article class="room-tariffs__card">
+            <span class="room-tariffs__icon" aria-hidden="true">
+              <img src="assets/images/login-icon-star.svg" alt="" width="20" height="19" decoding="async" />
+            </span>
+            <p class="room-tariffs__text">Номер + 2-х разовое питание</p>
+            <p class="room-tariffs__price">от 3850 руб. / ночь</p>
+            <a class="room-tariffs__btn" href="booking.html#available-rooms">Выбрать</a>
+          </article>
+
+          <article class="room-tariffs__card">
+            <span class="room-tariffs__icon" aria-hidden="true">
+              <img src="assets/images/rooms-icons 2.svg" alt="" width="24" height="24" decoding="async" />
+            </span>
+            <p class="room-tariffs__text">Номер + 3-х разовое питание</p>
+            <p class="room-tariffs__price">от 4300 руб. / ночь</p>
+            <a class="room-tariffs__btn" href="booking.html#available-rooms">Выбрать</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="room-amenities" aria-labelledby="room-amenities-title">
+      <div class="room-amenities__inner">
+        <header class="room-amenities__header">
+          <h2 class="room-amenities__title" id="room-amenities-title">Оснащение номера</h2>
+          <p class="room-amenities__lead">Всё необходимое для комфортного проживания</p>
+        </header>
+
+        <div class="room-amenities__columns">
+          <div class="room-amenities__column">
+            <h3 class="room-amenities__column-title">В номере</h3>
+            <ul class="room-amenities__list">
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Прикроватная тумба</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Платяной шкаф / вешалки</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Телевизор</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Письменный стол и стул</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Холодильник</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Набор посуды</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Чай, сахар</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Телефон</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Шампунь, гель для душа, мыло</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Набор полотенец</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="room-amenities__column">
+            <h3 class="room-amenities__column-title">В стоимость проживания включено</h3>
+            <ul class="room-amenities__list">
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Завтрак</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Вызов такси</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Побудка</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Городские телефонные звонки</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Гладильная комната (1 этаж)</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Кулер на этаже</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Wi-Fi по всей территории</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Аптечка первой медицинской помощи</span>
+              </li>
+              <li class="room-amenities__item">
+                <img class="room-amenities__dot" src="assets/images/icon-dot.svg" alt="" width="10" height="10" decoding="async" />
+                <span>Машина для чистки обуви (1 этаж)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="room-extra" aria-labelledby="room-extra-title">
+      <div class="room-extra__inner">
+        <header class="room-extra__header">
+          <h2 class="room-extra__title" id="room-extra-title">Дополнительные удобства</h2>
+          <p class="room-extra__lead">Доступны всем постояльцам гостиницы</p>
+        </header>
+
+        <div class="room-extra__grid">
+          <article class="room-extra__card">
+            <span class="room-extra__icon" aria-hidden="true">
+              <img src="assets/images/advantages-icon-wifi.svg" alt="" width="28" height="28" decoding="async" />
+            </span>
+            <h3 class="room-extra__card-title">Wi-Fi по всей территории</h3>
+            <p class="room-extra__card-text">
+              Высокоскоростной интернет во всех номерах и общественных зонах
+            </p>
+          </article>
+
+          <article class="room-extra__card">
+            <span class="room-extra__icon" aria-hidden="true">
+              <img src="assets/images/advantages-icon-parking.svg" alt="" width="28" height="28" decoding="async" />
+            </span>
+            <h3 class="room-extra__card-title">Бесплатная парковка</h3>
+            <p class="room-extra__card-text">
+              Просторная и доступная для гостей гостиницы парковка
+            </p>
+          </article>
+
+          <article class="room-extra__card">
+            <span class="room-extra__icon" aria-hidden="true">
+              <img src="assets/images/advantages-icon-location.svg" alt="" width="28" height="28" decoding="async" />
+            </span>
+            <h3 class="room-extra__card-title">Удобное расположение</h3>
+            <p class="room-extra__card-text">
+              В 5-ти минутах ходьбы от центра города, рядом с живописным парком
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="room-booking" id="room-booking" aria-labelledby="room-booking-title">
+      <div class="room-booking__inner">
+        <header class="room-booking__header">
+          <h2 class="room-booking__title" id="room-booking-title">Забронируйте прямо сейчас</h2>
+          <p class="room-booking__lead">
+            Выберите удобные даты и получите подтверждение бронирования за несколько минут.
+            Отмена возможна бесплатно.
+          </p>
+        </header>
+
+        <div class="room-booking__form-wrap">
+          <div class="room-booking__form-panel">
+            <h3 class="room-booking__form-title">Форма бронирования</h3>
+
+            <form class="room-booking__form" action="booking.html#available-rooms" method="get" data-stay-range>
+              <div class="room-booking__fields">
+                <label class="room-booking__field">
+                  <span class="room-booking__label">Ваше имя</span>
+                  <input
+                    class="room-booking__control"
+                    type="text"
+                    name="name"
+                    placeholder="Иван Иванов"
+                    autocomplete="name"
+                    required
+                  />
+                </label>
+
+                <label class="room-booking__field">
+                  <span class="room-booking__label">Телефон</span>
+                  <input
+                    class="room-booking__control"
+                    type="tel"
+                    name="phone"
+                    placeholder="+7 (***) *** ** - **"
+                    autocomplete="tel"
+                    required
+                  />
+                </label>
+
+                <div class="room-booking__row">
+                  <label class="room-booking__field">
+                    <span class="room-booking__label">Дата заезда</span>
+                    <input
+                      class="room-booking__control room-booking__control--date"
+                      type="date"
+                      name="checkin"
+                      data-stay-range="checkin"
+                      autocomplete="off"
+                      required
+                    />
+                  </label>
+
+                  <label class="room-booking__field">
+                    <span class="room-booking__label">Дата выезда</span>
+                    <input
+                      class="room-booking__control room-booking__control--date"
+                      type="date"
+                      name="checkout"
+                      data-stay-range="checkout"
+                      autocomplete="off"
+                      required
+                    />
+                  </label>
+                </div>
+
+                <label class="room-booking__field">
+                  <span class="room-booking__label">Количество гостей</span>
+                  <span class="room-booking__select-wrap">
+                    <select class="room-booking__control room-booking__select" name="guests">
+                      <option value="1" selected>1 гость</option>
+                    </select>
+                  </span>
+                </label>
+
+                <label class="room-booking__field">
+                  <span class="room-booking__label">Тариф</span>
+                  <span class="room-booking__select-wrap">
+                    <select class="room-booking__control room-booking__select" name="tariff">
+                      <option value="basic" selected>За место - от 3400 руб</option>
+                      <option value="half-board">Номер + 2-х разовое питание - от 3850 руб</option>
+                      <option value="full-board">Номер + 3-х разовое питание - от 4300 руб</option>
+                    </select>
+                  </span>
+                </label>
+
+                <div class="room-booking__tariff-summary" aria-live="polite">
+                  <span class="room-booking__label">Выбранный тариф</span>
+                  <p class="room-booking__tariff-value" data-room-booking-tariff>За место в номере — от 3400 руб. / ночь</p>
+                </div>
+              </div>
+
+              <button class="room-booking__submit" type="submit">Забронировать</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="room-payment-modal" id="room-payment-modal" hidden role="dialog" aria-modal="true" aria-labelledby="room-payment-title">
+    <div class="room-payment-modal__backdrop" data-room-payment-close tabindex="-1" aria-hidden="true"></div>
+    <div class="room-payment-modal__dialog">
+      <header class="room-payment-modal__header">
+        <h2 class="room-payment-modal__title" id="room-payment-title">Оплата</h2>
+        <p class="room-payment-modal__lead">
+          Проверьте детали бронирования и подтвердите демонстрационную оплату
+        </p>
+      </header>
+
+      <div class="room-payment-modal__divider" aria-hidden="true"></div>
+
+      <section class="room-payment-modal__summary" aria-label="Детали бронирования">
+        <h3 class="room-payment-modal__summary-title">Вы бронируете</h3>
+        <dl class="room-payment-modal__details">
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Номер:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-room>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Цена за ночь:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-price>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Ночей:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-nights>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Даты:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-date>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Количество гостей:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-guests>—</dd>
+          </div>
+          <div class="room-payment-modal__detail">
+            <dt class="room-payment-modal__detail-label">Тариф:</dt>
+            <dd class="room-payment-modal__detail-value" data-room-payment-tariff>—</dd>
+          </div>
+        </dl>
+        <p class="room-payment-modal__total">
+          <span class="room-payment-modal__total-label">Итого к оплате:</span>
+          <strong class="room-payment-modal__total-value" data-room-payment-total>—</strong>
+        </p>
+        <p class="room-payment-modal__total-breakdown" data-room-payment-breakdown hidden></p>
+      </section>
+
+      <form class="room-payment-modal__form" action="#" method="post" novalidate>
+        <p class="room-payment-modal__demo-note" role="note">
+          Демонстрационная оплата: данные банковской карты не собираются. Подтвердите бронирование ниже.
+        </p>
+
+        <label class="room-payment-modal__field room-payment-modal__field--demo">
+          <input type="checkbox" name="payment-demo-confirm" required />
+          <span>Подтверждаю оплату и согласие с условиями бронирования (демо)</span>
+        </label>
+
+        <div class="room-payment-modal__actions">
+          <button class="room-payment-modal__btn room-payment-modal__btn--primary" type="submit">Оплатить</button>
+          <button class="room-payment-modal__btn room-payment-modal__btn--ghost" type="button" data-room-payment-close>
+            Отмена
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

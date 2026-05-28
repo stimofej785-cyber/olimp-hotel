@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Мои бронирования — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="account.html">Кабинет</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="account-panel" aria-labelledby="account-bookings-title">
+      <div class="account-panel__inner">
+        <aside class="account-sidebar" aria-label="Меню личного кабинета">
+          <div class="account-profile">
+            <div class="account-profile__avatar" aria-hidden="true">АИ</div>
+            <div class="account-profile__info">
+              <p class="account-profile__name">Алексей Иванов</p>
+              <p class="account-profile__email">aleksey@mail.ru</p>
+              <p class="account-profile__badge" hidden>
+                <img src="assets/images/login-icon-star.svg" alt="" width="18" height="18" decoding="async" />
+                <span>Постоянный гость</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="account-nav-card">
+            <nav class="account-nav" aria-label="Разделы личного кабинета">
+              <a class="account-nav__link" href="account.html">Обзор</a>
+              <a class="account-nav__link" href="account-bookings.html">Бронирования</a>
+              <a class="account-nav__link" href="account-notifications.html">Уведомления</a>
+              <a class="account-nav__link" href="account-payments.html">История оплат</a>
+              <a class="account-nav__link" href="account-settings.html">Настройки</a>
+              <a class="account-nav__link account-nav__link--logout" href="login.html">Выйти</a>
+            </nav>
+          </div>
+        </aside>
+
+        <div class="account-main">
+          <article class="account-card account-bookings" data-account-bookings>
+            <div class="account-bookings__header">
+              <h1 class="account-card__title" id="account-bookings-title">Мои бронирования</h1>
+              <a class="account-bookings__new" href="booking.html#available-rooms">Новое</a>
+            </div>
+
+            <div class="account-bookings__tabs" role="tablist" aria-label="Фильтр бронирований">
+              <button
+                class="account-bookings__tab account-bookings__tab--active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="account-bookings-panel-active"
+                data-tab="active"
+              >
+                Активные
+              </button>
+              <button
+                class="account-bookings__tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="account-bookings-panel-completed"
+                data-tab="completed"
+              >
+                Завершённые
+              </button>
+              <button
+                class="account-bookings__tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="account-bookings-panel-cancelled"
+                data-tab="cancelled"
+              >
+                Отменённые
+              </button>
+            </div>
+
+            <div class="account-bookings__panels">
+              <div
+                class="account-bookings__panel"
+                id="account-bookings-panel-active"
+                role="tabpanel"
+                data-panel="active"
+              >
+                <div class="account-bookings__empty">
+                  <p class="account-bookings__empty-title">Активных бронирований нет</p>
+                  <p class="account-bookings__empty-text">Оформите новое бронирование на сайте</p>
+                </div>
+              </div>
+
+              <div
+                class="account-bookings__panel"
+                id="account-bookings-panel-completed"
+                role="tabpanel"
+                data-panel="completed"
+                hidden
+              >
+                <div class="account-bookings__empty">
+                  <p class="account-bookings__empty-title">Завершённых бронирований нет</p>
+                  <p class="account-bookings__empty-text">Здесь появятся прошлые заезды</p>
+                </div>
+              </div>
+
+              <div
+                class="account-bookings__panel"
+                id="account-bookings-panel-cancelled"
+                role="tabpanel"
+                data-panel="cancelled"
+                hidden
+              >
+                <div class="account-bookings__empty">
+                  <p class="account-bookings__empty-title">Отменённых бронирований нет</p>
+                  <p class="account-bookings__empty-text">У вас пока не было отменённых бронирований</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

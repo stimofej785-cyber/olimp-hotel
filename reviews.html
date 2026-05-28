@@ -1,0 +1,340 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Отзывы — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="reviews-hero" aria-labelledby="reviews-hero-title">
+      <div class="reviews-hero__inner">
+        <h1 class="reviews-hero__title" id="reviews-hero-title">
+          <span>Гостиница «Олимп» -</span>
+          <span>«Отзывы»</span>
+        </h1>
+        <p class="reviews-hero__text">
+          Мы гордимся каждым отзывом - они помогают нам становиться лучше каждый
+          день
+        </p>
+
+        <article class="reviews-summary__card" data-reviews-summary aria-label="Сводка отзывов">
+          <div class="reviews-summary__col reviews-summary__col--rating">
+            <p class="reviews-summary__score">—</p>
+            <div class="reviews-summary__stars" aria-hidden="true">
+              <img class="reviews-summary__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews-summary__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews-summary__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews-summary__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <span class="reviews-summary__star-half">
+                <img class="reviews-summary__star reviews-summary__star--ghost" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+                <span class="reviews-summary__star-half-fill">
+                  <img class="reviews-summary__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+                </span>
+              </span>
+            </div>
+            <p class="reviews-summary__caption">Средняя оценка</p>
+          </div>
+
+          <div class="reviews-summary__divider" aria-hidden="true">
+            <img
+              class="reviews-summary__stick"
+              src="assets/images/review-stick.svg"
+              alt=""
+              width="1"
+              height="150"
+              decoding="async"
+            />
+          </div>
+
+          <div class="reviews-summary__col reviews-summary__col--bars">
+            <ul class="reviews-summary__bars">
+              <li class="reviews-summary__bar-row">
+                <span class="reviews-summary__bar-label">5</span>
+                <img class="reviews-summary__bar-star" src="assets/images/rooms/main-star.svg" alt="" width="16" height="15" decoding="async" />
+                <div class="reviews-summary__bar-track">
+                  <span class="reviews-summary__bar-fill" style="width: 0%"></span>
+                </div>
+                <span class="reviews-summary__bar-count">0</span>
+              </li>
+              <li class="reviews-summary__bar-row">
+                <span class="reviews-summary__bar-label">4</span>
+                <img class="reviews-summary__bar-star" src="assets/images/rooms/main-star.svg" alt="" width="16" height="15" decoding="async" />
+                <div class="reviews-summary__bar-track">
+                  <span class="reviews-summary__bar-fill" style="width: 0%"></span>
+                </div>
+                <span class="reviews-summary__bar-count">0</span>
+              </li>
+              <li class="reviews-summary__bar-row">
+                <span class="reviews-summary__bar-label">3</span>
+                <img class="reviews-summary__bar-star" src="assets/images/rooms/main-star.svg" alt="" width="16" height="15" decoding="async" />
+                <div class="reviews-summary__bar-track">
+                  <span class="reviews-summary__bar-fill" style="width: 0%"></span>
+                </div>
+                <span class="reviews-summary__bar-count">0</span>
+              </li>
+              <li class="reviews-summary__bar-row">
+                <span class="reviews-summary__bar-label">2</span>
+                <img class="reviews-summary__bar-star" src="assets/images/rooms/main-star.svg" alt="" width="16" height="15" decoding="async" />
+                <div class="reviews-summary__bar-track">
+                  <span class="reviews-summary__bar-fill" style="width: 0%"></span>
+                </div>
+                <span class="reviews-summary__bar-count">0</span>
+              </li>
+              <li class="reviews-summary__bar-row">
+                <span class="reviews-summary__bar-label">1</span>
+                <img class="reviews-summary__bar-star" src="assets/images/rooms/main-star.svg" alt="" width="16" height="15" decoding="async" />
+                <div class="reviews-summary__bar-track">
+                  <span class="reviews-summary__bar-fill" style="width: 0%"></span>
+                </div>
+                <span class="reviews-summary__bar-count">0</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="reviews-summary__divider" aria-hidden="true">
+            <img
+              class="reviews-summary__stick"
+              src="assets/images/review-stick.svg"
+              alt=""
+              width="1"
+              height="150"
+              decoding="async"
+            />
+          </div>
+
+          <div class="reviews-summary__col reviews-summary__col--totals">
+            <div class="reviews-summary__total">
+              <p class="reviews-summary__total-value" data-reviews-total-count>—</p>
+              <p class="reviews-summary__total-label">Всего отзывов</p>
+            </div>
+            <div class="reviews-summary__total">
+              <p class="reviews-summary__total-value reviews-summary__total-value--accent" data-reviews-recommend>—</p>
+              <p class="reviews-summary__total-label">Рекомендуют нас</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="reviews-list" aria-labelledby="reviews-list-title">
+      <div class="reviews-list__inner">
+        <h2 class="reviews-list__title" id="reviews-list-title">Отзывы клиентов</h2>
+
+        <div class="reviews-list__items" data-reviews-list>
+          <p class="reviews-list__loading">Загрузка отзывов…</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews-form" aria-labelledby="reviews-form-title">
+      <div class="reviews-form__inner">
+        <header class="reviews-form__header">
+          <h2 class="reviews-form__title" id="reviews-form-title">Оставьте отзыв</h2>
+          <p class="reviews-form__subtitle">Поделитесь опытом с другими гостями</p>
+        </header>
+
+        <div class="reviews-form__layout">
+          <div class="reviews-form__card reviews-form__card--form">
+            <h3 class="reviews-form__card-title">Ваш отзыв</h3>
+
+            <div
+              class="reviews-form__stars"
+              role="group"
+              aria-label="Ваша оценка"
+              data-reviews-stars
+              data-star-filled="assets/images/rooms/main-star.svg"
+              data-star-empty="assets/images/review-star-grey.svg"
+            >
+              <button class="reviews-form__star-btn" type="button" data-rating="1" aria-label="1 звезда" aria-pressed="false">
+                <img class="reviews-form__star" src="assets/images/review-star-grey.svg" alt="" width="25" height="24" decoding="async" />
+              </button>
+              <button class="reviews-form__star-btn" type="button" data-rating="2" aria-label="2 звезды" aria-pressed="false">
+                <img class="reviews-form__star" src="assets/images/review-star-grey.svg" alt="" width="25" height="24" decoding="async" />
+              </button>
+              <button class="reviews-form__star-btn" type="button" data-rating="3" aria-label="3 звезды" aria-pressed="false">
+                <img class="reviews-form__star" src="assets/images/review-star-grey.svg" alt="" width="25" height="24" decoding="async" />
+              </button>
+              <button class="reviews-form__star-btn" type="button" data-rating="4" aria-label="4 звезды" aria-pressed="false">
+                <img class="reviews-form__star" src="assets/images/review-star-grey.svg" alt="" width="25" height="24" decoding="async" />
+              </button>
+              <button class="reviews-form__star-btn" type="button" data-rating="5" aria-label="5 звёзд" aria-pressed="false">
+                <img class="reviews-form__star" src="assets/images/review-star-grey.svg" alt="" width="25" height="24" decoding="async" />
+              </button>
+            </div>
+
+            <form class="reviews-form__form" action="#" method="post">
+              <input type="hidden" name="rating" id="review-rating" value="" required />
+              <div class="reviews-form__field">
+                <label class="reviews-form__label" for="review-name">Ваше имя:</label>
+                <input
+                  class="reviews-form__control"
+                  id="review-name"
+                  name="name"
+                  type="text"
+                  placeholder="Иван Иванов"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+
+              <div class="reviews-form__field reviews-form__field--message">
+                <label class="reviews-form__label" for="review-message">Сообщение:</label>
+                <textarea
+                  class="reviews-form__control reviews-form__textarea"
+                  id="review-message"
+                  name="message"
+                  placeholder="Опишите своё пребывание..."
+                  required
+                ></textarea>
+              </div>
+
+              <button class="reviews-form__submit" type="submit">Написать отзыв</button>
+            </form>
+          </div>
+
+          <aside class="reviews-form__card reviews-form__card--tips" aria-label="Советы по отзыву">
+            <h3 class="reviews-form__tips-title">Советы по отзыву</h3>
+            <ul class="reviews-form__tips-list">
+              <li class="reviews-form__tips-item">Опишите, что понравилось больше всего</li>
+              <li class="reviews-form__tips-item">Отметьте уровень сервиса и чистоты</li>
+              <li class="reviews-form__tips-item">Укажите тип номера и цель поездки</li>
+              <li class="reviews-form__tips-item">Отзыв появится после проверки</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews-booking booking-cta" aria-labelledby="reviews-booking-title">
+      <div class="booking-cta__inner">
+        <div class="booking-cta__card">
+          <h2 class="booking-cta__title" id="reviews-booking-title">Забронируйте номер прямо сейчас</h2>
+          <p class="booking-cta__text">Выберите удобные даты и получите подтверждение за несколько минут</p>
+          <a class="booking-cta__btn" href="booking.html#available-rooms">Перейти к бронированию</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

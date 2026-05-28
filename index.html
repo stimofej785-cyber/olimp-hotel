@@ -1,0 +1,608 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__layers" aria-hidden="true">
+        <div class="hero__blur">
+          <img
+            class="hero__blur-img"
+            src="assets/images/hero-bg.png"
+            alt=""
+            width="1920"
+            height="900"
+            decoding="async"
+          />
+        </div>
+        <div class="hero__scrim"></div>
+      </div>
+
+      <div class="hero__inner">
+        <div class="hero__content">
+          <div class="hero__intro">
+            <ul class="hero__stars" aria-label="Категория отеля — 3 звезды">
+              <li class="hero__star" aria-hidden="true">
+                <svg class="hero__star-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.5781 3.45801C17.7746 3.14926 18.2254 3.14926 18.4219 3.45801L22.415 9.73633C22.8915 10.4854 23.6355 11.0254 24.4951 11.2471L31.7002 13.1055C32.0541 13.1971 32.1934 13.6251 31.9609 13.9072L27.2236 19.6455C26.6585 20.33 26.3749 21.2039 26.4297 22.0898L26.8887 29.5166C26.9113 29.882 26.5465 30.1471 26.2061 30.0127L19.2852 27.2803C18.4595 26.9544 17.5405 26.9544 16.7148 27.2803L9.79395 30.0127C9.45346 30.1471 9.08872 29.882 9.11133 29.5166L9.57031 22.0898C9.62509 21.2039 9.34147 20.33 8.77637 19.6455L4.03906 13.9072C3.80659 13.6251 3.94587 13.1971 4.2998 13.1055L11.5049 11.2471C12.3645 11.0254 13.1085 10.4854 13.585 9.73633L17.5781 3.45801Z"
+                    stroke="#FFFFFF"
+                    stroke-width="3"
+                  />
+                </svg>
+              </li>
+              <li class="hero__star" aria-hidden="true">
+                <svg class="hero__star-icon hero__star-icon--alt" width="35" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.5781 3.45801C17.7746 3.14926 18.2254 3.14926 18.4219 3.45801L22.415 9.73633C22.8915 10.4854 23.6355 11.0254 24.4951 11.2471L31.7002 13.1055C32.0541 13.1971 32.1934 13.6251 31.9609 13.9072L27.2236 19.6455C26.6585 20.33 26.3749 21.2039 26.4297 22.0898L26.8887 29.5166C26.9113 29.882 26.5465 30.1471 26.2061 30.0127L19.2852 27.2803C18.4595 26.9544 17.5405 26.9544 16.7148 27.2803L9.79395 30.0127C9.45346 30.1471 9.08872 29.882 9.11133 29.5166L9.57031 22.0898C9.62509 21.2039 9.34147 20.33 8.77637 19.6455L4.03906 13.9072C3.80659 13.6251 3.94587 13.1971 4.2998 13.1055L11.5049 11.2471C12.3645 11.0254 13.1085 10.4854 13.585 9.73633L17.5781 3.45801Z"
+                    stroke="#FFFFFF"
+                    stroke-width="3"
+                  />
+                </svg>
+              </li>
+              <li class="hero__star" aria-hidden="true">
+                <svg class="hero__star-icon" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.5781 3.45801C17.7746 3.14926 18.2254 3.14926 18.4219 3.45801L22.415 9.73633C22.8915 10.4854 23.6355 11.0254 24.4951 11.2471L31.7002 13.1055C32.0541 13.1971 32.1934 13.6251 31.9609 13.9072L27.2236 19.6455C26.6585 20.33 26.3749 21.2039 26.4297 22.0898L26.8887 29.5166C26.9113 29.882 26.5465 30.1471 26.2061 30.0127L19.2852 27.2803C18.4595 26.9544 17.5405 26.9544 16.7148 27.2803L9.79395 30.0127C9.45346 30.1471 9.08872 29.882 9.11133 29.5166L9.57031 22.0898C9.62509 21.2039 9.34147 20.33 8.77637 19.6455L4.03906 13.9072C3.80659 13.6251 3.94587 13.1971 4.2998 13.1055L11.5049 11.2471C12.3645 11.0254 13.1085 10.4854 13.585 9.73633L17.5781 3.45801Z"
+                    stroke="#FFFFFF"
+                    stroke-width="3"
+                  />
+                </svg>
+              </li>
+            </ul>
+
+            <div class="hero__titles">
+              <h1 class="hero__title" id="hero-title">Гостиница «Олимп»</h1>
+              <p class="hero__subtitle">— отдых с заботой о вас</p>
+            </div>
+
+            <p class="hero__lead">
+              Гостиница «Олимп» — комфортное и уютное пространство для отдыха, и размещения гостей
+            </p>
+          </div>
+
+          <div class="hero__actions">
+            <a class="hero__btn hero__btn--primary" href="rooms.html">Выбрать номер</a>
+            <a class="hero__btn hero__btn--ghost" href="about.html">Узнать больше</a>
+          </div>
+        </div>
+
+        <aside class="hero__booking" aria-labelledby="hero-booking-title">
+          <h2 class="hero__booking-title" id="hero-booking-title">Форма бронирования</h2>
+
+          <form class="hero__form" action="booking.html" method="get" novalidate data-stay-range>
+            <div class="hero__fields">
+              <div class="hero__field">
+                <label class="hero__label" for="hero-checkin">Дата заезда</label>
+                <div class="hero__control hero__control--date">
+                  <input
+                    class="hero__input hero__input--date"
+                    id="hero-checkin"
+                    name="checkin"
+                    type="date"
+                    data-stay-range="checkin"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="hero__field">
+                <label class="hero__label" for="hero-checkout">Дата выезда</label>
+                <div class="hero__control hero__control--date">
+                  <input
+                    class="hero__input hero__input--date"
+                    id="hero-checkout"
+                    name="checkout"
+                    type="date"
+                    data-stay-range="checkout"
+                    autocomplete="off"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="hero__field">
+                <label class="hero__label" for="hero-guests">Количество гостей</label>
+                <div class="hero__control hero__control--select">
+                  <select class="hero__select" id="hero-guests" name="guests">
+                    <option value="1" selected>1 гость</option>
+                    <option value="2">2 гостя</option>
+                  </select>
+                  <span class="hero__select-chevron" aria-hidden="true">
+                    <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M3.5 5L8.5 10.5L13.5 5"
+                        stroke="#3A5C2B"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <button class="hero__submit" type="submit">найти номер</button>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Цифры о нас">
+      <div class="stats__inner">
+        <div class="stats__card">
+          <span class="stats__value">15</span>
+          <span class="stats__label">Комфортных номеров</span>
+        </div>
+        <div class="stats__card">
+          <span class="stats__value">5000+</span>
+          <span class="stats__label">Довольных гостей</span>
+        </div>
+        <div class="stats__card">
+          <span class="stats__value">20</span>
+          <span class="stats__label">Лет опыта</span>
+        </div>
+        <div class="stats__card">
+          <span class="stats__value">24</span>
+          <span class="stats__label">Часа поддержки</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="about" aria-labelledby="about-title">
+      <div class="about__inner">
+        <div class="about__content">
+          <h2 class="about__title" id="about-title">О гостинице</h2>
+          <p class="about__text">
+            Современное пространство для комфортного проживания гостей города,
+            сочетающее уют, удобство и развитую инфраструктуру. Мы создали место,
+            где каждый гость чувствует себя как дома. Расположенная на территории
+            ФСК «Олимп», наша гостиница предлагает уникальное сочетание
+            комфортного размещения и доступа к спортивным объектам.
+          </p>
+          <a class="about__btn" href="about.html">Подробнее о нас</a>
+        </div>
+        <div class="about__media">
+          <img
+            class="about__photo"
+            src="assets/images/about-hotel.svg"
+            alt="Гостиница Олимп — вид снаружи"
+            width="824"
+            height="352"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="advantages" aria-labelledby="advantages-title">
+      <div class="advantages__inner">
+        <h2 class="advantages__title" id="advantages-title">Преимущества</h2>
+        <ul class="advantages__grid">
+          <li class="advantages__card">
+            <div class="advantages__icon-wrap">
+              <img class="advantages__icon" src="assets/images/advantages-icon-bed.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="advantages__card-title">Комфортные номера</h3>
+            <p class="advantages__card-text">Номера разных категорий для любых целей поездки</p>
+          </li>
+          <li class="advantages__card">
+            <div class="advantages__icon-wrap">
+              <img class="advantages__icon" src="assets/images/advantages-icon-gym.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="advantages__card-title">Спорткомплекс</h3>
+            <p class="advantages__card-text">Размещение на территории ФОК «Олимп»</p>
+          </li>
+          <li class="advantages__card">
+            <div class="advantages__icon-wrap">
+              <img class="advantages__icon" src="assets/images/advantages-icon-parking.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="advantages__card-title">Бесплатная парковка</h3>
+            <p class="advantages__card-text">Просторная и доступная для гостей гостиницы парковка</p>
+          </li>
+          <li class="advantages__card">
+            <div class="advantages__icon-wrap">
+              <img class="advantages__icon" src="assets/images/advantages-icon-wifi.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="advantages__card-title">Wi-Fi по всей территории</h3>
+            <p class="advantages__card-text">Высокоскоростной интернет во всех номерах и общественных зонах</p>
+          </li>
+          <li class="advantages__card">
+            <div class="advantages__icon-wrap">
+              <img class="advantages__icon" src="assets/images/advantages-icon-breakfast.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="advantages__card-title">Завтрак</h3>
+            <p class="advantages__card-text">Полноценный сытный завтрак каждое утро</p>
+          </li>
+          <li class="advantages__card">
+            <div class="advantages__icon-wrap">
+              <img class="advantages__icon" src="assets/images/advantages-icon-location.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="advantages__card-title">Удобное расположение</h3>
+            <p class="advantages__card-text">В 5-ти минутах ходьбы от центра города, рядом с живописным парком</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rooms" aria-labelledby="rooms-title">
+      <div class="rooms__inner">
+        <h2 class="rooms__title" id="rooms-title">Наши номера</h2>
+
+        <div class="rooms__grid">
+          <article class="rooms__card">
+            <img
+              class="rooms__photo"
+              src="assets/images/rooms/room-standard-single.svg"
+              alt="Одноместный стандарт 1 категории"
+              width="470"
+              height="300"
+              decoding="async"
+            />
+            <div class="rooms__body">
+              <h3 class="rooms__card-title">Одноместный стандарт 1 категории</h3>
+              <ul class="rooms__features">
+                <li>15.9 кв.м</li>
+                <li>однокомнатный номер</li>
+                <li>односпальная кровать</li>
+              </ul>
+              <p class="rooms__price">от 2400 руб. / ночь</p>
+              <a class="rooms__btn" href="room-detail.html">Подробнее</a>
+            </div>
+          </article>
+
+          <article class="rooms__card">
+            <img
+              class="rooms__photo"
+              src="assets/images/rooms/room-improved-single.svg"
+              alt="Улучшенный одноместный стандарт 1 категории"
+              width="470"
+              height="300"
+              decoding="async"
+            />
+            <div class="rooms__body">
+              <h3 class="rooms__card-title">Улучшенный одноместный стандарт 1 категории</h3>
+              <ul class="rooms__features">
+                <li>19 кв.м</li>
+                <li>однокомнатный номер</li>
+                <li>двуспальная кровать</li>
+              </ul>
+              <p class="rooms__price">от 3400 руб. / ночь</p>
+              <a class="rooms__btn" href="room-improved-single.html">Подробнее</a>
+            </div>
+          </article>
+
+          <article class="rooms__card">
+            <img
+              class="rooms__photo"
+              src="assets/images/rooms/room-double.svg"
+              alt="Двухместный улучшенный стандарт"
+              width="470"
+              height="300"
+              decoding="async"
+            />
+            <div class="rooms__body">
+              <h3 class="rooms__card-title">Двухместный улучшенный стандарт</h3>
+              <ul class="rooms__features">
+                <li>18.1 кв.м</li>
+                <li>однокомнатный номер</li>
+                <li>две односпальные кровати</li>
+              </ul>
+              <p class="rooms__price">от 3600 руб. / ночь</p>
+              <a class="rooms__btn" href="room-improved-double.html">Подробнее</a>
+            </div>
+          </article>
+        </div>
+
+        <a class="rooms__more" href="rooms.html">Больше номеров</a>
+      </div>
+    </section>
+
+    <section class="contacts" aria-labelledby="contacts-title">
+      <div class="contacts__inner">
+        <div class="contacts__heading">
+          <h2 class="contacts__title" id="contacts-title">Контакты</h2>
+          <p class="contacts__subtitle">Свяжитесь с нами, мы всегда рады помочь</p>
+        </div>
+
+        <div class="contacts__grid">
+          <article class="contacts__card">
+            <div class="contacts__icon-wrap">
+              <img class="contacts__icon" src="assets/images/advantages-icon-location.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="contacts__card-title">Наш адрес:</h3>
+            <p class="contacts__card-text">г. Советский, ул.Юности, 12</p>
+          </article>
+
+          <article class="contacts__card">
+            <div class="contacts__icon-wrap">
+              <img class="contacts__icon" src="assets/images/contact-icon-phone.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="contacts__card-title">Телефон:</h3>
+            <p class="contacts__card-text">8 (34675) 3-62-67</p>
+          </article>
+
+          <article class="contacts__card">
+            <div class="contacts__icon-wrap">
+              <img class="contacts__icon" src="assets/images/contact-icon-email.svg" alt="" width="24" height="24" decoding="async" />
+            </div>
+            <h3 class="contacts__card-title">Электронная почта:</h3>
+            <p class="contacts__card-text">mail@olimp-sov.ru</p>
+          </article>
+        </div>
+
+        <div class="contacts__actions">
+          <a class="contacts__btn contacts__btn--primary" href="contacts.html">Как добраться</a>
+          <a class="contacts__btn contacts__btn--ghost" href="contacts.html#contacts-form">Написать</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="reviews" aria-labelledby="reviews-title">
+      <div class="reviews__inner">
+        <div class="reviews__heading">
+          <h2 class="reviews__title" id="reviews-title">Отзывы</h2>
+          <p class="reviews__subtitle">Что наши гости говорят о нас</p>
+        </div>
+
+        <div class="reviews__grid">
+          <article class="reviews__card">
+            <div class="reviews__stars" aria-label="Оценка 5 из 5">
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+            </div>
+            <p class="reviews__text">
+              Останавливались в гостинице «Олимп» на выходные - остались очень довольны.
+              Номер чистый и уютный, всё продумано до мелочей. Персонал вежливый и
+              отзывчивый, всегда готов помочь. Отличное место!
+            </p>
+            <div class="reviews__divider"></div>
+            <h3 class="reviews__author">Алексей Иванов</h3>
+            <time class="reviews__date" datetime="2025-12-12">12.12.2025</time>
+          </article>
+
+          <article class="reviews__card">
+            <div class="reviews__stars" aria-label="Оценка 5 из 5">
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+            </div>
+            <p class="reviews__text">
+              Прекрасная гостиница! Удобное расположение, тихая атмосфера и современные
+              номера. Особенно порадовал быстрый Wi-Fi и чистота в номере. Чувствуется
+              забота о гостях. Обязательно вернусь ещё раз.
+            </p>
+            <div class="reviews__divider"></div>
+            <h3 class="reviews__author">Ольга Смирнова</h3>
+            <time class="reviews__date" datetime="2025-12-19">19.12.2025</time>
+          </article>
+
+          <article class="reviews__card">
+            <div class="reviews__stars" aria-label="Оценка 5 из 5">
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+              <img class="reviews__star" src="assets/images/rooms/main-star.svg" alt="" width="25" height="24" decoding="async" />
+            </div>
+            <p class="reviews__text">
+              Отдыхали в данной гостинице и впечатления только положительные. Заселение
+              прошло быстро, номер полностью соответствовал описанию. Очень уютно и
+              спокойно для отдыха после дороги.
+            </p>
+            <div class="reviews__divider"></div>
+            <h3 class="reviews__author">Мария Кузнецова</h3>
+            <time class="reviews__date" datetime="2026-01-12">12.01.2026</time>
+          </article>
+        </div>
+
+        <a class="reviews__btn" href="reviews.html">Оставить отзыв</a>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="faq-title">
+      <div class="faq__inner">
+        <h2 class="faq__title" id="faq-title">Часто задаваемые вопросы</h2>
+
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary class="faq__question">
+              <span>Когда заезд и выезд?</span>
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>Заезд в гостиницу осуществляется с 14:00 до 15:00. Выезд — с 11:00 до 12:00. При необходимости раннего заезда или позднего выезда уточните возможность заранее у администратора.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">
+              <span>Как отменить бронирование?</span>
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>Отменить бронирование можно по телефону гостиницы или через личный кабинет на сайте. Рекомендуем сообщать об отмене заранее, чтобы администратор успел обновить доступность номера.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">
+              <span>Какие документы нужны при заселении?</span>
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>Для заселения необходим паспорт. Для детей потребуется свидетельство о рождении или документ, удостоверяющий личность сопровождающего.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">
+              <span>Можно ли заселиться с животными?</span>
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>Размещение с животными возможно только по предварительному согласованию с администрацией. Условия зависят от категории номера и размера питомца.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">
+              <span>Какие способы оплаты принимаются?</span>
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>К оплате принимаются наличные и банковские карты. Возможность безналичной оплаты для организаций можно уточнить при бронировании.</p>
+            </div>
+          </details>
+          <details class="faq__item">
+            <summary class="faq__question">
+              <span>Есть ли бесплатная парковка?</span>
+              <span class="faq__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__answer">
+              <p>Да, для гостей гостиницы предусмотрена бесплатная просторная и доступная парковка.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking-cta" aria-labelledby="booking-cta-title">
+      <div class="booking-cta__inner">
+        <div class="booking-cta__card">
+          <h2 class="booking-cta__title" id="booking-cta-title">Забронируйте номер прямо сейчас</h2>
+          <p class="booking-cta__text">Выберите удобные даты и получите подтверждение за несколько минут</p>
+          <a class="booking-cta__btn" href="booking.html">Перейти к бронированию</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

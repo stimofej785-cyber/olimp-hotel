@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Номера — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="rooms-hero" aria-labelledby="rooms-hero-title">
+      <div class="rooms-hero__inner">
+        <h1 class="rooms-hero__title" id="rooms-hero-title">
+          <span>Гостиница «Олимп» -</span>
+          <span>«Номера»</span>
+        </h1>
+        <p class="rooms-hero__text">
+          Комфортные номера разных категорий — от уютного стандарта до
+          просторного люкса
+        </p>
+      </div>
+    </section>
+
+    <section class="rooms-search" aria-labelledby="rooms-search-title">
+      <div class="rooms-search__inner">
+        <h2 class="rooms-search__title" id="rooms-search-title">Найдите подходящий номер</h2>
+
+        <form class="rooms-search__form" action="booking.html" method="get" data-stay-range>
+          <div class="rooms-search__fields">
+            <label class="rooms-search__field">
+              <span class="rooms-search__label">Дата заезда</span>
+              <input class="rooms-search__control" type="date" name="check-in" data-stay-range="checkin" autocomplete="off" />
+            </label>
+
+            <label class="rooms-search__field">
+              <span class="rooms-search__label">Дата выезда</span>
+              <input class="rooms-search__control" type="date" name="check-out" data-stay-range="checkout" autocomplete="off" />
+            </label>
+
+            <label class="rooms-search__field">
+              <span class="rooms-search__label">Количество гостей</span>
+              <span class="rooms-search__select-wrap">
+                <select class="rooms-search__control rooms-search__select" name="guests">
+                  <option value="1">1 гость</option>
+                  <option value="2">2 гостя</option>
+                </select>
+              </span>
+            </label>
+          </div>
+
+          <button class="rooms-search__submit" type="submit">
+            Показать доступные номера
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section class="rooms-catalog" aria-labelledby="rooms-catalog-title">
+      <div class="rooms-catalog__inner">
+        <div class="rooms-catalog__header">
+          <h2 class="rooms-catalog__title" id="rooms-catalog-title">Наши номера</h2>
+          <p class="rooms-catalog__lead">
+            Каждый номер оборудован всем необходимым для комфортного проживания
+          </p>
+        </div>
+
+        <div class="rooms-catalog__list">
+          <article class="rooms-catalog__card">
+            <div class="rooms-catalog__media">
+              <img
+                class="rooms-catalog__photo"
+                src="assets/images/rooms/room-standard-single 1.svg"
+                alt="Одноместный стандарт 1 категории"
+                width="568"
+                height="304"
+                decoding="async"
+              />
+            </div>
+            <div class="rooms-catalog__content">
+              <p class="rooms-catalog__type">Тип размещения: одноместный</p>
+              <h3 class="rooms-catalog__card-title">Одноместный стандарт 1 категории</h3>
+              <p class="rooms-catalog__description">
+                Описание номера: однокомнатный номер, односпальная кровать,
+                санузел с душем.
+              </p>
+              <p class="rooms-catalog__area">
+                <img class="rooms-catalog__area-icon" src="assets/images/rooms/Home-Icon.svg" alt="" width="18" height="18" aria-hidden="true" />
+                <span>Площадь: от 15,9 кв.м.</span>
+              </p>
+              <p class="rooms-catalog__price">от 2400 руб. / ночь</p>
+            </div>
+            <a class="rooms-catalog__btn" href="room-detail.html">Узнать больше</a>
+          </article>
+
+          <article class="rooms-catalog__card">
+            <div class="rooms-catalog__media">
+              <img
+                class="rooms-catalog__photo"
+                src="assets/images/rooms/room-improved-single 1.svg"
+                alt="Улучшенный одноместный стандарт 1 категории"
+                width="568"
+                height="304"
+                decoding="async"
+              />
+            </div>
+            <div class="rooms-catalog__content">
+              <p class="rooms-catalog__type">Тип размещения: одноместный</p>
+              <h3 class="rooms-catalog__card-title">Улучшенный одноместный стандарт 1 категории</h3>
+              <p class="rooms-catalog__description">
+                Описание номера: однокомнатный номер, двуспальная кровать,
+                санузел с душем.
+              </p>
+              <p class="rooms-catalog__area">
+                <img class="rooms-catalog__area-icon" src="assets/images/rooms/Home-Icon.svg" alt="" width="18" height="18" aria-hidden="true" />
+                <span>Площадь: от 19 кв.м.</span>
+              </p>
+              <p class="rooms-catalog__price">от 3400 руб. / ночь</p>
+            </div>
+            <a class="rooms-catalog__btn" href="room-improved-single.html">Узнать больше</a>
+          </article>
+
+          <article class="rooms-catalog__card">
+            <div class="rooms-catalog__media">
+              <img
+                class="rooms-catalog__photo"
+                src="assets/images/rooms/room-double-improved 1.svg"
+                alt="Двухместный улучшенный стандарт"
+                width="568"
+                height="304"
+                decoding="async"
+              />
+            </div>
+            <div class="rooms-catalog__content">
+              <p class="rooms-catalog__type">Тип размещения: двухместный</p>
+              <h3 class="rooms-catalog__card-title">Двухместный улучшенный стандарт</h3>
+              <p class="rooms-catalog__description">
+                Описание номера: однокомнатный номер, две односпальные кровати,
+                санузел с душем.
+              </p>
+              <p class="rooms-catalog__area">
+                <img class="rooms-catalog__area-icon" src="assets/images/rooms/Home-Icon.svg" alt="" width="18" height="18" aria-hidden="true" />
+                <span>Площадь: от 18.1 кв.м.</span>
+              </p>
+              <p class="rooms-catalog__price">от 3600 руб. / ночь</p>
+            </div>
+            <a class="rooms-catalog__btn" href="room-improved-double.html">Узнать больше</a>
+          </article>
+
+          <article class="rooms-catalog__card">
+            <div class="rooms-catalog__media">
+              <img
+                class="rooms-catalog__photo"
+                src="assets/images/rooms/room-luxe-single 1.svg"
+                alt="Люкс одноместный"
+                width="568"
+                height="304"
+                decoding="async"
+              />
+            </div>
+            <div class="rooms-catalog__content">
+              <p class="rooms-catalog__type">Тип размещения: одноместный</p>
+              <h3 class="rooms-catalog__card-title">Люкс одноместный</h3>
+              <p class="rooms-catalog__description">
+                Описание номера: двухкомнатный номер, двуспальная кровать,
+                санузел с душем, санузел с ванной
+              </p>
+              <p class="rooms-catalog__area">
+                <img class="rooms-catalog__area-icon" src="assets/images/rooms/Home-Icon.svg" alt="" width="18" height="18" aria-hidden="true" />
+                <span>Площадь: от 63.7 кв.м.</span>
+              </p>
+              <p class="rooms-catalog__price">от 5000 руб. / ночь</p>
+            </div>
+            <a class="rooms-catalog__btn" href="room-luxe-single.html">Узнать больше</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rooms-comfort" aria-labelledby="rooms-comfort-title">
+      <div class="rooms-comfort__inner">
+        <div class="rooms-comfort__header">
+          <h2 class="rooms-comfort__title" id="rooms-comfort-title">Удобство в номерах</h2>
+          <p class="rooms-comfort__lead">
+            Всё необходимое для комфортного проживания уже включено
+          </p>
+        </div>
+
+        <div class="rooms-comfort__grid" aria-label="Удобства в номерах">
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/advantages-icon-wifi.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Wi-Fi</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/rooms-icon-TV.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Телевизор</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/rooms-icon-fridge.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Холодильник</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/contact-icon-phone.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Телефон</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/rooms-icon-soup.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Набор банных принадлежностей</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/rooms-icon-towel.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Набор полотенец</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/rooms-icon-iron.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Гладильная комната</h3>
+          </article>
+
+          <article class="rooms-comfort__card">
+            <img class="rooms-comfort__icon" src="assets/images/rooms-icon-taxi.svg" alt="" width="50" height="50" aria-hidden="true" />
+            <h3 class="rooms-comfort__card-title">Вызов такси</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rooms-reservation" aria-labelledby="rooms-reservation-title">
+      <div class="rooms-reservation__card">
+        <div class="rooms-reservation__content">
+          <h2 class="rooms-reservation__title" id="rooms-reservation-title">
+            Готовы забронировать номер?
+          </h2>
+          <p class="rooms-reservation__text">
+            Свяжитесь с нами любым удобным способом, и мы поможем подобрать
+            идеальный номер для вашего отдыха
+          </p>
+          <div class="rooms-reservation__actions">
+            <a class="rooms-reservation__btn rooms-reservation__btn--primary" href="booking.html">
+              Забронировать онлайн
+            </a>
+            <a class="rooms-reservation__btn rooms-reservation__btn--ghost" href="contacts.html#contacts-form">
+              Позвонить нам
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

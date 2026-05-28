@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Админ-панель — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="page-admin">
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input type="checkbox" id="site-header-nav-toggle" class="site-header__nav-toggle" tabindex="-1" />
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img class="site-header__logo" src="assets/images/logo-olymp.svg" alt="Олимп" width="107" height="68" decoding="async" />
+      </a>
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="index.html">На сайт</a>
+        </div>
+      </div>
+      <label class="site-header__burger" for="site-header-nav-toggle" tabindex="0" aria-controls="site-header-menu">
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="admin-panel" data-admin-panel hidden aria-label="Панель управления">
+      <div class="admin-panel__inner">
+        <aside class="admin-sidebar" aria-label="Разделы админ-панели">
+          <div class="admin-sidebar__head">
+            <p class="admin-sidebar__title">Управление сайтом</p>
+            <p class="admin-sidebar__subtitle">Гостиница «Олимп»</p>
+          </div>
+          <nav class="admin-nav">
+            <button class="admin-nav__link admin-nav__link--active" type="button" data-admin-tab="overview">Обзор</button>
+            <button class="admin-nav__link" type="button" data-admin-tab="bookings">Бронирования</button>
+            <button class="admin-nav__link" type="button" data-admin-tab="rooms">Номера</button>
+            <button class="admin-nav__link" type="button" data-admin-tab="services">Услуги</button>
+            <button class="admin-nav__link" type="button" data-admin-tab="reviews">Отзывы</button>
+            <button class="admin-nav__link" type="button" data-admin-tab="users">Пользователи</button>
+            <button class="admin-nav__link" type="button" data-admin-tab="inquiries">Заявки</button>
+          </nav>
+          <button class="admin-nav__logout" type="button" data-admin-logout>Выйти</button>
+        </aside>
+
+        <div class="admin-main">
+          <section class="admin-section" data-admin-section="overview">
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Обзор</h2>
+              <p class="admin-section__lead">Сводка по ключевым разделам сайта</p>
+            </header>
+            <div class="admin-stats" data-admin-stats></div>
+          </section>
+
+          <section class="admin-section" data-admin-section="bookings" hidden>
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Бронирования</h2>
+              <div class="admin-section__filters">
+                <button class="admin-filter admin-filter--active" type="button" data-booking-filter="">Все</button>
+                <button class="admin-filter" type="button" data-booking-filter="pending">Новые</button>
+                <button class="admin-filter" type="button" data-booking-filter="confirmed">Подтверждены</button>
+                <button class="admin-filter" type="button" data-booking-filter="completed">Завершены</button>
+                <button class="admin-filter" type="button" data-booking-filter="cancelled">Отменены</button>
+              </div>
+            </header>
+            <div class="admin-list" data-admin-bookings></div>
+          </section>
+
+          <section class="admin-section" data-admin-section="rooms" hidden>
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Номера</h2>
+              <p class="admin-section__lead">Управление номерами на сайте</p>
+            </header>
+            <div class="admin-list" data-admin-rooms></div>
+          </section>
+
+          <section class="admin-section" data-admin-section="services" hidden>
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Услуги</h2>
+              <p class="admin-section__lead">Управление услугами на странице «Услуги»</p>
+            </header>
+            <div class="admin-list" data-admin-services></div>
+          </section>
+
+          <section class="admin-section" data-admin-section="reviews" hidden>
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Модерация отзывов</h2>
+              <div class="admin-section__filters">
+                <button class="admin-filter admin-filter--active" type="button" data-review-filter="">Все</button>
+                <button class="admin-filter" type="button" data-review-filter="pending">На модерации</button>
+                <button class="admin-filter" type="button" data-review-filter="approved">Опубликованы</button>
+                <button class="admin-filter" type="button" data-review-filter="rejected">Отклонены</button>
+              </div>
+            </header>
+            <div class="admin-list" data-admin-reviews></div>
+          </section>
+
+          <section class="admin-section" data-admin-section="users" hidden>
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Пользователи</h2>
+              <p class="admin-section__lead">Зарегистрированные пользователи сайта</p>
+            </header>
+            <div class="admin-list" data-admin-users></div>
+          </section>
+
+          <section class="admin-section" data-admin-section="inquiries" hidden>
+            <header class="admin-section__header">
+              <h2 class="admin-section__title">Заявки</h2>
+              <div class="admin-section__filters">
+                <button class="admin-filter admin-filter--active" type="button" data-inquiry-filter="">Все</button>
+                <button class="admin-filter" type="button" data-inquiry-filter="new">Новые</button>
+                <button class="admin-filter" type="button" data-inquiry-filter="in_progress">В обработке</button>
+                <button class="admin-filter" type="button" data-inquiry-filter="processed">Обработаны</button>
+              </div>
+            </header>
+            <div class="admin-list" data-admin-inquiries></div>
+          </section>
+        </div>
+      </div>
+
+      <p class="admin-toast" data-admin-toast hidden role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="admin-user-bookings-modal" hidden>
+    <div class="admin-modal__backdrop" data-admin-modal-close></div>
+    <div class="admin-modal__dialog" role="dialog" aria-labelledby="admin-user-bookings-title" aria-modal="true">
+      <header class="admin-modal__head">
+        <h3 class="admin-modal__title" id="admin-user-bookings-title">Бронирования пользователя</h3>
+        <button class="admin-modal__close" type="button" data-admin-modal-close aria-label="Закрыть">&times;</button>
+      </header>
+      <div class="admin-modal__body" data-admin-user-bookings></div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

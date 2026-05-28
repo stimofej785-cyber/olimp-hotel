@@ -1,0 +1,20 @@
+# Пример для Render.com (опционально)
+# https://render.com/docs/infrastructure-as-code
+
+services:
+  - type: web
+    name: olimp-hotel
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PASSWORD_RESET_EXPOSE_LINK
+        value: "0"
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: CORS_ORIGIN
+        sync: false

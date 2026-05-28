@@ -1,0 +1,454 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>О нас — Гостиница Олимп</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-header" role="banner">
+    <div class="site-header__inner">
+      <input
+        type="checkbox"
+        id="site-header-nav-toggle"
+        class="site-header__nav-toggle"
+        tabindex="-1"
+      />
+
+      <a class="site-header__brand" href="index.html" aria-label="Олимп — на главную">
+        <img
+          class="site-header__logo"
+          src="assets/images/logo-olymp.svg"
+          alt="Олимп"
+          width="107"
+          height="68"
+          decoding="async"
+        />
+      </a>
+
+      <div id="site-header-menu" class="site-header__drawer">
+        <nav class="site-header__nav" aria-label="Основная навигация">
+          <ul class="site-header__nav-list">
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="index.html">Главная</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="rooms.html">Номера</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="services.html">Услуги</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="about.html">О нас</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="contacts.html">Контакты</a></li>
+            <li class="site-header__nav-item"><a class="site-header__nav-link" href="reviews.html">Отзывы</a></li>
+          </ul>
+        </nav>
+
+        <div class="site-header__actions">
+          <a class="site-header__btn site-header__btn--primary" href="booking.html#available-rooms">Забронировать</a>
+          <a class="site-header__btn site-header__btn--ghost" href="login.html">Вход</a>
+        </div>
+      </div>
+
+      <label
+        class="site-header__burger"
+        for="site-header-nav-toggle"
+        tabindex="0"
+        aria-controls="site-header-menu"
+      >
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="site-header__burger-line" aria-hidden="true"></span>
+        <span class="visually-hidden">Открыть меню</span>
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-hero" aria-labelledby="about-hero-title">
+      <div class="about-hero__inner">
+        <h1 class="about-hero__title" id="about-hero-title">
+          <span>Гостиница «Олимп» -</span>
+          <span>«О нас»</span>
+        </h1>
+        <p class="about-hero__text">
+          20 лет создаём уют, тепло и комфорт для каждого гостя. Место, где вы
+          всегда желанны
+        </p>
+      </div>
+    </section>
+
+    <section class="about-location" aria-labelledby="about-location-title">
+      <div class="about-location__inner">
+        <div class="about-location__header">
+          <h2 class="about-location__title" id="about-location-title">
+            Расположение и инфраструктура
+          </h2>
+          <p class="about-location__lead">
+            Гостиница «Олимп» - в 5 минутах ходьбы от центра
+          </p>
+        </div>
+
+        <article class="about-location__card">
+          <div class="about-location__content">
+            <div class="about-location__text">
+              <p>
+                Гостиница «Олимп» расположена рядом с живописным парком.
+                Несмотря на расположение, шум города не омрачит ваш отдых.
+                Мы предлагаем 15 номеров разной категории и вместительности,
+                с возможностью организации дополнительного места. Максимальная
+                вместимость — 30 человек.
+              </p>
+              <p>
+                Рядом с гостиницей (в шаговой доступности) находятся банки,
+                образовательные учреждения, аллея, учреждение здравоохранения,
+                районный суд, а также городской парк культуры и отдыха.
+              </p>
+            </div>
+
+            <div class="about-location__distances">
+              <div class="about-location__distance">
+                <div class="about-location__distance-icon-wrap">
+                  <img
+                    class="about-location__distance-icon"
+                    src="assets/images/about-icon-railway.svg"
+                    alt=""
+                    width="24"
+                    height="24"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div class="about-location__distance-info">
+                  <span class="about-location__distance-name">Ж/д вокзал</span>
+                  <span class="about-location__distance-time">10 минут</span>
+                </div>
+              </div>
+
+              <div class="about-location__distance">
+                <div class="about-location__distance-icon-wrap">
+                  <img
+                    class="about-location__distance-icon"
+                    src="assets/images/about-icon-airport.svg"
+                    alt=""
+                    width="24"
+                    height="24"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div class="about-location__distance-info">
+                  <span class="about-location__distance-name">Аэропорт</span>
+                  <span class="about-location__distance-time">20 минут</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="about-location__places" aria-label="Объекты инфраструктуры рядом">
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-bank vtb.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">ВТБ</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-hospital.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Больница</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-school.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Гимназия</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-trial.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Районный суд</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-bank sberbank.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Сбербанк</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-alley.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Аллея</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-college.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Колледж</span>
+            </li>
+            <li class="about-location__place">
+              <img class="about-location__place-icon" src="assets/images/about-icon-park.svg" alt="" width="24" height="24" aria-hidden="true" />
+              <span class="about-location__place-name">Городской парк</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-who" aria-labelledby="about-who-title">
+      <div class="about-who__inner">
+        <h2 class="about-who__title" id="about-who-title">Кто мы такие</h2>
+
+        <div class="about-who__body">
+          <div class="about-who__content">
+            <div class="about-who__card">
+              <p>
+                Гостиница «Олимп» — это уютное и современное пространство для
+                проживания в самом сердце города Советский. На протяжении 20 лет
+                мы принимаем гостей, деловых путешественников и туристов,
+                создавая для них атмосферу тепла и домашнего комфорта.
+              </p>
+              <p>
+                Мы гордимся тем, что за годы работы стали любимым местом для
+                многих постоянных гостей. Наш персонал работает круглосуточно,
+                чтобы каждый визит был незабываемым.
+              </p>
+            </div>
+
+            <a class="about-who__btn" href="rooms.html">Смотреть номера</a>
+          </div>
+
+          <img
+            class="about-who__photo"
+            src="assets/images/rooms/about-who we are.svg"
+            alt="Гостиница «Олимп»"
+            width="640"
+            height="480"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="about-features" aria-labelledby="about-features-title">
+      <div class="about-features__inner">
+        <div class="about-features__header">
+          <h2 class="about-features__title" id="about-features-title">
+            Что нас отличает
+          </h2>
+          <p class="about-features__lead">
+            Мы строим отношения с нашими гостями на основе доверия, заботы и
+            профессионализма
+          </p>
+        </div>
+
+        <div class="about-features__grid" aria-label="Преимущества гостиницы">
+          <article class="about-features__card">
+            <p class="about-features__highlight">20+</p>
+            <h3 class="about-features__subtitle">Лет на рынке</h3>
+            <p class="about-features__text">
+              Работаем с 2005 года, постоянно совершенствуясь
+            </p>
+          </article>
+
+          <article class="about-features__card">
+            <p class="about-features__highlight">15</p>
+            <h3 class="about-features__subtitle">Номеров</h3>
+            <p class="about-features__text">
+              4 категории - стандарт, полулюкс, двухместный, люкс
+            </p>
+          </article>
+
+          <article class="about-features__card">
+            <p class="about-features__highlight">5000+</p>
+            <h3 class="about-features__subtitle">Довольных гостей</h3>
+            <p class="about-features__text">
+              Более 5000 гостей выбрали нас за эти годы
+            </p>
+          </article>
+
+          <article class="about-features__card">
+            <p class="about-features__highlight about-features__highlight--text">
+              Бесплатная парковка
+            </p>
+            <h3 class="about-features__subtitle">Просторная и доступная</h3>
+            <p class="about-features__text">
+              Парковка для гостей гостиницы на территории комплекса
+            </p>
+          </article>
+
+          <article class="about-features__card">
+            <p class="about-features__highlight">24/7</p>
+            <h3 class="about-features__subtitle">Работает стойка регистрации</h3>
+            <p class="about-features__text">
+              Всегда на связи и готовы помочь с выбором номера
+            </p>
+          </article>
+
+          <article class="about-features__card">
+            <p class="about-features__highlight about-features__highlight--text">
+              Завтрак
+            </p>
+            <h3 class="about-features__subtitle">Свежие завтраки</h3>
+            <p class="about-features__text">
+              Горячие, вкусные и сытные для гостей гостиницы
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-gallery" aria-labelledby="about-gallery-title">
+      <div class="about-gallery__inner">
+        <div class="about-gallery__header">
+          <h2 class="about-gallery__title" id="about-gallery-title">
+            Галерея пространств
+          </h2>
+          <p class="about-gallery__lead">
+            Загляните в нашу гостиницу ещё до приезда
+          </p>
+        </div>
+
+        <div class="about-gallery__layout" aria-label="Фотографии гостиницы">
+          <div class="about-gallery__viewer" aria-live="polite">
+            <img
+              class="about-gallery__main"
+              src="assets/images/rooms/about-gallery 1.svg"
+              alt=""
+              width="680"
+              height="360"
+              decoding="async"
+            />
+          </div>
+
+          <div class="about-gallery__grid">
+            <button
+              type="button"
+              class="about-gallery__thumb about-gallery__thumb--large is-active"
+              aria-label="Показать фото 1"
+              aria-pressed="true"
+            >
+              <img
+                class="about-gallery__photo"
+                src="assets/images/rooms/about-gallery 1.svg"
+                alt=""
+                width="680"
+                height="360"
+                decoding="async"
+              />
+            </button>
+            <button
+              type="button"
+              class="about-gallery__thumb about-gallery__thumb--large"
+              aria-label="Показать фото 2"
+              aria-pressed="false"
+            >
+              <img
+                class="about-gallery__photo"
+                src="assets/images/rooms/about-gallery 2.svg"
+                alt=""
+                width="680"
+                height="360"
+                decoding="async"
+              />
+            </button>
+            <button
+              type="button"
+              class="about-gallery__thumb about-gallery__thumb--small"
+              aria-label="Показать фото 3"
+              aria-pressed="false"
+            >
+              <img
+                class="about-gallery__photo"
+                src="assets/images/rooms/about-gallery 3.svg"
+                alt=""
+                width="440"
+                height="240"
+                decoding="async"
+              />
+            </button>
+            <button
+              type="button"
+              class="about-gallery__thumb about-gallery__thumb--small"
+              aria-label="Показать фото 4"
+              aria-pressed="false"
+            >
+              <img
+                class="about-gallery__photo"
+                src="assets/images/rooms/about-gallery 4.svg"
+                alt=""
+                width="440"
+                height="240"
+                decoding="async"
+              />
+            </button>
+            <button
+              type="button"
+              class="about-gallery__thumb about-gallery__thumb--small"
+              aria-label="Показать фото 5"
+              aria-pressed="false"
+            >
+              <img
+                class="about-gallery__photo"
+                src="assets/images/rooms/about-gallery 5.svg"
+                alt=""
+                width="440"
+                height="240"
+                decoding="async"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand-block">
+        <a class="site-footer__brand" href="index.html" aria-label="Олимп — на главную">
+          <img
+            class="site-footer__logo"
+            src="assets/images/logo-olymp.svg"
+            alt="Олимп"
+            width="107"
+            height="68"
+            decoding="async"
+          />
+        </a>
+        <p class="site-footer__text">
+          Гостиница «Олимп» - комфортное размещение в городе Советский.
+          Уютные номера, внимательный сервис и всё необходимое для отдыха
+          и деловых поездок. Мы заботимся о вашем комфорте каждый день.
+        </p>
+        <a class="site-footer__btn" href="booking.html#available-rooms">Забронировать</a>
+        <p class="site-footer__copy">© 2026 Гостиница «Олимп»</p>
+      </div>
+
+      <nav class="site-footer__column" aria-label="Навигация в футере">
+        <h2 class="site-footer__title">Навигация</h2>
+        <ul class="site-footer__list">
+          <li><a href="index.html">Главная</a></li>
+          <li><a href="rooms.html">Номера</a></li>
+          <li><a href="services.html">Услуги</a></li>
+          <li><a href="about.html">О нас</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="reviews.html">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <nav class="site-footer__column" aria-label="Помощь">
+        <h2 class="site-footer__title">Помощь</h2>
+        <ul class="site-footer__list">
+          <li><a href="contacts.html">Как добраться?</a></li>
+          <li><a href="contacts.html">Правила посещения?</a></li>
+          <li><a href="contacts.html">Время работы?</a></li>
+          <li><a href="privacy.html">Политика конфиденциальности</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-footer__column">
+        <h2 class="site-footer__title">Контакты</h2>
+        <ul class="site-footer__list site-footer__contacts">
+          <li>г. Советский, ул.Юности, 12</li>
+          <li><a href="tel:+73467536267">8 (34675) 3-62-67</a></li>
+          <li><a href="mailto:mail@olimp-sov.ru">mail@olimp-sov.ru</a></li>
+        </ul>
+        <div class="site-footer__socials" aria-label="Социальные сети">
+          <a class="site-footer__social" href="https://vk.com/olimpsovsport" target="_blank" rel="noopener noreferrer" aria-label="ВКонтакте">
+            <img src="assets/images/social-vk.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+          <a class="site-footer__social" href="https://max.ru/" target="_blank" rel="noopener noreferrer" aria-label="Max">
+            <img src="assets/images/social-max.svg" alt="" width="24" height="24" decoding="async" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
