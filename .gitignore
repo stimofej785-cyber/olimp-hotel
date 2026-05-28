@@ -5,6 +5,7 @@ node_modules/
 .env
 .env.*
 !.env.example
+!deploy/.env.example
 
 # База данных (создаётся при первом запуске на сервере)
 *.db

@@ -1,5 +1,5 @@
 # Railway: https://docs.railway.com/guides/deploy
-# Start command берётся из package.json → npm start
+# Start command берётся из package.json в корне проекта → npm start
 
 [build]
 builder = "NIXPACKS"

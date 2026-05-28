@@ -7,7 +7,7 @@
 
 ```bash
 npm install
-copy .env.example .env
+copy deploy\.env.example .env
 ```
 
 Отредактируйте `.env`: задайте `ADMIN_EMAIL` и `ADMIN_PASSWORD` (нужны при первом запуске для входа в админку).
@@ -27,25 +27,13 @@ npm start
 
 Проверка проекта: `node scripts/audit-check.js` (сервер должен быть запущен).
 
-## Публикация на GitHub
+## Публикация на GitHub и деплой
 
-1. Создайте пустой репозиторий на GitHub (без README, если копируете этот файл).
-2. В папке проекта:
+Инструкции в папке **[deploy/](./deploy/)**:
 
-```bash
-git init
-git add .
-git status
-```
-
-Убедитесь, что в списке **нет** `node_modules/`, `.env`, `Server/olymp.db`.
-
-```bash
-git commit -m "Initial commit: сайт гостиницы Олимп"
-git branch -M main
-git remote add origin https://github.com/ВАШ_ЛОГИН/ВАШ_РЕПО.git
-git push -u origin main
-```
+- [deploy/GITHUB.md](./deploy/GITHUB.md) — отправка на GitHub
+- [deploy/RAILWAY.md](./deploy/RAILWAY.md) — хостинг на Railway
+- [deploy/README.md](./deploy/README.md) — обзор файлов
 
 ## Деплой на хостинг
 
@@ -77,12 +65,12 @@ npm start
 
 ### Railway (рекомендуется)
 
-Подробная инструкция: **[RAILWAY.md](./RAILWAY.md)** — деплой из GitHub, Volume для SQLite, переменные окружения.
+**[deploy/RAILWAY.md](./deploy/RAILWAY.md)** — деплой из GitHub, Volume для SQLite, переменные окружения.
 
 ### Другие платформы
 
 - **VPS** (Timeweb, Selectel, и т.д.) — Node.js + nginx как reverse proxy.
-- **Render** — см. `render.yaml`.
+- **Render** — см. [deploy/render.yaml](./deploy/render.yaml).
 
 Пример nginx (прокси на Node):
 
@@ -105,9 +93,9 @@ diplom/
 │   ├── Server.js                           # точка входа
 │   ├── db.js, seed.js                      # БД и начальные данные
 │   └── routes/                             # API
+├── deploy/                                 # GitHub, Railway, .env.example
 ├── scripts/audit-check.js
 ├── package.json
-├── .env.example                            # шаблон настроек (в Git)
 └── .gitignore
 ```
 
