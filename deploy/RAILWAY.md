@@ -13,6 +13,17 @@ Railway берёт код с GitHub, запускает `npm start` и даёт 
 
 ---
 
+## Если сборка падает на `npm ci` / `EBADENGINE`
+
+В репозитории уже настроено:
+
+- **Node 20** — файлы `.nvmrc` и `nixpacks.toml` в корне проекта
+- синхронизированный **`package-lock.json`**
+
+После обновления кода на GitHub: **Deployments** → **Redeploy**.
+
+---
+
 ## Шаг 1. Подключить репозиторий
 
 1. Откройте [railway.app](https://railway.app)  
