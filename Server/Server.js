@@ -102,7 +102,11 @@ app.use("/api/account", accountRouter);
 app.use("/api/admin", adminRouter);
 
 app.use(function (req, res) {
-  res.status(404).json({ error: "Маршрут не найден." });
+  if (req.path.startsWith("/api/")) {
+    return res.status(404).json({ error: "Маршрут не найден." });
+  }
+
+  res.status(404).sendFile(path.join(ROOT_DIR, "404.html"));
 });
 
 app.use(function (err, req, res, next) {

@@ -58,6 +58,26 @@ async function migrateDatabase() {
     await run("ALTER TABLE rooms ADD COLUMN total_units INTEGER NOT NULL DEFAULT 1");
   }
 
+  const serviceColumns = await all("PRAGMA table_info(services)");
+  if (serviceColumns.length) {
+    if (!serviceColumns.some(function (col) { return col.name === "price_per_hour"; })) {
+      await run("ALTER TABLE services ADD COLUMN price_per_hour INTEGER");
+    }
+    if (!serviceColumns.some(function (col) { return col.name === "price_extra_hour"; })) {
+      await run("ALTER TABLE services ADD COLUMN price_extra_hour INTEGER");
+    }
+
+    await run(
+      "UPDATE services SET price_per_hour = 720 WHERE slug = 'conference-hall' AND (price_per_hour IS NULL OR price_per_hour = 0)"
+    );
+    await run(
+      "UPDATE services SET price_per_hour = 1800, price_extra_hour = 1200 WHERE slug = 'sauna-pool' AND (price_per_hour IS NULL OR price_per_hour = 0)"
+    );
+    await run(
+      "UPDATE services SET category = 'extra' WHERE slug IN ('conference-hall', 'sauna-pool')"
+    );
+  }
+
   const serviceBookingColumns = await all("PRAGMA table_info(service_bookings)");
   if (serviceBookingColumns.length) {
     if (!serviceBookingColumns.some(function (col) { return col.name === "hours"; })) {

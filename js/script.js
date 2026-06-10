@@ -16,6 +16,10 @@
     "account-notifications.html",
     "account-payments.html",
     "booking.html",
+    "room-detail.html",
+    "room-improved-single.html",
+    "room-improved-double.html",
+    "room-luxe-single.html",
     "rooms.html",
     "services.html",
     "reviews.html",
@@ -25,6 +29,7 @@
     "forgot-password.html",
     "reset-password.html",
     "login.html",
+    "register.html",
     "admin.html",
   ]);
 
@@ -137,6 +142,46 @@
     window.location.href = "login.html?next=" + encodeURIComponent(page);
   }
 
+  function getBookingLoginNext() {
+    const page = window.location.pathname.split("/").pop() || "index.html";
+    return page + window.location.search + window.location.hash;
+  }
+
+  async function requireAuthForBooking() {
+    const token = getAuthToken();
+    if (!token) {
+      window.location.href =
+        "login.html?next=" + encodeURIComponent(getBookingLoginNext());
+      return null;
+    }
+
+    let user = getAuthUser();
+    if (!user) {
+      user = await refreshAuthSession();
+    }
+
+    if (!user) {
+      clearAuthSession();
+      window.location.href =
+        "login.html?next=" + encodeURIComponent(getBookingLoginNext());
+      return null;
+    }
+
+    if (user.isBlocked) {
+      window.alert("Аккаунт заблокирован. Обратитесь к администратору.");
+      return null;
+    }
+
+    return user;
+  }
+
+  function isRoomDetailPaymentPage() {
+    return Boolean(
+      document.body.getAttribute("data-room-slug") &&
+        document.querySelector(".room-booking__form")
+    );
+  }
+
   function buildAuthHeaders(extraHeaders) {
     const headers = Object.assign({ "Content-Type": "application/json" }, extraHeaders || {});
     const token = getAuthToken();
@@ -198,9 +243,6 @@
     if (!actions) return;
 
     const currentPage = window.location.pathname.split("/").pop() || "index.html";
-    if (currentPage === "admin.html") {
-      return;
-    }
 
     const ghostBtn = actions.querySelector(".site-header__btn--ghost");
     if (!ghostBtn) return;
@@ -223,10 +265,12 @@
       ghostBtn.href = "account.html";
     }
 
-    if (window.location.pathname.endsWith("account.html") && user.role !== "admin") {
+    ghostBtn.removeAttribute("aria-current");
+
+    if (currentPage === "admin.html" && user.role === "admin") {
       ghostBtn.setAttribute("aria-current", "page");
-    } else {
-      ghostBtn.removeAttribute("aria-current");
+    } else if (currentPage === "account.html" && user.role !== "admin") {
+      ghostBtn.setAttribute("aria-current", "page");
     }
   }
 
@@ -988,6 +1032,284 @@
     { value: "full-board", label: "Номер + 3-х разовое питание", optionPrefix: "Номер + 3-х разовое питание" },
   ];
 
+  const ROOM_PAGE_TO_SLUG = {
+    "room-detail.html": "single-standard",
+    "room-improved-single.html": "improved-single",
+    "room-improved-double.html": "improved-double",
+    "room-luxe-single.html": "lux-single",
+  };
+
+  function formatRoomPriceShort(amount) {
+    const value = Number(amount) || 0;
+    return "от " + value.toLocaleString("ru-RU") + " руб.";
+  }
+
+  function formatRoomPriceNight(amount) {
+    return formatRoomPriceShort(amount) + " / ночь";
+  }
+
+  function getRoomPricesFromApi(room) {
+    if (!room) {
+      return { basic: 0, "half-board": 0, "full-board": 0 };
+    }
+
+    if (room.prices) {
+      return room.prices;
+    }
+
+    return {
+      basic: room.pricePerNight || 0,
+      "half-board": room.priceHalfBoard || room.pricePerNight || 0,
+      "full-board": room.priceFullBoard || room.pricePerNight || 0,
+    };
+  }
+
+  function applyRoomToBookingCard(card, room) {
+    if (!card || !room) return;
+
+    const meta = getRoomMeta(room.slug, room);
+    const titleEl = card.querySelector(".booking-rooms__card-title");
+    const descEl = card.querySelector(".booking-rooms__description");
+    const priceEl = card.querySelector(".booking-rooms__price-value");
+
+    if (titleEl && room.title) {
+      titleEl.textContent = room.title;
+    }
+
+    if (descEl && room.description) {
+      descEl.textContent = room.description;
+    }
+
+    if (priceEl) {
+      priceEl.textContent = formatRoomPriceShort(meta.price);
+    }
+
+    card.dataset.roomPrice = String(meta.price);
+    card.dataset.roomMaxGuests = String(meta.maxGuests);
+    syncCardTariffDataset(card, meta.prices, meta.price);
+  }
+
+  function applyBookingCardAvailability(card, room) {
+    if (!card) return;
+
+    const unavailableEl = card.querySelector("[data-booking-unavailable]");
+    const bookBtn = card.querySelector('[data-booking-action="book"]');
+    const countEl = card.querySelector("[data-booking-availability]");
+
+    if (!room) {
+      card.hidden = true;
+      return;
+    }
+
+    card.hidden = false;
+
+    const adminDisabled = room.isAvailable === false;
+    const count =
+      room.availableCount != null
+        ? room.availableCount
+        : adminDisabled
+          ? 0
+          : room.totalUnits || 0;
+    const isUnavailable = adminDisabled || count <= 0;
+
+    if (countEl) {
+      countEl.textContent = String(adminDisabled ? 0 : count);
+      countEl.setAttribute(
+        "aria-label",
+        "Доступно номеров: " + (adminDisabled ? 0 : count)
+      );
+    }
+
+    card.classList.toggle("booking-rooms__card--unavailable", isUnavailable);
+
+    if (unavailableEl) {
+      unavailableEl.textContent = adminDisabled
+        ? "Номер недоступен"
+        : "Номер недоступен на выбранные даты";
+      unavailableEl.hidden = !isUnavailable;
+    }
+
+    if (bookBtn) {
+      bookBtn.setAttribute("aria-disabled", isUnavailable ? "true" : "false");
+      bookBtn.textContent = isUnavailable ? "Недоступно" : "Забронировать";
+    }
+  }
+
+  function setRoomDetailAvailability(room) {
+    if (!room) return;
+
+    const section = document.querySelector(".room-booking");
+    const form = document.querySelector(".room-booking__form");
+    const primaryBtn = document.querySelector(".room-detail__btn--primary");
+    const disabled = room.isAvailable === false;
+
+    if (section) {
+      section.classList.toggle("room-booking--unavailable", disabled);
+    }
+
+    let notice = section ? section.querySelector("[data-room-unavailable-notice]") : null;
+    if (disabled && section) {
+      if (!notice) {
+        notice = document.createElement("p");
+        notice.className = "room-booking__unavailable";
+        notice.setAttribute("data-room-unavailable-notice", "");
+        notice.textContent = "Номер недоступен";
+        const formPanel = section.querySelector(".room-booking__form-panel");
+        if (formPanel) {
+          formPanel.insertBefore(notice, formPanel.firstChild);
+        }
+      }
+      notice.hidden = false;
+    } else if (notice) {
+      notice.hidden = true;
+    }
+
+    if (form) {
+      form.querySelectorAll("input, select, textarea, button").forEach(function (field) {
+        field.disabled = disabled;
+      });
+    }
+
+    if (primaryBtn) {
+      primaryBtn.disabled = disabled;
+      primaryBtn.setAttribute("aria-disabled", disabled ? "true" : "false");
+    }
+  }
+
+  function applyRoomToDetailPage(room) {
+    if (!room) return;
+
+    const prices = getRoomPricesFromApi(room);
+    const titleEl = document.getElementById("room-detail-title");
+
+    if (titleEl && room.title) {
+      titleEl.textContent = room.title;
+      document.title = room.title + " — Гостиница Олимп";
+    }
+
+    const priceValueEl = document.querySelector(".room-detail__price-value");
+    if (priceValueEl) {
+      priceValueEl.textContent = formatRoomPriceNight(prices.basic);
+    }
+
+    const tariffCards = document.querySelectorAll(".room-tariffs__card");
+    const tariffKeys = ["basic", "half-board", "full-board"];
+
+    tariffCards.forEach(function (card, index) {
+      const priceEl = card.querySelector(".room-tariffs__price");
+      if (priceEl && prices[tariffKeys[index]]) {
+        priceEl.textContent = formatRoomPriceNight(prices[tariffKeys[index]]);
+      }
+    });
+
+    const tariffSelect = document.querySelector('.room-booking__form select[name="tariff"]');
+    if (tariffSelect) {
+      tariffSelect.innerHTML = ROOM_TARIFF_OPTIONS.map(function (option) {
+        const price = prices[option.value];
+        return (
+          '<option value="' +
+          option.value +
+          '">' +
+          option.optionPrefix +
+          " - " +
+          formatRoomPriceShort(price) +
+          "</option>"
+        );
+      }).join("");
+    }
+
+    document.querySelectorAll(".room-detail__tag span").forEach(function (span) {
+      if (/гост/i.test(span.textContent)) {
+        const guests = Number(room.maxGuests) || 1;
+        span.textContent =
+          guests === 1 ? "1 гость" : guests + " " + (guests < 5 ? "гостя" : "гостей");
+      }
+    });
+
+    const tariffDisplay = document.querySelector("[data-room-booking-tariff]");
+    if (tariffDisplay && tariffSelect && tariffSelect.selectedOptions.length) {
+      const selectedText = tariffSelect.selectedOptions[0].textContent.trim();
+      tariffDisplay.textContent = selectedText.replace(" - ", " — ") + " / ночь";
+    }
+
+    setRoomDetailAvailability(room);
+  }
+
+  function applyRoomToCatalogCard(card, room) {
+    if (!card || !room) return;
+
+    const titleEl = card.querySelector(".rooms-catalog__card-title, .rooms__card-title");
+    const descEl = card.querySelector(".rooms-catalog__description, .rooms__description");
+    const priceEl = card.querySelector(".rooms-catalog__price, .rooms__price");
+
+    if (titleEl && room.title) {
+      titleEl.textContent = room.title;
+    }
+
+    if (descEl && room.description) {
+      descEl.textContent = room.description;
+    }
+
+    if (priceEl) {
+      priceEl.textContent = formatRoomPriceNight(room.pricePerNight || getRoomPricesFromApi(room).basic);
+    }
+  }
+
+  function getSlugFromCatalogCard(card) {
+    const link = card.querySelector("a[href]");
+    if (!link) return "";
+
+    const href = link.getAttribute("href") || "";
+    const page = href.split("#")[0].split("?")[0];
+    return ROOM_PAGE_TO_SLUG[page] || "";
+  }
+
+  async function initPublicRoomData() {
+    const slug = document.body.getAttribute("data-room-slug");
+    const bookingPage = document.querySelector("[data-booking-page]");
+    const catalogCards = document.querySelectorAll(".rooms-catalog__card, .rooms__card");
+
+    if (!slug && !bookingPage && !catalogCards.length) {
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/rooms");
+      if (!response.ok) return;
+
+      const data = await response.json();
+      const bySlug = {};
+
+      (data.rooms || []).forEach(function (room) {
+        bySlug[room.slug] = room;
+      });
+
+      if (slug && bySlug[slug]) {
+        applyRoomToDetailPage(bySlug[slug]);
+      }
+
+      if (bookingPage) {
+        bookingPage.querySelectorAll("[data-room-slug]").forEach(function (card) {
+          const cardSlug = card.getAttribute("data-room-slug");
+          const room = bySlug[cardSlug];
+          if (room) {
+            applyRoomToBookingCard(card, room);
+          }
+          applyBookingCardAvailability(card, room || null);
+        });
+      }
+
+      catalogCards.forEach(function (card) {
+        const cardSlug = getSlugFromCatalogCard(card);
+        if (cardSlug && bySlug[cardSlug]) {
+          applyRoomToCatalogCard(card, bySlug[cardSlug]);
+        }
+      });
+    } catch (error) {
+      /* работаем со статическими данными, если API недоступен */
+    }
+  }
+
   function syncCardTariffDataset(card, prices, fallbackPrice) {
     if (!card || !prices) return;
     card.dataset.tariffBasic = String(prices.basic != null ? prices.basic : fallbackPrice);
@@ -1223,7 +1545,9 @@
 
         rooms.forEach(function (room) {
           bySlug[room.slug] = room;
-          totalAvailable += room.availableCount != null ? room.availableCount : room.totalUnits || 0;
+          if (room.isAvailable !== false) {
+            totalAvailable += room.availableCount != null ? room.availableCount : room.totalUnits || 0;
+          }
         });
 
         cards.forEach(function (card) {
@@ -1237,30 +1561,11 @@
             syncCardTariffDataset(card, meta.prices, meta.price);
           }
 
-          if (!room) return;
-
-          const count =
-            room.availableCount != null ? room.availableCount : room.totalUnits || 0;
-          const countEl = card.querySelector("[data-booking-availability]");
-          const unavailableEl = card.querySelector("[data-booking-unavailable]");
-          const bookBtn = card.querySelector('[data-booking-action="book"]');
-
-          if (countEl) {
-            countEl.textContent = String(count);
-            countEl.setAttribute("aria-label", "Доступно номеров: " + count);
+          if (room) {
+            applyRoomToBookingCard(card, room);
           }
 
-          const isUnavailable = count <= 0;
-          card.classList.toggle("booking-rooms__card--unavailable", isUnavailable);
-
-          if (unavailableEl) {
-            unavailableEl.hidden = !isUnavailable;
-          }
-
-          if (bookBtn) {
-            bookBtn.setAttribute("aria-disabled", isUnavailable ? "true" : "false");
-            bookBtn.textContent = isUnavailable ? "Недоступно" : "Забронировать";
-          }
+          applyBookingCardAvailability(card, room || null);
         });
 
         filterLabels.forEach(function (labelEl) {
@@ -1273,9 +1578,11 @@
 
           const room = bySlug[key];
           const count = room
-            ? room.availableCount != null
-              ? room.availableCount
-              : room.totalUnits || 0
+            ? room.isAvailable === false
+              ? 0
+              : room.availableCount != null
+                ? room.availableCount
+                : room.totalUnits || 0
             : 0;
           const prefix = BOOKING_FILTER_LABELS[key] || key;
           labelEl.textContent = prefix + ": " + count;
@@ -1291,7 +1598,7 @@
       const dates = getFilterDates();
 
       if (typeof openBookingPaymentModal === "function") {
-        openBookingPaymentModal(slug, card, dates);
+        await openBookingPaymentModal(slug, card, dates);
         return;
       }
 
@@ -1319,7 +1626,16 @@
       event.preventDefault();
 
       const card = bookBtn.closest("[data-room-slug]");
-      if (!card || card.classList.contains("booking-rooms__card--unavailable")) return;
+      if (!card) return;
+
+      if (card.classList.contains("booking-rooms__card--unavailable")) {
+        const notice = card.querySelector("[data-booking-unavailable]");
+        const message = notice && notice.textContent.trim()
+          ? notice.textContent.trim()
+          : "Номер недоступен";
+        window.alert(message);
+        return;
+      }
 
       submitBooking(card.getAttribute("data-room-slug"), card);
     });
@@ -1462,6 +1778,28 @@
     return day + "." + month + "." + date.getFullYear();
   }
 
+  function getBookingNotificationDate(createdAt, eventDate) {
+    const createdIso = String(createdAt || "").slice(0, 10);
+    const eventIso = String(eventDate || "").slice(0, 10);
+    const created = parseAccountISODate(createdIso);
+    const event = parseAccountISODate(eventIso);
+
+    if (created && event) {
+      const daysBeforeEvent = Math.round((event - created) / (24 * 60 * 60 * 1000));
+      if (daysBeforeEvent >= 0 && daysBeforeEvent <= 30) {
+        return createdIso;
+      }
+    }
+
+    if (event) {
+      const notifyDate = new Date(event);
+      notifyDate.setDate(notifyDate.getDate() - 2);
+      return localISODate(notifyDate);
+    }
+
+    return createdIso || eventIso;
+  }
+
   function formatGuestsLabel(count) {
     const n = Number(count) || 1;
     if (n === 1) return "1 гость";
@@ -1491,6 +1829,28 @@
     return { text: "Подтверждено", className: "account-recent__status--confirmed" };
   }
 
+  function classifyServiceBooking(booking) {
+    if (booking.status === "cancelled") return "cancelled";
+    if (booking.status === "completed") return "completed";
+    const bookingDate = parseAccountISODate(booking.bookingDate);
+    if (bookingDate && bookingDate < startOfToday()) return "completed";
+    return "active";
+  }
+
+  function getServiceBookingStatusMeta(booking) {
+    const kind = classifyServiceBooking(booking);
+    if (kind === "cancelled") {
+      return { text: "Отменено", className: "account-recent__status--cancelled" };
+    }
+    if (kind === "completed") {
+      return { text: "Завершено", className: "account-recent__status--completed" };
+    }
+    if (booking.status === "pending") {
+      return { text: "Новое", className: "account-recent__status--confirmed" };
+    }
+    return { text: "Подтверждено", className: "account-recent__status--confirmed" };
+  }
+
   function renderAccountEmptyState(title, text) {
     return (
       '<div class="account-bookings__empty">' +
@@ -1507,7 +1867,7 @@
   function renderRoomBookingItem(booking, itemClass) {
     const status = getRoomBookingStatusMeta(booking);
     const statusSpanClass =
-      itemClass === "account-bookings__item" ? "account-bookings__status" : status.className;
+      itemClass === "account-bookings__item" ? "account-bookings__status" : "account-recent__status";
 
     return (
       '<li class="' +
@@ -1560,6 +1920,116 @@
       "</div>" +
       "</li>"
     );
+  }
+
+  function renderServiceBookingItem(booking, itemClass) {
+    const status = getServiceBookingStatusMeta(booking);
+    const statusSpanClass =
+      itemClass === "account-bookings__item" ? "account-bookings__status" : "account-recent__status";
+    const hours = Number(booking.hours) || 1;
+    const hoursLabel = hours + " " + (hours === 1 ? "час" : hours < 5 ? "часа" : "часов");
+
+    return (
+      '<li class="' +
+      itemClass +
+      '">' +
+      '<span class="' +
+      itemClass +
+      '__icon" aria-hidden="true">' +
+      '<img src="assets/images/advantages-icon-gym.svg" alt="" width="22" height="22" decoding="async" />' +
+      "</span>" +
+      '<div class="' +
+      itemClass +
+      '__info">' +
+      '<p class="' +
+      itemClass +
+      '__room">' +
+      escapeHtml(booking.serviceName) +
+      "</p>" +
+      '<p class="' +
+      itemClass +
+      '__dates">' +
+      escapeHtml(formatAccountDateShort(booking.bookingDate)) +
+      "</p>" +
+      '<ul class="' +
+      itemClass +
+      '__tags">' +
+      "<li>Доп. услуга</li>" +
+      "<li>" +
+      hoursLabel +
+      "</li>" +
+      "<li>" +
+      formatGuestsLabel(booking.guests) +
+      "</li>" +
+      "</ul>" +
+      "</div>" +
+      '<div class="' +
+      itemClass +
+      '__aside">' +
+      '<span class="' +
+      statusSpanClass +
+      " " +
+      status.className +
+      '">' +
+      status.text +
+      "</span>" +
+      '<span class="' +
+      itemClass +
+      '__price">' +
+      formatRublesAmount(booking.totalPrice) +
+      "</span>" +
+      "</div>" +
+      "</li>"
+    );
+  }
+
+  function renderAccountBookingEntry(entry, itemClass) {
+    if (entry.type === "service") {
+      return renderServiceBookingItem(entry.booking, itemClass);
+    }
+    return renderRoomBookingItem(entry.booking, itemClass);
+  }
+
+  function compareAccountBookingEntries(a, b, direction) {
+    const dateA = parseAccountISODate(a.sortDate) || new Date(0);
+    const dateB = parseAccountISODate(b.sortDate) || new Date(0);
+    return direction === "asc" ? dateA - dateB : dateB - dateA;
+  }
+
+  function buildAccountBookingGroups(summary) {
+    const groups = {
+      active: [],
+      completed: [],
+      cancelled: [],
+    };
+
+    (summary.roomBookings || []).forEach(function (booking) {
+      groups[classifyRoomBooking(booking)].push({
+        type: "room",
+        booking: booking,
+        sortDate: booking.checkIn,
+      });
+    });
+
+    (summary.serviceBookings || []).forEach(function (booking) {
+      groups[classifyServiceBooking(booking)].push({
+        type: "service",
+        booking: booking,
+        sortDate: booking.bookingDate,
+      });
+    });
+
+    groups.active.sort(function (a, b) {
+      return compareAccountBookingEntries(a, b, "asc");
+    });
+    groups.completed.sort(function (a, b) {
+      return compareAccountBookingEntries(a, b, "desc");
+    });
+    groups.cancelled.sort(function (a, b) {
+      return compareAccountBookingEntries(a, b, "desc");
+    });
+
+    return groups;
   }
 
   function escapeHtml(value) {
@@ -1671,19 +2141,41 @@
     }
 
     if (recentList) {
-      if (!roomBookings.length) {
+      const recentEntries = [];
+
+      roomBookings.forEach(function (booking) {
+        recentEntries.push({
+          type: "room",
+          booking: booking,
+          sortDate: String(booking.createdAt || booking.checkIn).slice(0, 10),
+        });
+      });
+
+      (summary.serviceBookings || []).forEach(function (booking) {
+        recentEntries.push({
+          type: "service",
+          booking: booking,
+          sortDate: String(booking.createdAt || booking.bookingDate).slice(0, 10),
+        });
+      });
+
+      recentEntries.sort(function (a, b) {
+        return compareAccountBookingEntries(a, b, "desc");
+      });
+
+      if (!recentEntries.length) {
         recentList.innerHTML =
           '<li class="account-recent__empty">' +
           renderAccountEmptyState(
             "Бронирований пока нет",
-            "После оформления бронирования оно появится в этом разделе"
+            "После оформления номера или доп. услуги запись появится в этом разделе"
           ) +
           "</li>";
       } else {
-        recentList.innerHTML = roomBookings
+        recentList.innerHTML = recentEntries
           .slice(0, 3)
-          .map(function (booking) {
-            return renderRoomBookingItem(booking, "account-recent__item");
+          .map(function (entry) {
+            return renderAccountBookingEntry(entry, "account-recent__item");
           })
           .join("");
       }
@@ -1694,17 +2186,7 @@
     const root = document.querySelector("[data-account-bookings]");
     if (!root) return;
 
-    const roomBookings = summary.roomBookings || [];
-
-    const groups = {
-      active: [],
-      completed: [],
-      cancelled: [],
-    };
-
-    roomBookings.forEach(function (booking) {
-      groups[classifyRoomBooking(booking)].push(booking);
-    });
+    const groups = buildAccountBookingGroups(summary);
 
     root.querySelectorAll(".account-bookings__panel").forEach(function (panel) {
       const key = panel.getAttribute("data-panel");
@@ -1712,8 +2194,11 @@
 
       if (!items.length) {
         const emptyCopy = {
-          active: ["Активных бронирований нет", "Оформите новое бронирование на сайте"],
-          completed: ["Завершённых бронирований нет", "Здесь появятся прошлые заезды"],
+          active: [
+            "Активных бронирований нет",
+            "Оформите бронирование номера или доп. услуги на сайте",
+          ],
+          completed: ["Завершённых бронирований нет", "Здесь появятся прошлые заезды и услуги"],
           cancelled: ["Отменённых бронирований нет", "У вас пока не было отменённых бронирований"],
         };
         const copy = emptyCopy[key] || emptyCopy.active;
@@ -1724,8 +2209,8 @@
       panel.innerHTML =
         '<ul class="account-bookings__list">' +
         items
-          .map(function (booking) {
-            return renderRoomBookingItem(booking, "account-bookings__item");
+          .map(function (entry) {
+            return renderAccountBookingEntry(entry, "account-bookings__item");
           })
           .join("") +
         "</ul>";
@@ -1749,6 +2234,7 @@
     const notifications = [];
 
     roomBookings.forEach(function (booking) {
+      const notifyIso = getBookingNotificationDate(booking.createdAt, booking.checkIn);
       notifications.push({
         heading: "Бронирование подтверждено",
         text:
@@ -1757,19 +2243,28 @@
           " — " +
           booking.roomName,
         badge: getRoomBookingStatusMeta(booking).text,
-        time: formatAccountDateShort(String(booking.createdAt || booking.checkIn).slice(0, 10)),
+        time: formatAccountDateShort(notifyIso),
+        sortTime: notifyIso,
         icon: "assets/images/advantages-icon-bed.svg",
       });
     });
 
     (summary.serviceBookings || []).forEach(function (booking) {
+      const notifyIso = getBookingNotificationDate(booking.createdAt, booking.bookingDate);
       notifications.push({
         heading: "Бронирование услуги",
         text: booking.serviceName + " — " + formatAccountDateShort(booking.bookingDate),
-        badge: "Подтверждено",
-        time: formatAccountDateShort(String(booking.createdAt || booking.bookingDate).slice(0, 10)),
-        icon: "assets/images/advantages-icon-bed.svg",
+        badge: getServiceBookingStatusMeta(booking).text,
+        time: formatAccountDateShort(notifyIso),
+        sortTime: notifyIso,
+        icon: "assets/images/advantages-icon-gym.svg",
       });
+    });
+
+    notifications.sort(function (a, b) {
+      const dateA = parseAccountISODate(a.sortTime) || new Date(0);
+      const dateB = parseAccountISODate(b.sortTime) || new Date(0);
+      return dateB - dateA;
     });
 
     list.innerHTML = notifications
@@ -2106,12 +2601,6 @@
         input.readOnly = !editing;
       });
 
-      Object.keys(notifyInputs).forEach(function (key) {
-        if (notifyInputs[key]) {
-          notifyInputs[key].disabled = !editing;
-        }
-      });
-
       if (passwordView) {
         passwordView.hidden = editing;
       }
@@ -2141,6 +2630,82 @@
     }
 
     setEditingState(false);
+
+    function getNotificationPrefsFromForm() {
+      return {
+        email: notifyInputs.email ? notifyInputs.email.checked : false,
+        sms: notifyInputs.sms ? notifyInputs.sms.checked : false,
+        promo: notifyInputs.promo ? notifyInputs.promo.checked : false,
+        checkin: notifyInputs.checkin ? notifyInputs.checkin.checked : false,
+      };
+    }
+
+    async function saveNotificationPrefs() {
+      const token = getAuthToken();
+      if (!token) {
+        redirectToLogin();
+        return;
+      }
+
+      const notifications = getNotificationPrefsFromForm();
+      data.notifications = notifications;
+
+      Object.keys(notifyInputs).forEach(function (key) {
+        if (notifyInputs[key]) {
+          notifyInputs[key].disabled = true;
+        }
+      });
+
+      try {
+        const response = await fetch("/api/auth/profile", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            phone: data.phone,
+            notifications: notifications,
+          }),
+        });
+
+        let payload = {};
+        try {
+          payload = await response.json();
+        } catch (error) {
+          payload = {};
+        }
+
+        if (!response.ok) {
+          throw new Error(payload.error || "Не удалось сохранить настройки уведомлений.");
+        }
+
+        setAuthSession(token, payload.user, isAuthRemembered());
+
+        if (payload.user && payload.user.id) {
+          saveAccountPrefs(payload.user.id, notifications);
+        }
+
+        showMessage("Настройки уведомлений сохранены.", false);
+      } catch (error) {
+        fillFormFromData();
+        showMessage(error.message || "Не удалось сохранить настройки уведомлений.", true);
+      } finally {
+        Object.keys(notifyInputs).forEach(function (key) {
+          if (notifyInputs[key]) {
+            notifyInputs[key].disabled = false;
+          }
+        });
+      }
+    }
+
+    Object.keys(notifyInputs).forEach(function (key) {
+      const input = notifyInputs[key];
+      if (!input) return;
+      input.addEventListener("change", saveNotificationPrefs);
+    });
 
     function showMessage(text, isError) {
       if (!messageEl) return;
@@ -2747,6 +3312,21 @@
       }
     }
 
+    function prefillRoomBookingFormFromUser() {
+      const bookingForm = document.querySelector(".room-booking__form");
+      if (!bookingForm) return;
+
+      const user = getAuthUser();
+      if (!user) return;
+
+      if (bookingForm.name && !bookingForm.name.value.trim()) {
+        bookingForm.name.value = (user.firstName + " " + user.lastName).trim();
+      }
+      if (bookingForm.phone && !bookingForm.phone.value.trim() && user.phone) {
+        bookingForm.phone.value = user.phone;
+      }
+    }
+
     function openModal() {
       if (pendingBooking) {
         populateSummaryFromBookingCard(pendingBooking.slug, pendingBooking.card);
@@ -2785,7 +3365,7 @@
         });
       });
 
-      roomBookingForm.addEventListener("submit", function (event) {
+      roomBookingForm.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         if (!roomBookingForm.checkValidity()) {
@@ -2793,13 +3373,20 @@
           return;
         }
 
+        const user = await requireAuthForBooking();
+        if (!user) return;
+
         pendingBooking = null;
         openModal();
+      });
+
+      refreshAuthSession().then(function () {
+        prefillRoomBookingFormFromUser();
       });
     }
 
     if (bookingPage) {
-      openBookingPaymentModal = function (slug, card, dates) {
+      openBookingPaymentModal = async function (slug, card, dates) {
         if (!dates.checkIn || !dates.checkOut) {
           window.alert("Выберите даты заезда и выезда в фильтрах слева.");
           return;
@@ -2809,6 +3396,9 @@
           window.alert("Количество гостей должно быть от 1 до " + MAX_GUESTS + ".");
           return;
         }
+
+        const user = await requireAuthForBooking();
+        if (!user) return;
 
         pendingBooking = { slug: slug, card: card, dates: dates, tariff: "basic" };
         openModal();
@@ -2873,11 +3463,21 @@
           return;
         }
 
+        const cardError = validatePaymentCard(form);
+        if (cardError) return;
+
         const demoError = validatePaymentDemo(form);
         if (demoError) return;
 
         if (!form.checkValidity()) {
           form.reportValidity();
+          return;
+        }
+
+        if (!user) {
+          window.alert("Для бронирования необходимо войти в личный кабинет.");
+          window.location.href =
+            "login.html?next=" + encodeURIComponent(getBookingLoginNext());
           return;
         }
 
@@ -3314,6 +3914,65 @@
     });
   }
 
+  function validatePaymentCard(form) {
+    if (!form) return "";
+
+    const cardNumberInput = form.querySelector('[name="card-number"]');
+    if (!cardNumberInput) return "";
+
+    const digits = cardNumberInput.value.replace(/\D/g, "");
+    if (digits.length < 16 || digits.length > 19) {
+      window.alert("Укажите корректный номер карты (16–19 цифр).");
+      return "card";
+    }
+
+    const expiryInput = form.querySelector('[name="card-expiry"]');
+    const expiry = expiryInput ? expiryInput.value.trim() : "";
+    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
+      window.alert("Укажите срок действия карты в формате ММ/ГГ.");
+      return "card";
+    }
+
+    const cvvInput = form.querySelector('[name="card-cvv"]');
+    const cvv = cvvInput ? cvvInput.value.replace(/\D/g, "") : "";
+    if (cvv.length !== 3) {
+      window.alert("Укажите CVV (3 цифры).");
+      return "card";
+    }
+
+    const holderInput = form.querySelector('[name="cardholder"]');
+    const holder = holderInput ? holderInput.value.trim() : "";
+    if (holder.length < 2) {
+      window.alert("Укажите имя на карте.");
+      return "card";
+    }
+
+    return "";
+  }
+
+  function bindCardNumberInput(input) {
+    if (!input || input.dataset.cardBound === "1") return;
+    input.dataset.cardBound = "1";
+
+    input.addEventListener("input", function () {
+      const digits = input.value.replace(/\D/g, "").slice(0, 19);
+      input.value = digits.replace(/(\d{4})(?=\d)/g, "$1 ").trim();
+    });
+  }
+
+  function bindCardExpiryInput(input) {
+    if (!input || input.dataset.cardBound === "1") return;
+    input.dataset.cardBound = "1";
+
+    input.addEventListener("input", function () {
+      let digits = input.value.replace(/\D/g, "").slice(0, 4);
+      if (digits.length > 2) {
+        digits = digits.slice(0, 2) + "/" + digits.slice(2);
+      }
+      input.value = digits;
+    });
+  }
+
   function validatePaymentDemo(form) {
     if (!form) return "";
 
@@ -3342,6 +4001,9 @@
       .forEach(bindNameInput);
     document.querySelectorAll('input[type="tel"], input[name="phone"]').forEach(bindPhoneInput);
     document.querySelectorAll('input[name="booking-date"]').forEach(bindBookingDateInput);
+    document.querySelectorAll('input[name="card-number"]').forEach(bindCardNumberInput);
+    document.querySelectorAll('input[name="card-expiry"]').forEach(bindCardExpiryInput);
+    document.querySelectorAll('input[name="card-cvv"]').forEach(bindCardCvvInput);
   }
 
   function appendAuthMessage(form, className) {
@@ -3590,13 +4252,6 @@
       messageEl.hidden = !text;
     }
 
-    const loginParams = new URLSearchParams(window.location.search);
-    if (loginParams.get("error") === "not_admin") {
-      showMessage(
-        "У этого аккаунта нет прав администратора. Войдите с email администратора (см. README или ADMIN_EMAIL в .env)."
-      );
-    }
-
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
       showMessage("");
@@ -3652,12 +4307,13 @@
     });
   }
 
-  function redirectAfterAuth(user, remember) {
+  function redirectAfterAuth(user) {
     const params = new URLSearchParams(window.location.search);
     const rawNext = String(params.get("next") || "").trim();
+    const rawPage = rawNext.split("#")[0].toLowerCase();
 
-    if (rawNext.split("#")[0].toLowerCase() === "admin.html" && user && user.role !== "admin") {
-      window.location.href = "login.html?error=not_admin";
+    if (rawPage === "admin.html" && user && user.role !== "admin") {
+      window.location.href = "account.html";
       return;
     }
 
@@ -3772,7 +4428,7 @@
         }
 
         setAuthSession(data.token, data.user, false);
-        window.location.href = "account.html";
+        redirectAfterAuth(data.user);
       } catch (error) {
         showMessage(error.message || "Не удалось зарегистрироваться.");
       }
@@ -3828,6 +4484,7 @@
     let currentSlug = "";
     let currentServiceMaxGuests = 10;
     let isDateAvailable = true;
+    let servicePricingBySlug = {};
 
     function getMaxGuests() {
       return currentServiceMaxGuests;
@@ -3836,15 +4493,22 @@
     function calculateServiceTotal(slug, hours) {
       const value = Number(hours) || 1;
       const safeHours = Math.max(1, Math.min(24, Math.floor(value)));
+      const service = servicePricingBySlug[slug] || {};
+      const pricePerHour = Number(service.pricePerHour) || 0;
+      const priceExtraHour = Number(service.priceExtraHour) || 0;
 
       if (slug === "conference-hall") {
-        return safeHours * 720;
+        const rate = pricePerHour || 720;
+        return safeHours * rate;
       }
 
       if (slug === "sauna-pool") {
-        if (safeHours <= 1) return 1800;
-        if (safeHours === 2) return 3600;
-        return 3600 + (safeHours - 2) * 1200;
+        const firstRate = pricePerHour || 1800;
+        const extraRate = priceExtraHour || 1200;
+
+        if (safeHours <= 1) return firstRate;
+        if (safeHours === 2) return firstRate * 2;
+        return firstRate * 2 + (safeHours - 2) * extraRate;
       }
 
       return 0;
@@ -4037,8 +4701,10 @@
     }
 
     openTriggers.forEach(function (trigger) {
-      trigger.addEventListener("click", function (event) {
+      trigger.addEventListener("click", async function (event) {
         event.preventDefault();
+        const user = await requireAuthForBooking();
+        if (!user) return;
         openModal(trigger);
       });
     });
@@ -4101,9 +4767,17 @@
       const available = await checkAvailability();
       if (!available || !isDateAvailable) return;
 
+      const cardError = validatePaymentCard(form);
+      if (cardError) return;
+
       const demoError = validatePaymentDemo(form);
       if (demoError) {
         showMessage("Подтвердите демонстрационную оплату.", true);
+        return;
+      }
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
         return;
       }
 
@@ -4151,6 +4825,66 @@
         closeModal();
       }
     });
+
+    fetch("/api/services")
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        (data.services || []).forEach(function (service) {
+          servicePricingBySlug[service.slug] = service;
+        });
+        updateTotal();
+      })
+      .catch(function () {});
+  }
+
+  async function initServicePrices() {
+    function formatServiceRubles(amount) {
+      return String(amount).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " руб";
+    }
+
+    function updateSaunaPriceCard(service) {
+      const card = document.querySelector(".services-sauna__price-card[data-sauna-price-card]");
+      if (!card || !service || service.slug !== "sauna-pool") return;
+
+      const firstEl = card.querySelector("[data-sauna-price-first]");
+      const thirdEl = card.querySelector("[data-sauna-price-third]");
+      const firstRate = Number(service.pricePerHour);
+      const thirdRate = Number(service.priceExtraHour);
+
+      if (firstEl && Number.isFinite(firstRate) && firstRate > 0) {
+        firstEl.textContent = formatServiceRubles(firstRate);
+      }
+
+      if (thirdEl && Number.isFinite(thirdRate) && thirdRate >= 0) {
+        thirdEl.textContent = formatServiceRubles(thirdRate);
+      }
+    }
+
+    try {
+      const response = await fetch("/api/services");
+      if (!response.ok) return;
+
+      const data = await response.json();
+
+      (data.services || []).forEach(function (service) {
+        if (service.slug === "sauna-pool") {
+          updateSaunaPriceCard(service);
+        }
+
+        if (service.slug === "conference-hall") {
+          const priceEl = document.querySelector('[data-service-price-hour="conference-hall"]');
+          const rate = Number(service.pricePerHour);
+
+          if (priceEl && Number.isFinite(rate) && rate > 0) {
+            priceEl.textContent = rate + " р/час";
+          }
+        }
+      });
+    } catch (error) {
+      // ignore
+    }
   }
 
   function initContactsForm() {
@@ -4247,6 +4981,7 @@
     await initResetPasswordForm();
     initRegisterForm();
     initContactsForm();
+    await initServicePrices();
     initServiceBooking();
     initStayRangeForms();
     initGuestLimitInputs();
@@ -4255,6 +4990,7 @@
     initReviewsFormStars();
     initReviewsFormSubmit();
     await initReviewsFromApi();
+    await initPublicRoomData();
     initReviewsReveal();
     initBookingReveal();
     initRoomPaymentModal();

@@ -2,6 +2,57 @@ const db = require("./db");
 
 const TARIFFS = ["basic", "half-board", "full-board"];
 
+function localISODate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+async function countActiveBookings(roomSlug, todayISO) {
+  const today = todayISO || localISODate(new Date());
+  const row = await db.get(
+    `SELECT COUNT(*) AS count
+     FROM bookings
+     WHERE room_slug = ?
+       AND status IN ('pending', 'confirmed')
+       AND check_out > ?`,
+    [roomSlug, today]
+  );
+
+  return row ? Number(row.count) || 0 : 0;
+}
+
+async function getAdminRoomMetrics(roomSlug) {
+  const row = await db.get(
+    "SELECT total_units, is_available FROM rooms WHERE slug = ?",
+    [roomSlug]
+  );
+
+  if (!row) {
+    return {
+      totalUnits: 0,
+      activeBookings: 0,
+      availableToday: 0,
+      occupiedToday: 0,
+    };
+  }
+
+  const totalUnits = Number(row.total_units) || 0;
+  const activeBookings = await countActiveBookings(roomSlug);
+  const occupiedToday = Math.min(totalUnits, activeBookings);
+  const availableToday = row.is_available
+    ? Math.max(0, totalUnits - activeBookings)
+    : 0;
+
+  return {
+    totalUnits: totalUnits,
+    activeBookings: activeBookings,
+    availableToday: availableToday,
+    occupiedToday: occupiedToday,
+  };
+}
+
 function mapRoom(row) {
   if (!row) return null;
 
@@ -100,7 +151,7 @@ async function listRoomsWithAvailability(options) {
   if (!checkIn || !checkOut) {
     return rooms.map(function (room) {
       return Object.assign({}, room, {
-        availableCount: room.totalUnits,
+        availableCount: room.isAvailable ? room.totalUnits : 0,
       });
     });
   }
@@ -121,6 +172,8 @@ module.exports = {
   getRoom,
   listRooms,
   countBookedUnits,
+  countActiveBookings,
   getAvailableUnits,
+  getAdminRoomMetrics,
   listRoomsWithAvailability,
 };

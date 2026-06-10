@@ -87,42 +87,21 @@ const DEFAULT_SERVICES = [
   {
     slug: "conference-hall",
     title: "Конференц-зал",
-    category: "main",
+    category: "extra",
     description: "Идеальное пространство для деловых мероприятий. Вместимость до 40 человек.",
     priceText: "720 р/час",
+    pricePerHour: 720,
     sortOrder: 1,
   },
   {
     slug: "sauna-pool",
     title: "Сауна с бассейном",
-    category: "main",
+    category: "extra",
     description: "Финская парная, бассейн с подсветкой и гостевая комната.",
-    priceText: "1800 руб / 1–2 час",
+    priceText: "1800 руб / 1–2 час, 1200 руб / 3-й час",
+    pricePerHour: 1800,
+    priceExtraHour: 1200,
     sortOrder: 2,
-  },
-  {
-    slug: "taxi",
-    title: "Заказ такси",
-    category: "extra",
-    description: "Организуем трансфер до аэропорта и вокзала.",
-    priceText: "по запросу",
-    sortOrder: 3,
-  },
-  {
-    slug: "wifi",
-    title: "Интернет Wi-Fi",
-    category: "extra",
-    description: "Высокоскоростной Wi-Fi на всей территории гостиницы.",
-    priceText: "бесплатно",
-    sortOrder: 4,
-  },
-  {
-    slug: "sport-rent",
-    title: "Прокат спортивного инвентаря",
-    category: "extra",
-    description: "Лыжи, роликовые лыжи, теннисный инвентарь и др.",
-    priceText: "по прайсу",
-    sortOrder: 5,
   },
 ];
 
@@ -174,22 +153,61 @@ async function seedDatabase(db) {
   }
 
   for (const slug of Object.keys(ROOM_UNITS)) {
-    await db.run("UPDATE rooms SET total_units = ? WHERE slug = ?", [ROOM_UNITS[slug], slug]);
+    await db.run(
+      "UPDATE rooms SET total_units = ?, is_visible = 1, is_available = 1 WHERE slug = ?",
+      [ROOM_UNITS[slug], slug]
+    );
   }
 
   const servicesCount = await db.get("SELECT COUNT(*) AS count FROM services");
   if (!servicesCount || servicesCount.count === 0) {
     for (const service of DEFAULT_SERVICES) {
       await db.run(
-        `INSERT INTO services (slug, title, category, description, price_text, is_active, sort_order)
-         VALUES (?, ?, ?, ?, ?, 1, ?)`,
+        `INSERT INTO services (slug, title, category, description, price_text, price_per_hour, price_extra_hour, is_active, sort_order)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`,
         [
           service.slug,
           service.title,
           service.category,
           service.description,
           service.priceText,
+          service.pricePerHour != null ? service.pricePerHour : null,
+          service.priceExtraHour != null ? service.priceExtraHour : null,
           service.sortOrder,
+        ]
+      );
+    }
+  }
+
+  for (const service of DEFAULT_SERVICES) {
+    const existing = await db.get("SELECT id FROM services WHERE slug = ?", [service.slug]);
+    if (!existing) {
+      await db.run(
+        `INSERT INTO services (slug, title, category, description, price_text, price_per_hour, price_extra_hour, is_active, sort_order)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)`,
+        [
+          service.slug,
+          service.title,
+          service.category,
+          service.description,
+          service.priceText,
+          service.pricePerHour != null ? service.pricePerHour : null,
+          service.priceExtraHour != null ? service.priceExtraHour : null,
+          service.sortOrder,
+        ]
+      );
+    } else {
+      await db.run(
+        `UPDATE services
+         SET category = ?,
+             price_per_hour = COALESCE(price_per_hour, ?),
+             price_extra_hour = COALESCE(price_extra_hour, ?)
+         WHERE slug = ?`,
+        [
+          service.category,
+          service.pricePerHour != null ? service.pricePerHour : null,
+          service.priceExtraHour != null ? service.priceExtraHour : null,
+          service.slug,
         ]
       );
     }

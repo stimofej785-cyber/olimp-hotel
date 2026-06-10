@@ -14,6 +14,7 @@ const {
   revokeAllUserSessions,
   requireAuth,
 } = require("../middleware/adminAuth");
+const { deleteUserCompletely } = require("../utils/deleteUser");
 
 const router = express.Router();
 
@@ -40,6 +41,7 @@ function mapUser(row) {
     lastName: row.last_name,
     phone: row.phone || "",
     role: row.role,
+    isBlocked: Boolean(row.is_blocked),
     notifications: parseNotificationPrefs(row.notification_prefs),
   };
 }
@@ -361,7 +363,7 @@ router.post("/logout", requireAuth, async function (req, res, next) {
 router.get("/me", requireAuth, async function (req, res, next) {
   try {
     const row = await db.get(
-      `SELECT id, email, first_name, last_name, phone, role, notification_prefs
+      `SELECT id, email, first_name, last_name, phone, role, is_blocked, notification_prefs
        FROM users WHERE id = ?`,
       [req.authUser.id]
     );
@@ -439,7 +441,7 @@ router.patch("/profile", requireAuth, async function (req, res, next) {
     }
 
     const row = await db.get(
-      `SELECT id, email, first_name, last_name, phone, role, notification_prefs
+      `SELECT id, email, first_name, last_name, phone, role, is_blocked, notification_prefs
        FROM users WHERE id = ?`,
       [userId]
     );
@@ -481,8 +483,10 @@ router.delete("/account", requireAuth, async function (req, res, next) {
       return res.status(401).json({ error: "Неверный пароль." });
     }
 
-    await db.run("DELETE FROM sessions WHERE user_id = ?", [userId]);
-    await db.run("DELETE FROM users WHERE id = ?", [userId]);
+    const deleted = await deleteUserCompletely(userId);
+    if (!deleted) {
+      return res.status(404).json({ error: "Пользователь не найден." });
+    }
 
     res.json({ message: "Аккаунт удалён." });
   } catch (err) {

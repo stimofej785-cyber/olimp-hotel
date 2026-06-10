@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("../db");
 const { MAX_GUESTS, validatePersonName, maxBookingDateISO } = require("../constants");
 const { TARIFFS, getRoom, getAvailableUnits } = require("../roomStore");
-const { optionalAuth } = require("../middleware/optionalAuth");
+const { requireAuth } = require("../middleware/adminAuth");
 
 const router = express.Router();
 
@@ -145,7 +145,7 @@ router.get("/rooms", async function (req, res, next) {
   }
 });
 
-router.post("/", optionalAuth, async function (req, res, next) {
+router.post("/", requireAuth, async function (req, res, next) {
   try {
     const validation = await validateBookingPayload(normalizePayload(req.body || {}));
 
@@ -155,8 +155,8 @@ router.post("/", optionalAuth, async function (req, res, next) {
 
     const booking = validation.data;
     const authUser = req.authUser;
-    const userId = authUser ? authUser.id || authUser.userId : null;
-    const bookingEmail = authUser ? authUser.email : booking.email;
+    const userId = authUser.id || authUser.userId;
+    const bookingEmail = authUser.email;
 
     const result = await db.withTransaction(async function () {
       const availableUnits = await getAvailableUnits(

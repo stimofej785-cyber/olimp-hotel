@@ -272,7 +272,7 @@
                 </p>
                 <div class="booking-rooms__actions">
                   <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
-                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="rooms.html">Подробнее</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="room-improved-single.html">Подробнее</a>
                 </div>
               </div>
             </article>
@@ -317,7 +317,7 @@
                 </p>
                 <div class="booking-rooms__actions">
                   <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
-                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="rooms.html">Подробнее</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="room-improved-double.html">Подробнее</a>
                 </div>
               </div>
             </article>
@@ -362,7 +362,7 @@
                 </p>
                 <div class="booking-rooms__actions">
                   <a class="booking-rooms__btn booking-rooms__btn--primary" href="#" data-booking-action="book">Забронировать</a>
-                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="rooms.html">Подробнее</a>
+                  <a class="booking-rooms__btn booking-rooms__btn--ghost" href="room-luxe-single.html">Подробнее</a>
                 </div>
               </div>
             </article>
@@ -519,8 +519,68 @@
           />
         </label>
 
+        <fieldset class="room-payment-modal__card-fields" data-payment-card-fields>
+          <legend class="visually-hidden">Данные банковской карты (демо)</legend>
+
+          <label class="room-payment-modal__field">
+            <span class="room-payment-modal__label">Номер карты</span>
+            <input
+              class="room-payment-modal__control"
+              type="text"
+              name="card-number"
+              inputmode="numeric"
+              autocomplete="cc-number"
+              placeholder="0000 0000 0000 0000"
+              maxlength="19"
+              required
+            />
+          </label>
+
+          <div class="room-payment-modal__row">
+            <label class="room-payment-modal__field">
+              <span class="room-payment-modal__label">Срок действия</span>
+              <input
+                class="room-payment-modal__control"
+                type="text"
+                name="card-expiry"
+                inputmode="numeric"
+                autocomplete="cc-exp"
+                placeholder="ММ/ГГ"
+                maxlength="5"
+                required
+              />
+            </label>
+
+            <label class="room-payment-modal__field">
+              <span class="room-payment-modal__label">CVV</span>
+              <input
+                class="room-payment-modal__control"
+                type="password"
+                name="card-cvv"
+                inputmode="numeric"
+                autocomplete="cc-csc"
+                placeholder="000"
+                maxlength="3"
+                required
+              />
+            </label>
+          </div>
+
+          <label class="room-payment-modal__field">
+            <span class="room-payment-modal__label">Имя на карте</span>
+            <input
+              class="room-payment-modal__control"
+              type="text"
+              name="cardholder"
+              autocomplete="cc-name"
+              placeholder="IVAN IVANOV"
+              required
+            />
+          </label>
+        </fieldset>
+
         <p class="room-payment-modal__demo-note" role="note">
-          Демонстрационная оплата: данные банковской карты не собираются. Подтвердите бронирование ниже.
+          Демонстрационная оплата: данные карты проверяются только в браузере и не сохраняются на сервере.
         </p>
 
         <label class="room-payment-modal__field room-payment-modal__field--demo">

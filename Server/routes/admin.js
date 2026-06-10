@@ -1,9 +1,14 @@
 const express = require("express");
 const { clampGuestCount } = require("../constants");
 const db = require("../db");
-const { getAvailableUnits } = require("../roomStore");
+const { getAdminRoomMetrics } = require("../roomStore");
 const { revokeAllUserSessions } = require("../middleware/adminAuth");
+const { deleteUserCompletely } = require("../utils/deleteUser");
 const { requireAdmin } = require("../middleware/adminAuth");
+const {
+  formatConferencePriceText,
+  formatSaunaPriceText,
+} = require("../servicePricing");
 
 function localISODate(date) {
   const y = date.getFullYear();
@@ -29,6 +34,12 @@ function mapAdminRoom(row) {
   const totalUnits = Number(row.totalUnits) || 0;
   const availableToday =
     row.availableToday != null ? Number(row.availableToday) : null;
+  const occupiedToday =
+    row.occupiedToday != null
+      ? Number(row.occupiedToday)
+      : availableToday != null
+        ? Math.max(0, totalUnits - availableToday)
+        : null;
 
   return Object.assign({}, row, {
     isVisible: toBool(row.isVisible),
@@ -36,14 +47,15 @@ function mapAdminRoom(row) {
     totalUnits: totalUnits,
     activeBookings: Number(row.activeBookings) || 0,
     availableToday: availableToday,
-    occupiedToday:
-      availableToday != null ? Math.max(0, totalUnits - availableToday) : null,
+    occupiedToday: occupiedToday,
   });
 }
 
 function mapAdminService(row) {
   return Object.assign({}, row, {
     isActive: toBool(row.isActive),
+    pricePerHour: row.pricePerHour != null ? Number(row.pricePerHour) : null,
+    priceExtraHour: row.priceExtraHour != null ? Number(row.priceExtraHour) : null,
   });
 }
 
@@ -190,6 +202,88 @@ router.delete("/bookings/:id", requireAdmin, async function (req, res, next) {
   }
 });
 
+router.get("/service-bookings", requireAdmin, async function (req, res, next) {
+  try {
+    const status = String(req.query.status || "").trim();
+    const slug = String(req.query.slug || "").trim();
+    let sql = `SELECT
+      id,
+      service_slug AS serviceSlug,
+      service_name AS serviceName,
+      guest_name AS guestName,
+      phone,
+      email,
+      booking_date AS bookingDate,
+      hours,
+      guests,
+      total_price AS totalPrice,
+      status,
+      user_id AS userId,
+      created_at AS createdAt
+    FROM service_bookings`;
+    const params = [];
+    const conditions = [];
+
+    if (status) {
+      conditions.push("status = ?");
+      params.push(status);
+    }
+
+    if (slug) {
+      conditions.push("service_slug = ?");
+      params.push(slug);
+    }
+
+    if (conditions.length) {
+      sql += " WHERE " + conditions.join(" AND ");
+    }
+
+    sql += " ORDER BY booking_date ASC, id DESC";
+    const rows = await db.all(sql, params);
+    res.json({ serviceBookings: rows });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.patch("/service-bookings/:id", requireAdmin, async function (req, res, next) {
+  try {
+    const allowed = ["pending", "confirmed", "cancelled", "completed"];
+    const status = String(req.body.status || "").trim();
+
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ error: "Недопустимый статус бронирования." });
+    }
+
+    const result = await db.run("UPDATE service_bookings SET status = ? WHERE id = ?", [
+      status,
+      req.params.id,
+    ]);
+
+    if (!result.changes) {
+      return res.status(404).json({ error: "Бронирование услуги не найдено." });
+    }
+
+    res.json({ message: "Статус бронирования услуги обновлён." });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/service-bookings/:id", requireAdmin, async function (req, res, next) {
+  try {
+    const result = await db.run("DELETE FROM service_bookings WHERE id = ?", [req.params.id]);
+
+    if (!result.changes) {
+      return res.status(404).json({ error: "Бронирование услуги не найдено." });
+    }
+
+    res.json({ message: "Бронирование услуги удалено." });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/reviews", requireAdmin, async function (req, res, next) {
   try {
     const status = String(req.query.status || "").trim();
@@ -265,6 +359,8 @@ router.get("/services", requireAdmin, async function (req, res, next) {
         category,
         description,
         price_text AS priceText,
+        price_per_hour AS pricePerHour,
+        price_extra_hour AS priceExtraHour,
         is_active AS isActive,
         sort_order AS sortOrder,
         created_at AS createdAt
@@ -278,42 +374,34 @@ router.get("/services", requireAdmin, async function (req, res, next) {
   }
 });
 
-router.post("/services", requireAdmin, async function (req, res, next) {
-  try {
-    const title = String(req.body.title || "").trim();
-    const slug = String(req.body.slug || "").trim();
-    const category = String(req.body.category || "extra").trim();
-    const description = String(req.body.description || "").trim();
-    const priceText = String(req.body.priceText || "").trim();
-    const sortOrder = Number(req.body.sortOrder) || 0;
-
-    if (!title || !slug) {
-      return res.status(400).json({ error: "Укажите название и slug услуги." });
-    }
-
-    const result = await db.run(
-      `INSERT INTO services (slug, title, category, description, price_text, is_active, sort_order)
-       VALUES (?, ?, ?, ?, ?, 1, ?)`,
-      [slug, title, category, description, priceText, sortOrder]
-    );
-
-    res.status(201).json({ message: "Услуга добавлена.", id: result.id });
-  } catch (err) {
-    if (String(err.message).includes("UNIQUE")) {
-      return res.status(400).json({ error: "Услуга с таким slug уже существует." });
-    }
-    next(err);
-  }
+router.post("/services", requireAdmin, function (req, res) {
+  res.status(403).json({ error: "Добавление новых услуг отключено. Доступно только редактирование существующих." });
 });
 
 router.patch("/services/:id", requireAdmin, async function (req, res, next) {
   try {
+    const current = await db.get(
+      "SELECT slug, price_per_hour, price_extra_hour FROM services WHERE id = ?",
+      [req.params.id]
+    );
+
+    if (!current) {
+      return res.status(404).json({ error: "Услуга не найдена." });
+    }
+
     const fields = [];
     const params = [];
+    const slug = req.body.slug !== undefined ? String(req.body.slug).trim() : current.slug;
+    let pricePerHour =
+      req.body.pricePerHour !== undefined ? Number(req.body.pricePerHour) : Number(current.price_per_hour);
+    let priceExtraHour =
+      req.body.priceExtraHour !== undefined
+        ? Number(req.body.priceExtraHour)
+        : Number(current.price_extra_hour);
 
     if (req.body.slug !== undefined) {
       fields.push("slug = ?");
-      params.push(String(req.body.slug).trim());
+      params.push(slug);
     }
     if (req.body.title !== undefined) {
       fields.push("title = ?");
@@ -331,6 +419,20 @@ router.patch("/services/:id", requireAdmin, async function (req, res, next) {
       fields.push("price_text = ?");
       params.push(String(req.body.priceText).trim());
     }
+    if (req.body.pricePerHour !== undefined) {
+      if (!Number.isFinite(pricePerHour) || pricePerHour <= 0) {
+        return res.status(400).json({ error: "Укажите корректную цену за час." });
+      }
+      fields.push("price_per_hour = ?");
+      params.push(pricePerHour);
+    }
+    if (req.body.priceExtraHour !== undefined) {
+      if (!Number.isFinite(priceExtraHour) || priceExtraHour < 0) {
+        return res.status(400).json({ error: "Укажите корректную цену за 3-й час." });
+      }
+      fields.push("price_extra_hour = ?");
+      params.push(priceExtraHour);
+    }
     if (req.body.sortOrder !== undefined) {
       fields.push("sort_order = ?");
       params.push(Number(req.body.sortOrder) || 0);
@@ -340,15 +442,25 @@ router.patch("/services/:id", requireAdmin, async function (req, res, next) {
       params.push(req.body.isActive ? 1 : 0);
     }
 
+    if (
+      req.body.priceText === undefined &&
+      (req.body.pricePerHour !== undefined || req.body.priceExtraHour !== undefined)
+    ) {
+      if (slug === "sauna-pool") {
+        fields.push("price_text = ?");
+        params.push(formatSaunaPriceText(pricePerHour, priceExtraHour));
+      } else if (slug === "conference-hall" && req.body.pricePerHour !== undefined) {
+        fields.push("price_text = ?");
+        params.push(formatConferencePriceText(pricePerHour));
+      }
+    }
+
     if (!fields.length) {
       return res.status(400).json({ error: "Нет данных для обновления." });
     }
 
     params.push(req.params.id);
-    const result = await db.run(
-      `UPDATE services SET ${fields.join(", ")} WHERE id = ?`,
-      params
-    );
+    const result = await db.run(`UPDATE services SET ${fields.join(", ")} WHERE id = ?`, params);
 
     if (!result.changes) {
       return res.status(404).json({ error: "Услуга не найдена." });
@@ -397,26 +509,19 @@ router.get("/rooms", requireAdmin, async function (req, res, next) {
       ORDER BY sort_order ASC, id ASC`
     );
 
-    const today = localISODate(new Date());
-    const tomorrow = addDaysISO(today, 1);
     const enriched = [];
 
     for (let i = 0; i < rows.length; i += 1) {
       const row = rows[i];
-      const activeRow = await db.get(
-        `SELECT COUNT(*) AS count
-         FROM bookings
-         WHERE room_slug = ?
-           AND status != 'cancelled'`,
-        [row.slug]
-      );
-      const availableToday = await getAvailableUnits(row.slug, today, tomorrow);
+      const metrics = await getAdminRoomMetrics(row.slug);
 
       enriched.push(
         mapAdminRoom(
           Object.assign({}, row, {
-            activeBookings: activeRow ? activeRow.count : 0,
-            availableToday: availableToday,
+            totalUnits: metrics.totalUnits,
+            activeBookings: metrics.activeBookings,
+            availableToday: metrics.availableToday,
+            occupiedToday: metrics.occupiedToday,
           })
         )
       );
@@ -428,53 +533,8 @@ router.get("/rooms", requireAdmin, async function (req, res, next) {
   }
 });
 
-router.post("/rooms", requireAdmin, async function (req, res, next) {
-  try {
-    const title = String(req.body.title || "").trim();
-    const slug = String(req.body.slug || "").trim();
-    const category = String(req.body.category || "standard").trim();
-    const pricePerNight = Number(req.body.pricePerNight) || 0;
-    const priceHalfBoard = Number(req.body.priceHalfBoard) || pricePerNight;
-    const priceFullBoard = Number(req.body.priceFullBoard) || pricePerNight;
-    const maxGuests = clampGuestCount(Number(req.body.maxGuests) || 1);
-    const description = String(req.body.description || "").trim();
-    const imageUrl = String(req.body.imageUrl || "").trim();
-    const sortOrder = Number(req.body.sortOrder) || 0;
-    const totalUnitsRaw = Number(req.body.totalUnits);
-    const totalUnits =
-      Number.isInteger(totalUnitsRaw) && totalUnitsRaw >= 0 ? totalUnitsRaw : 1;
-
-    if (!title || !slug || !pricePerNight) {
-      return res.status(400).json({ error: "Укажите название, slug и цену номера." });
-    }
-
-    const result = await db.run(
-      `INSERT INTO rooms (
-        slug, title, category, price_per_night, price_half_board, price_full_board,
-        max_guests, description, image_url, is_visible, is_available, sort_order, total_units
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, 1, ?, ?)`,
-      [
-        slug,
-        title,
-        category,
-        pricePerNight,
-        priceHalfBoard,
-        priceFullBoard,
-        maxGuests,
-        description,
-        imageUrl,
-        sortOrder,
-        totalUnits,
-      ]
-    );
-
-    res.status(201).json({ message: "Номер добавлен.", id: result.id });
-  } catch (err) {
-    if (String(err.message).includes("UNIQUE")) {
-      return res.status(400).json({ error: "Номер с таким slug уже существует." });
-    }
-    next(err);
-  }
+router.post("/rooms", requireAdmin, function (req, res) {
+  res.status(403).json({ error: "Добавление новых номеров отключено. Доступно только редактирование существующих." });
 });
 
 router.patch("/rooms/:id", requireAdmin, async function (req, res, next) {
@@ -618,6 +678,29 @@ router.patch("/users/:id", requireAdmin, async function (req, res, next) {
     }
 
     res.json({ message: req.body.isBlocked ? "Пользователь заблокирован." : "Пользователь разблокирован." });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/users/:id", requireAdmin, async function (req, res, next) {
+  try {
+    const user = await db.get("SELECT id, role FROM users WHERE id = ?", [req.params.id]);
+
+    if (!user) {
+      return res.status(404).json({ error: "Пользователь не найден." });
+    }
+
+    if (user.role === "admin") {
+      return res.status(400).json({ error: "Нельзя удалить администратора." });
+    }
+
+    const deleted = await deleteUserCompletely(user.id);
+    if (!deleted) {
+      return res.status(404).json({ error: "Пользователь не найден." });
+    }
+
+    res.json({ message: "Пользователь полностью удалён из базы данных." });
   } catch (err) {
     next(err);
   }

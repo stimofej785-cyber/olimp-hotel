@@ -1,10 +1,11 @@
 const express = require("express");
 const db = require("../db");
+const { calculateServiceTotal } = require("../servicePricing");
 
 const router = express.Router();
 
 const { getServiceMaxGuests, validatePersonName, isBookingDateWithinRange } = require("../constants");
-const { optionalAuth } = require("../middleware/optionalAuth");
+const { requireAuth } = require("../middleware/adminAuth");
 
 const BOOKABLE_SERVICES = {
   "conference-hall": "Конференц-зал",
@@ -21,21 +22,16 @@ function bookedMessage(slug) {
   return "Бронирование в этот день невозможно.";
 }
 
-function calculateTotalPrice(slug, hours) {
-  const value = Number(hours) || 1;
-  const safeHours = Math.max(1, Math.min(24, Math.floor(value)));
+function calculateTotalPrice(slug, hours, service) {
+  return calculateServiceTotal(slug, hours, service);
+}
 
-  if (slug === "conference-hall") {
-    return safeHours * 720;
-  }
-
-  if (slug === "sauna-pool") {
-    if (safeHours <= 1) return 1800;
-    if (safeHours === 2) return 3600;
-    return 3600 + (safeHours - 2) * 1200;
-  }
-
-  return 0;
+async function getServicePricing(slug) {
+  return db.get(
+    `SELECT slug, price_per_hour AS pricePerHour, price_extra_hour AS priceExtraHour
+     FROM services WHERE slug = ?`,
+    [slug]
+  );
 }
 
 function parseISODate(value) {
@@ -63,6 +59,8 @@ router.get("/", async function (req, res, next) {
         category,
         description,
         price_text AS priceText,
+        price_per_hour AS pricePerHour,
+        price_extra_hour AS priceExtraHour,
         sort_order AS sortOrder
       FROM services
       WHERE is_active = 1
@@ -124,7 +122,7 @@ router.get("/availability", async function (req, res, next) {
   }
 });
 
-router.post("/bookings", optionalAuth, async function (req, res, next) {
+router.post("/bookings", requireAuth, async function (req, res, next) {
   try {
     const slug = String(req.body.serviceSlug || req.body.slug || "").trim();
     const bookingDate = String(req.body.bookingDate || req.body.date || "").trim();
@@ -176,8 +174,10 @@ router.post("/bookings", optionalAuth, async function (req, res, next) {
     }
 
     const authUser = req.authUser;
-    const userId = authUser ? authUser.id || authUser.userId : null;
-    const bookingEmail = authUser ? authUser.email : email || null;
+    const userId = authUser.id || authUser.userId;
+    const bookingEmail = authUser.email;
+
+    const servicePricing = await getServicePricing(slug);
 
     let result;
 
@@ -195,7 +195,7 @@ router.post("/bookings", optionalAuth, async function (req, res, next) {
           bookingDate,
           hours,
           guests,
-          calculateTotalPrice(slug, hours),
+          calculateTotalPrice(slug, hours, servicePricing),
           userId,
         ]
       );
@@ -222,7 +222,7 @@ router.post("/bookings", optionalAuth, async function (req, res, next) {
         bookingDate: bookingDate,
         hours: hours,
         guests: guests,
-        totalPrice: calculateTotalPrice(slug, hours),
+        totalPrice: calculateTotalPrice(slug, hours, servicePricing),
         status: "pending",
       },
     });

@@ -19,8 +19,16 @@ function checkHtml() {
     if (/social-max\.svg[\s\S]{0,120}href="#"/i.test(content) || /href="#"[^>]*social-max/i.test(content)) {
       issues.push(`HTML: ${name} — ссылка Max ведёт на #`);
     }
-    if (/name="card-number"|name="card-cvv"|name="cardholder"/i.test(content)) {
-      issues.push(`HTML: ${name} — остались поля банковской карты`);
+    const isRoomDetailPage = /^room(-detail|-improved|-luxe)/i.test(name);
+    const allowsPaymentCardFields =
+      isRoomDetailPage || name === "booking.html" || name === "services.html";
+    if (
+      !allowsPaymentCardFields &&
+      /name="card-number"|name="card-cvv"|name="cardholder"/i.test(content)
+    ) {
+      issues.push(
+        `HTML: ${name} — поля банковской карты только в модалках оплаты номеров, booking.html и services.html`
+      );
     }
     if (/РђРґРјР|РћР»РёРјР|РќРѕРјРµСЂР/i.test(content)) {
       issues.push(`HTML: ${name} — битая кодировка UTF-8`);
@@ -40,7 +48,6 @@ function checkJs() {
 
   const badPatterns = [
     ["setPasswordPreview", "хранение пароля в sessionStorage"],
-    ["validatePaymentCard", "старая валидация карты"],
     ["cardholderInput", "ссылка на удалённое поле cardholder"],
   ];
 
@@ -158,10 +165,29 @@ async function checkApi() {
       guests: 1,
       tariff: "basic",
     });
-    if (badBooking.status !== 400) {
-      issues.push(`API: POST /api/bookings с прошлой датой → ${badBooking.status} (ожидали 400)`);
-    } else {
+    if (badBooking.status === 401) {
+      passed.push("API: бронирование без токена отклонено");
+    } else if (badBooking.status === 400) {
       passed.push("API: бронирование отклоняет прошлые даты");
+    } else {
+      issues.push(`API: POST /api/bookings с прошлой датой → ${badBooking.status} (ожидали 401 или 400)`);
+    }
+
+    const anonBooking = await request("POST", "/api/bookings", {
+      guestName: "Test Guest",
+      phone: "+79001234567",
+      roomSlug: "single-standard",
+      checkIn: "2026-07-01",
+      checkOut: "2026-07-03",
+      guests: 1,
+      tariff: "basic",
+    });
+    if (anonBooking.status === 201) {
+      issues.push("SECURITY: POST /api/bookings без токена создаёт бронь");
+    } else if (anonBooking.status === 401) {
+      passed.push("SECURITY: POST /api/bookings требует авторизацию");
+    } else {
+      issues.push(`SECURITY: POST /api/bookings без токена → ${anonBooking.status} (ожидали 401)`);
     }
   } catch (error) {
     issues.push(`API: сервер недоступен на localhost:3000 — ${error.message}`);
