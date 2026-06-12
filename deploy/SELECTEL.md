@@ -98,6 +98,39 @@ Certbot автоматически:
 sudo certbot renew --dry-run
 ```
 
+### Важно: если HTTPS не открывается без VPN (а HTTP работает)
+
+На части российских сетей TLS на 443 обрывается из‑за MTU (пакеты SSL слишком большие). VPN это маскирует. На сервере нужно:
+
+```bash
+sudo iptables -t mangle -A POSTROUTING -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
+```
+
+И в `/etc/ufw/before.rules` перед `# End required lines` добавить:
+
+```
+# olimp-mtu-fix
+-A tcp -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360
+```
+
+```bash
+sudo ufw reload
+```
+
+### Критично: UFW не должен блокировать Node.js на localhost
+
+Если сайт «умирает» через 10–15 минут, а в `/var/log/nginx/error.log` есть `upstream timed out` — UFW блокирует nginx → Node на порту 3000:
+
+```bash
+sudo ufw allow in on lo
+sudo ufw allow from 127.0.0.1
+sudo ufw reload
+```
+
+Проверка: `curl http://127.0.0.1:3000/api/health` должен сразу вернуть `{"ok":true,...}`.
+
+Сайт также доступен по **http://ваш-домен.ru** — если HTTPS не открывается у вашего провайдера без VPN.
+
 ## 4. Обновление после изменений на GitHub
 
 ```bash

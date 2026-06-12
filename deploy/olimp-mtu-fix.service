@@ -1,0 +1,12 @@
+[Unit]
+Description=Olymp hotel MTU fix for TLS on Russian ISPs
+After=network-online.target ufw.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/bash -c 'IFACE=$(ip route get 1.1.1.1 | awk "{print \$5; exit}"); iptables -t mangle -C POSTROUTING -o "$IFACE" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360 2>/dev/null || iptables -t mangle -A POSTROUTING -o "$IFACE" -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss 1360'
+
+[Install]
+WantedBy=multi-user.target
