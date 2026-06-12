@@ -51,17 +51,9 @@ npm start
 
 ```bash
 sudo npm install -g pm2
-pm2 start ecosystem.config.cjs
+pm2 start npm --name olimp -- start
 pm2 save
-pm2 startup systemd -u root --hp /root
-# выполните команду, которую выведет pm2 startup
-systemctl enable pm2-root
-systemctl start pm2-root
-```
-
-Автопроверка (если Node упал, перезапуск каждые 2 минуты):
-```bash
-echo '*/2 * * * * root curl -sf http://127.0.0.1:3000/api/health >/dev/null || /usr/bin/pm2 restart olimp-hotel' | sudo tee /etc/cron.d/olimp-hotel-health
+pm2 startup
 ```
 
 ## 3. Nginx + SSL (Let's Encrypt)
