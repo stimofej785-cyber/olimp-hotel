@@ -31,8 +31,8 @@ npm start
 
 | Поле | По умолчанию |
 |------|----------------|
-| Логин | `admin` (или email `admin@olimp.ru`) |
-| Пароль | `admin` |
+| Email | `forestsorokin338@mail.ru` |
+| Пароль | `Shohte12` |
 
 Переопределение: `ADMIN_EMAIL`, `ADMIN_PASSWORD` в `.env`. Пароль синхронизируется при каждом `npm start`.
 
@@ -42,8 +42,8 @@ npm start
 
 | Поле | Значение |
 |------|----------|
-| Логин | `user` (или email `user@olimp.ru`) |
-| Пароль | `user` |
+| Email | `greter12@mail.ru` |
+| Пароль | `great123` |
 | ФИО | Пётр Зарубин |
 
 Вход: [login.html](http://localhost:3000/login.html) → личный кабинет.
@@ -55,7 +55,6 @@ npm start
 Инструкции в папке **[deploy/](./deploy/)**:
 
 - [deploy/GITHUB.md](./deploy/GITHUB.md) — отправка на GitHub
-- [deploy/SELECTEL.md](./deploy/SELECTEL.md) — хостинг на Selectel с HTTPS
 - [deploy/RAILWAY.md](./deploy/RAILWAY.md) — хостинг на Railway
 - [deploy/README.md](./deploy/README.md) — обзор файлов
 

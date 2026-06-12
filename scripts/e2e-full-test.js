@@ -12,12 +12,12 @@ const ROOT = path.join(__dirname, "..");
 const DB_PATH = path.join(ROOT, "Server", "olymp.db");
 
 const ADMIN = {
-  email: "admin",
-  password: "admin",
+  email: "forestsorokin338@mail.ru",
+  password: "Shohte12",
 };
 const DEMO_GUEST = {
-  email: "user",
-  password: "user",
+  email: "greter12@mail.ru",
+  password: "great123",
 };
 
 const passed = [];

@@ -110,8 +110,8 @@ function checkJsSyntax() {
 
 async function checkApiFlows() {
   const admin = await request("POST", "/api/auth/login", {
-    email: "admin",
-    password: "admin",
+    email: "forestsorokin338@mail.ru",
+    password: "Shohte12",
   });
   if (admin.status === 200 && admin.body.user && admin.body.user.role === "admin") {
     passed.push("API: вход администратора — OK");
@@ -120,8 +120,8 @@ async function checkApiFlows() {
   }
 
   const guest = await request("POST", "/api/auth/login", {
-    email: "user",
-    password: "user",
+    email: "greter12@mail.ru",
+    password: "great123",
   });
   if (guest.status === 200 && guest.body.token) {
     passed.push("API: вход гостя — OK");
@@ -181,7 +181,7 @@ async function checkApiFlows() {
       {
         guestName: "Пётр Зарубин",
         phone: "+79150000012",
-        email: "user@olimp.ru",
+        email: "greter12@mail.ru",
         roomSlug: "single-standard",
         checkIn: checkIn,
         checkOut: checkOut,

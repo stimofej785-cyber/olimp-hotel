@@ -4,8 +4,8 @@ const dbPath = path.join(__dirname, "..", "Server", "olymp.db");
 const db = new sqlite3.Database(dbPath);
 
 db.serialize(function () {
-  db.run("DELETE FROM bookings WHERE email IN ('greter12@mail.ru', 'user@olimp.ru')");
-  db.run("DELETE FROM service_bookings WHERE email IN ('greter12@mail.ru', 'user@olimp.ru')");
+  db.run("DELETE FROM bookings WHERE email = 'greter12@mail.ru'");
+  db.run("DELETE FROM service_bookings WHERE email = 'greter12@mail.ru'");
   db.run("DELETE FROM users WHERE email LIKE 'e2e-%@%'");
   db.run("DELETE FROM reviews WHERE author_name LIKE '%e2e%' OR message LIKE '%[e2e]%'");
   db.run(

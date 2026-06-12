@@ -15,7 +15,6 @@ const {
   requireAuth,
 } = require("../middleware/adminAuth");
 const { deleteUserCompletely } = require("../utils/deleteUser");
-const { resolveLoginEmail, isLoginAlias } = require("../utils/loginIdentity");
 
 const router = express.Router();
 
@@ -117,19 +116,21 @@ function parseNotificationPrefs(raw) {
 
 router.post("/login", async function (req, res, next) {
   try {
-    const rawLogin = String(req.body.email || "");
-    const email = resolveLoginEmail(rawLogin);
+    const email = normalizeEmail(req.body.email);
     const password = String(req.body.password || "");
 
     if (!email || !password) {
-      return res.status(400).json({ error: "Укажите логин (или email) и пароль." });
+      return res.status(400).json({ error: "Укажите email и пароль." });
     }
 
-    if (!isLoginAlias(rawLogin)) {
-      const emailError = validateEmail(email);
-      if (emailError) {
-        return res.status(400).json({ error: emailError });
-      }
+    const emailError = validateEmail(email);
+    if (emailError) {
+      return res.status(400).json({ error: emailError });
+    }
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      return res.status(400).json({ error: passwordError });
     }
 
     const user = await db.get(

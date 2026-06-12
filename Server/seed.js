@@ -1,13 +1,8 @@
 const { hashPassword } = require("./utils/password");
 
-const { DEFAULT_ADMIN_EMAIL, DEFAULT_DEMO_EMAIL } = require("./utils/loginIdentity");
-
-const LEGACY_ADMIN_EMAILS = ["forestsorokin338@mail.ru"];
-const LEGACY_DEMO_EMAILS = ["greter12@mail.ru"];
-
 const PRIMARY_ADMIN = {
-  email: (process.env.ADMIN_EMAIL || DEFAULT_ADMIN_EMAIL).trim().toLowerCase(),
-  password: process.env.ADMIN_PASSWORD || "admin",
+  email: (process.env.ADMIN_EMAIL || "forestsorokin338@mail.ru").trim().toLowerCase(),
+  password: process.env.ADMIN_PASSWORD || "Shohte12",
   firstName: process.env.ADMIN_FIRST_NAME || "Администратор",
   lastName: process.env.ADMIN_LAST_NAME || "Олимп",
   phone: process.env.ADMIN_PHONE || "+7 (000) 000 00 - 00",
@@ -16,8 +11,8 @@ const PRIMARY_ADMIN = {
 
 /** Гость для демонстрации на предзащите (логин на login.html) */
 const DEMO_GUEST = {
-  email: (process.env.DEMO_USER_EMAIL || DEFAULT_DEMO_EMAIL).trim().toLowerCase(),
-  password: process.env.DEMO_USER_PASSWORD || "user",
+  email: (process.env.DEMO_USER_EMAIL || "greter12@mail.ru").trim().toLowerCase(),
+  password: process.env.DEMO_USER_PASSWORD || "great123",
   firstName: "Пётр",
   lastName: "Зарубин",
   phone: process.env.DEMO_USER_PHONE || "+7 (915) 000-00-12",
@@ -232,34 +227,11 @@ async function seedDatabase(db) {
   await ensureDemoGuest(db);
 }
 
-async function migrateLegacyAccountEmail(db, legacyEmails, targetEmail) {
-  if (!targetEmail) return;
-
-  for (let i = 0; i < legacyEmails.length; i += 1) {
-    const legacyEmail = String(legacyEmails[i] || "").trim().toLowerCase();
-    if (!legacyEmail || legacyEmail === targetEmail) continue;
-
-    const legacyUser = await db.get("SELECT id FROM users WHERE email = ?", [legacyEmail]);
-    if (!legacyUser) continue;
-
-    const targetUser = await db.get("SELECT id FROM users WHERE email = ?", [targetEmail]);
-    if (targetUser && targetUser.id !== legacyUser.id) {
-      await db.run("DELETE FROM users WHERE id = ?", [legacyUser.id]);
-      return;
-    }
-
-    await db.run("UPDATE users SET email = ? WHERE id = ?", [targetEmail, legacyUser.id]);
-    return;
-  }
-}
-
 async function ensurePrimaryAdmin(db) {
   if (!PRIMARY_ADMIN.password) {
     console.warn("[seed] ADMIN_PASSWORD не задан — учётная запись администратора не обновлена.");
     return;
   }
-
-  await migrateLegacyAccountEmail(db, LEGACY_ADMIN_EMAILS, PRIMARY_ADMIN.email);
 
   const hash = await hashPassword(PRIMARY_ADMIN.password);
   const existing = await db.get("SELECT id, role FROM users WHERE email = ?", [
@@ -306,8 +278,6 @@ async function ensurePrimaryAdmin(db) {
 }
 
 async function ensureDemoGuest(db) {
-  await migrateLegacyAccountEmail(db, LEGACY_DEMO_EMAILS, DEMO_GUEST.email);
-
   const hash = await hashPassword(DEMO_GUEST.password);
   const existing = await db.get("SELECT id FROM users WHERE email = ?", [DEMO_GUEST.email]);
 
