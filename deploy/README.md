@@ -5,6 +5,7 @@
 | Файл | Назначение |
 |------|------------|
 | [GITHUB.md](./GITHUB.md) | Как отправить проект на GitHub |
+| [SELECTEL.md](./SELECTEL.md) | Деплой на Selectel VPS с HTTPS |
 | [RAILWAY.md](./RAILWAY.md) | Деплой на Railway |
 | [railway.toml](./railway.toml) | Конфиг Railway (опционально) |
 | [render.yaml](./render.yaml) | Пример для Render.com |

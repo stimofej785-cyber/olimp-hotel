@@ -3537,6 +3537,27 @@
     return String(value || "").trim().toLowerCase();
   }
 
+  function isLoginAlias(value) {
+    const normalized = normalizeLoginEmail(value);
+    return normalized === "admin" || normalized === "user";
+  }
+
+  function getLoginIdentifierError(value, required) {
+    const identifier = String(value || "").trim();
+    if (!identifier) return required ? "Укажите логин или email." : "";
+    if (isLoginAlias(identifier)) return "";
+    return getEmailError(identifier, required);
+  }
+
+  function getLoginPasswordError(value) {
+    const password = String(value || "");
+    if (!password) return "Укажите пароль.";
+    if (password.length > PASSWORD_MAX_LENGTH) {
+      return "Пароль не должен быть длиннее " + PASSWORD_MAX_LENGTH + " символов.";
+    }
+    return "";
+  }
+
   const EMAIL_PATTERN = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const PASSWORD_MIN_LENGTH = 6;
   const PASSWORD_MAX_LENGTH = 64;
@@ -3798,8 +3819,11 @@
   }
 
   function bindEmailInput(input) {
-    input.setAttribute("inputmode", "email");
+    const loginForm = input.closest("[data-auth-login]");
     input.setAttribute("maxlength", String(EMAIL_MAX_LENGTH));
+    if (!loginForm) {
+      input.setAttribute("inputmode", "email");
+    }
 
     input.addEventListener("input", function () {
       trimToMaxLength(input, EMAIL_MAX_LENGTH);
@@ -3808,6 +3832,10 @@
 
     input.addEventListener("blur", function () {
       input.value = String(input.value || "").trim().slice(0, EMAIL_MAX_LENGTH);
+      if (loginForm) {
+        setFieldValidity(input, getLoginIdentifierError(input.value, input.required));
+        return;
+      }
       setFieldValidity(input, getEmailError(input.value, input.required));
     });
   }
@@ -3839,7 +3867,10 @@
   function bindPasswordInput(input) {
     if (input.id === "account-settings-password-view") return;
 
-    input.setAttribute("minlength", String(PASSWORD_MIN_LENGTH));
+    const loginForm = input.closest("[data-auth-login]");
+    if (!loginForm) {
+      input.setAttribute("minlength", String(PASSWORD_MIN_LENGTH));
+    }
     input.setAttribute("maxlength", String(PASSWORD_MAX_LENGTH));
 
     input.addEventListener("input", function () {
@@ -3852,7 +3883,10 @@
         setFieldValidity(input, "");
         return;
       }
-      setFieldValidity(input, getPasswordError(input.value));
+      setFieldValidity(
+        input,
+        loginForm ? getLoginPasswordError(input.value) : getPasswordError(input.value)
+      );
     });
 
     bindPasswordVisibilityToggle(input);
@@ -4260,17 +4294,17 @@
       const password = form.password ? form.password.value : "";
 
       if (!email || !password) {
-        showMessage("Укажите email и пароль.");
+        showMessage("Укажите логин (или email) и пароль.");
         return;
       }
 
-      const emailError = getEmailError(email, true);
+      const emailError = getLoginIdentifierError(email, true);
       if (emailError) {
         showMessage(emailError);
         return;
       }
 
-      const passwordError = getPasswordError(password);
+      const passwordError = getLoginPasswordError(password);
       if (passwordError) {
         showMessage(passwordError);
         return;
