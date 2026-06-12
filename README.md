@@ -55,7 +55,6 @@ npm start
 Инструкции в папке **[deploy/](./deploy/)**:
 
 - [deploy/GITHUB.md](./deploy/GITHUB.md) — отправка на GitHub
-- [deploy/SELECTEL.md](./deploy/SELECTEL.md) — хостинг на Selectel с HTTPS
 - [deploy/RAILWAY.md](./deploy/RAILWAY.md) — хостинг на Railway
 - [deploy/README.md](./deploy/README.md) — обзор файлов
 
@@ -67,7 +66,7 @@ npm start
 |------------|----------|
 | `PORT` | Порт (часто задаёт хостинг) |
 | `NODE_ENV` | `production` |
-| `CORS_ORIGIN` | Полный URL сайта, например `https://ваш-домен.ru` |
+| `CORS_ORIGIN` | Полный URL сайта, например `http://ваш-домен.ru` |
 | `ADMIN_EMAIL` | Email администратора (первый запуск) |
 | `ADMIN_PASSWORD` | Пароль администратора (первый запуск) |
 | `PASSWORD_RESET_EXPOSE_LINK` | `0` на продакшене |
